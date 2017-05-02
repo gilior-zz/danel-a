@@ -1,0 +1,15 @@
+<div class="wrp h1">
+  <div class="wrp--top-left wrp--curtain-item" [@leftUp]="'in'" *ngIf="!showContent">
+  <span class="wrp--top-left--txt wrp--txt-bottom text-uppercase">
+    dan
+  </span>
+  </div>
+  <div class="wrp--top-right wrp--curtain-item" [@rigtUp]="'in'" *ngIf="!showContent">
+  <span class="top-right--txt wrp--txt-bottom text-uppercase">
+    el
+  </span>
+  </div>
+  <div class="wrp--bootom-left wrp--curtain-item text-capitalize text-right" [@leftDown]="'in'" *ngIf="!showContent">smart-</div>
+  <div class="wrp--bootom-right wrp--curtain-item text-left text-capitalize" [@rigtDown]="'in'" *ngIf="!showContent">office</div>
+</div>
+

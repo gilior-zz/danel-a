@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@progress/kendo-theme-default/scss/all";
+
+html,body{
+  overflow-x: hidden;
+
+}
+body{
+  font-family: 'Arimo', sans-serif;
+}

@@ -1,0 +1,54 @@
+$col1: black;
+$col2: white;
+.wrp{
+  direction: ltr;
+  cursor: default;
+  &--top-left{
+    height:50vh;
+    top:0;
+    left:0;
+    background: linear-gradient(to bottom right, $col1, $col2);
+
+    &--txt{
+      right: 0;
+    }
+  }
+  &--top-right{
+    height:50vh;
+    top:0;
+    right:0;
+    background: linear-gradient(to bottom left, $col1, $col2);
+    direction: ltr;
+    &--txt{
+      //display: table-cell;
+    }
+  }
+
+  &--bootom-left{
+    top:50vh;
+    left:0;
+    height:50vh;
+
+
+    background: linear-gradient(to top right, $col1, $col2);
+  }
+  &--bootom-right{
+    height:50vh;
+    top:50vh;
+    right: 0;
+    background: linear-gradient(to top left, $col1, $col2);
+  }
+
+  &--curtain-item{
+    position: absolute;
+    z-index: 1031;
+    width: 50%;
+    //border: solid;
+  }
+
+  &--txt-bottom{
+    position: absolute;
+    bottom: 0;
+  }
+}
+

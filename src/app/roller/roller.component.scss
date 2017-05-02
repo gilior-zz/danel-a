@@ -1,0 +1,42 @@
+.marquee-wrp{
+  //animation: moving 5s infinite;
+  //position: relative;
+  //height:25px;
+  //white-space: nowrap;
+  //overflow: hidden;
+  direction: ltr;
+  &--roller-wrp{
+    margin-left: 30px;
+    direction: rtl;
+  }
+}
+
+.msg{
+
+  //display: inline;
+  //overflow: hidden;
+cursor: default;
+}
+.date {
+  font-weight: bold;
+  color: rgba(141,16,15,0.81);
+}
+
+.marquee{
+
+}
+
+@keyframes moving {
+  from{transform: translate3d(10%,20%,5vh);
+  }
+  to{transform:  translate3d(10%,20%,100vh);
+  }
+
+}
+
+@keyframes mymove {
+  from {left: 0px;}
+  to {left: 200px;}
+}
+
+
