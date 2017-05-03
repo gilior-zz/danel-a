@@ -1,9 +1,9 @@
 
-<!--
+
 <kendo-grid
   #grid
-  [selectable]="true"
-  [kendoGridBinding]="filteredData"
+ 
+  [data]="gridData"
   (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
   (save)="saveHandler($event)" (remove)="removeHandler($event)"
   [pageSize]="10"
@@ -69,7 +69,7 @@
     <button kendoButton (click)="closeRemoveDlg('no')" primary="true">ביטול</button>
     <button kendoButton (click)="closeRemoveDlg('yes')" primary="true">אישור</button>
   </kendo-dialog-actions>
-</kendo-dialog>-->
+</kendo-dialog>
 
 
 

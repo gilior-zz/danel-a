@@ -6,6 +6,7 @@ import { LinksService } from "../services/links.service";
 import { RollerService } from "../services/roller.service";
 import { UtilityService } from "../services/utility.service";
 import { MdlsService } from "../services/mdls.service";
+import { RTL } from '@progress/kendo-angular-l10n';
 
 import { AppConfigProvider } from "../app-config";
 
@@ -19,6 +20,6 @@ import { AppConfigProvider } from "../app-config";
      LinksService, RollerService, 
      UtilityService, 
      MdlsService,
-     AppConfigProvider]
+     AppConfigProvider,{ provide: RTL, useValue: true }]
 })
 export class CoreModule { }

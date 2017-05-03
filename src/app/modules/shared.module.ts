@@ -29,14 +29,14 @@ import { CommonModule } from '@angular/common';
     CommonModule,
 
     HttpModule,
-    // GridModule,
-    // InputsModule,
-    // ButtonsModule,
-    // FormsModule,
-    // ReactiveFormsModule,
-    // LayoutModule,
-    // DialogModule,
-    // UploadModule,
+    GridModule,
+    InputsModule,
+    ButtonsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LayoutModule,
+    DialogModule,
+    TreeModule,
     BrowserAnimationsModule,]
 })
 export class SharedModule { }

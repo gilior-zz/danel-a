@@ -30,7 +30,12 @@ export class InfoComponent implements OnInit {
   public editedRowIndex: number;
   items: Observable<string[]>;
   ngOnInit() {
-    this.infoService.getFaQs().subscribe(i => { this.gridData = i.sis; this.filteredData = this.gridData });
+    this.infoService.getFaQs().subscribe(i => {
+      this.gridData = <Array<SupportIssue>>JSON.parse(JSON.stringify(i));
+
+
+      this.filteredData = this.gridData
+    });
     this.handleAStream();
     this.handleQStream();
 
