@@ -21,6 +21,8 @@ export class InfoService {
   }
 
   getFaQs(): Observable<SupportIssueResponse> {
+    
+    
     return this.http.get(this.config.apiEndpoint)
       .map(this.extractData)
       .catch(this.handleError);
