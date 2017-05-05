@@ -10,7 +10,7 @@ import { EnvironmentService } from "../services/environment.service";
   animations:[
     trigger('anchorSize', [
       transition('0 => 1', [
-
+  
         animate('1s ease-in', style({
 
           transform: 'scale(1.1)'
