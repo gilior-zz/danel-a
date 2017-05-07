@@ -1,14 +1,26 @@
-import { SupportIssue } from './../../models';
+import { IFaQDal } from '../dal/faq/Ifaqdal';
+import { FaqsSql, SupportIssues } from '../dal/faq/faqs-sql';
+import { SupportIssue } from '../../models';
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 
 
 
 
-
-
-
 export class FaqRoutesHandler {
+    faqDal: IFaQDal;
+    constructor() {
+        this.faqDal = new FaqsSql();
+        this.faqDal.loadFaqS().then(i => {
+
+
+
+            console.log(SupportIssues);
+            console.log('loadFaqS ended');
+        })
+    }
+
+
     public delHandler(req, faqs: Array<SupportIssue>) {
         faqs.splice(faqs.indexOf(req['faq']), 1);
     }

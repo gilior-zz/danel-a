@@ -1,7 +1,4 @@
-
-
-
-
+import { SupportIssues } from './../dal/faq/faqs-sql';
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 
@@ -9,16 +6,13 @@ import { SupportIssue } from "../../models";
 import { FaqRoutesHandler } from "../routesLogic/faqRoutesLogic";
 
 let faqRoutesHandler: FaqRoutesHandler = new FaqRoutesHandler();
-let faqs: Array<SupportIssue> = new Array<SupportIssue>();
-for (var index = 0; index < 20; index++) {
-    faqs.push({ prb: `prb ${index}`, sln: `sln ${index}`, id: index })
-}
+
 
 export const faqRouter = express.Router();
 faqRouter.use('/:faqId', (req, res, next) => {
     console.log(req.query.sln);
 
-    req['faq'] = faqs.find(i => (req.params.faqId == null || i.id == req.params.faqId)
+    req['faq'] = SupportIssues.find(i => (req.params.faqId == null || i.id == req.params.faqId)
         && (req.query.sln == null || i.sln == req.query.sln));
 
     if (req['faq'] == null) res.send(404, 'no sux faq');
@@ -28,17 +22,13 @@ faqRouter.use('/:faqId', (req, res, next) => {
 //http://localhost:3000/api/faq (w/out body) 
 faqRouter.route('/')
     .get((req, res) => {
-
-
-
-        let sorted = faqs.sort((a, b) => { return a.id - b.id });
+        let sorted = SupportIssues.sort((a, b) => { return a.id - b.id });
         let linkedFaqs = [];
-        faqRoutesHandler.getAllHandler(faqs, linkedFaqs, req);
+        faqRoutesHandler.getAllHandler(sorted, linkedFaqs, req);
         res.json(linkedFaqs);
     })
     .post((req, res) => {
 
-        faqs.push(req.body);
         res.send(201, req.body);
     }
     )
@@ -64,7 +54,7 @@ faqRouter.route('/:faqID')
     )
 
     .delete((req, res) => {
-        faqRoutesHandler.delHandler(req, faqs);
+        faqRoutesHandler.delHandler(req, SupportIssues);
         res.send(204, req['faq']);
     }
     );
