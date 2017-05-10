@@ -1,9 +1,13 @@
-import { SupportIssues } from './../dal/faq/faqs-sql';
+import {  SupportIssues } from '../dal/faq/faqs-sql';
+
+
+
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 
 import { SupportIssue } from "../../models";
 import { FaqRoutesHandler } from "../routesLogic/faqRoutesLogic";
+
 
 let faqRoutesHandler: FaqRoutesHandler = new FaqRoutesHandler();
 
@@ -22,10 +26,10 @@ faqRouter.use('/:faqId', (req, res, next) => {
 //http://localhost:3000/api/faq (w/out body) 
 faqRouter.route('/')
     .get((req, res) => {
-        let sorted = SupportIssues.sort((a, b) => { return a.id - b.id });
+        // let sorted = SupportIssues.sort((a, b) => { return a.id - b.id });
         let linkedFaqs = [];
-        faqRoutesHandler.getAllHandler(sorted, linkedFaqs, req);
-        res.json(linkedFaqs);
+        let response = faqRoutesHandler.getAllHandler(req);
+        res.json(response);
     })
     .post((req, res) => {
 
@@ -54,7 +58,7 @@ faqRouter.route('/:faqID')
     )
 
     .delete((req, res) => {
-        faqRoutesHandler.delHandler(req, SupportIssues);
+        faqRoutesHandler.delHandler(req.params.faqId);
         res.send(204, req['faq']);
     }
     );

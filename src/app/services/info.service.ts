@@ -65,7 +65,7 @@ export class InfoService {
       .catch(this.handleError);
   }
 
-  remove(dataItem: SupportIssue) {
-    return this.http.delete(`${this.config.apiEndpoint}/${dataItem.id}`);
+  remove(id: number) {
+    return this.http.delete(`${this.config.apiEndpoint}/${id}`);
   }
 }

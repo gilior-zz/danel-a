@@ -6,8 +6,30 @@ import * as sql from 'mssql'
 import { IProcedureResult } from "mssql";
 import { SupportIssue, SupportIssueLink } from "models";
 
-export let SupportIssues: Array<SupportIssue>;
+export let SupportIssues: Array<any>;
 export class FaqsSql implements IFaQDal {
+    async  deleteItem(id: any): Promise<any> {
+        try {
+            const pool1 = new sql.ConnectionPool(
+                {
+                    user: 'lior',
+                    password: '1234',
+                    server: '127.0.0.1',
+                    database: 'info'
+                }
+            )
+            await pool1.connect();
+            await pool1.request() // or: new sql.Request(pool1) 
+                .input('@ID', id)
+                .execute('SupportIssueLinksDelete');
+        }
+        catch (err) {
+            console.log(err);
+
+            return Promise.resolve(null);
+        }
+    }
+
     async  loadFaqS(): Promise<Array<SupportIssue>> {
         try {
             const pool1 = new sql.ConnectionPool(
@@ -31,7 +53,7 @@ export class FaqsSql implements IFaQDal {
     extractData(res: IProcedureResult<any>) {
         let sis: Array<SupportIssue> = [];
         res.recordsets[0].forEach(i => {
-            sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID })
+            sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp })
         })
 
         let sisLnk: Array<SupportIssueLink> = [];

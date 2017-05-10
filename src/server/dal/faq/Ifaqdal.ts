@@ -4,5 +4,6 @@ export interface IFaQDal {
 
 
     loadFaqS():  Promise<Array<SupportIssue>>;
+    deleteItem(id):Promise<any>;
 }
  

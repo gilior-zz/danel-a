@@ -1,3 +1,4 @@
+import { State,process } from '@progress/kendo-data-query';
 import { Component, OnInit, ViewChild, DoCheck, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
@@ -10,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SupportIssue } from "../../models";
 import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
+import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
 
 @Component({
   selector: 'lg-info',
@@ -21,25 +23,42 @@ export class InfoComponent implements OnInit {
   public formGroup: FormGroup;
 
   public showFaqDlg: boolean;
+  private data: Array<SupportIssue>;
   public showRemoveDlg: boolean;
   constructor(public infoService: InfoService, public ut: UtilityService) { }
   gridData: Array<SupportIssue>;
+  private pageSize: number = 10;
+  private items: Array<SupportIssue>;
   filteredData: Array<SupportIssue>;
   prbFilter: string;
   slnFilter: string;
+  private gridView: GridDataResult;
   public editedRowIndex: number;
-  items: Observable<string[]>;
+
+
   ngOnInit() {
     this.infoService.getFaQs().subscribe(i => {
-      this.gridData = <Array<SupportIssue>>JSON.parse(JSON.stringify(i));
+      this.items = <Array<SupportIssue>>JSON.parse(JSON.stringify(i));
+      this.loadItems();
 
 
-      this.filteredData = this.gridData
     });
     this.handleAStream();
     this.handleQStream();
 
 
+  }
+
+  protected pageChange(event: PageChangeEvent): void {
+    this.skip = event.skip;
+    this.loadItems();
+  }
+  private loadItems(): void {
+    // debugger;
+    this.gridView = {
+      data: this.items.slice(this.skip, this.skip + this.pageSize),
+      total: this.items.length
+    };
   }
   public handleQStream() {
     this.searchQTermStream
@@ -95,9 +114,9 @@ export class InfoComponent implements OnInit {
 
     //this.infoService.remove(dataItem);
     this.delID = dataItem.id;
-    console.log(`dataItem ${dataItem.id}`)
-    console.log(`dataItem ${dataItem.prb}`)
-    console.log(`dataItem ${dataItem.prb}`)
+    // console.log(`dataItem ${dataItem.id}`)
+    // console.log(`dataItem ${dataItem.prb}`)
+    // console.log(`dataItem ${dataItem.prb}`)
 
     this.showRemoveDlg = true;
   }
@@ -106,17 +125,18 @@ export class InfoComponent implements OnInit {
 
   delete() {
     console.log(`delete from DB ${this.delID}`);
+    this.infoService.remove(this.delID);
   }
 
   public closeRemoveDlg(status) {
-    console.log(`Dialog result: ${status}`);
+    // console.log(`Dialog result: ${status}`);
     this.showRemoveDlg = false;
     if (status == 'yes')
       this.delete();
   }
 
   public closeFaqDlg(status) {
-    console.log(`Dialog result: ${status}`);
+    // console.log(`Dialog result: ${status}`);
     this.showFaqDlg = false;
     if (status == 'yes')
       this.infoService.add(this.ut.faqToSave).subscribe(
@@ -125,26 +145,33 @@ export class InfoComponent implements OnInit {
       );
   }
 
+     protected dataStateChange(state: DataStateChangeEvent): void {
+        this.state = state;
+        this.gridView = process(this.items, this.state);
+    }
+
+  private state: State = {
+        skip: 0,
+        take: 10
+    };
+
 
   dialogContent: string = 'למחוק רשומה?';
 
-  public editHandler({ sender, rowIndex, dataItem }) {
+  protected editHandler({ sender, rowIndex, dataItem }) {
     this.closeEditor(sender);
 
     this.formGroup = new FormGroup({
-      'id': new FormControl(dataItem.id),
-      'prb': new FormControl(dataItem.prb, Validators.required),
+
       'sln': new FormControl(dataItem.sln, Validators.required),
+      'prb': new FormControl(dataItem.prb, Validators.required),
     });
 
     this.editedRowIndex = rowIndex;
 
     sender.editRow(rowIndex, this.formGroup);
-    console.log(`rowIndex ${rowIndex}`)
-    console.log(`dataItem ${dataItem.id}`)
-    console.log(`dataItem ${dataItem.prb}`)
-    console.log(`dataItem ${dataItem.prb}`)
   }
+
 
   public cancelHandler({ sender, rowIndex }) {
     this.closeEditor(sender, rowIndex);

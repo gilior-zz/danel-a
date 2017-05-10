@@ -1,3 +1,4 @@
+
 import { IFaQDal } from '../dal/faq/Ifaqdal';
 import { FaqsSql, SupportIssues } from '../dal/faq/faqs-sql';
 import { SupportIssue } from '../../models';
@@ -15,14 +16,16 @@ export class FaqRoutesHandler {
 
 
 
-            console.log(SupportIssues);
+            // console.log(SupportIssues);
             console.log('loadFaqS ended');
         })
     }
 
 
-    public delHandler(req, faqs: Array<SupportIssue>) {
-        faqs.splice(faqs.indexOf(req['faq']), 1);
+    public delHandler(id:number) {
+        // faqs.splice(faqs.indexOf(req['faq']), 1);
+    console.log(`in  delHandler`);
+        this.faqDal.deleteItem(id);
     }
 
     public putHandler(req) {
@@ -38,13 +41,13 @@ export class FaqRoutesHandler {
         }
     }
 
-    public getAllHandler(faqs: Array<SupportIssue>, linkedFaqs: Array<SupportIssue>, req) {
-        faqs.forEach(i => {
-            let linkedFaq = Object.assign({}, i);
-            linkedFaq['links'] = {};
-            linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
-            linkedFaqs.push(linkedFaq);
-        })
+    public getAllHandler(req):Array<SupportIssue> {
+        // faqs.forEach(i => {
+        // let linkedFaq = Object.assign({}, i);
+        // linkedFaq['links'] = {};
+        // linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
+       return SupportIssues;
+        // })
     }
 
     public getOneHandler(faq: SupportIssue, linkedFaq: SupportIssue, req) {
