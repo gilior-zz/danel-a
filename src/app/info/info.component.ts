@@ -1,4 +1,4 @@
-import { State,process } from '@progress/kendo-data-query';
+import { State, process } from '@progress/kendo-data-query';
 import { Component, OnInit, ViewChild, DoCheck, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
@@ -37,17 +37,19 @@ export class InfoComponent implements OnInit {
 
 
   ngOnInit() {
+    this.loadFaqs();
+    // this.handleAStream();
+    // this.handleQStream();
+  }
+  private loadFaqs() {
     this.infoService.getFaQs().subscribe(i => {
       this.items = <Array<SupportIssue>>JSON.parse(JSON.stringify(i));
       this.loadItems();
 
 
     });
-    this.handleAStream();
-    this.handleQStream();
-
-
   }
+
 
   protected pageChange(event: PageChangeEvent): void {
     this.skip = event.skip;
@@ -98,15 +100,36 @@ export class InfoComponent implements OnInit {
     this.formGroup = undefined;
   }
 
-  public addHandller() {
+
+  public addHandler({ sender }) {
     this.showFaqDlg = true;
   }
 
-  public saveHandler({ sender, rowIndex, formGroup, isNew }) {
+  //  public addHandlerB({sender}) {
+  //       this.closeEditor(sender);
+
+  //       this.formGroup = new FormGroup({
+  //           'sln': new FormControl(),
+  //           'prb': new FormControl(""),
+
+  //       });
+
+  //       sender.addRow(this.formGroup);
+  //   }
+
+  public saveHandlerReactiveDriven({ sender, rowIndex, formGroup, isNew }) {
     const si: SupportIssue = formGroup.value;
 
     this.infoService.update(si);
 
+    sender.closeRow(rowIndex);
+  }
+
+  protected saveHandlerTemplateDriven({ sender, rowIndex, dataItem, isNew }) {
+    // update the data source
+    this.infoService.update(dataItem).subscribe(i => { });
+
+    // close the editor, i.e revert the row back into view mode
     sender.closeRow(rowIndex);
   }
 
@@ -125,7 +148,11 @@ export class InfoComponent implements OnInit {
 
   delete() {
     console.log(`delete from DB ${this.delID}`);
-    this.infoService.remove(this.delID);
+    this.infoService.remove(this.delID).subscribe(() => {
+      let item = this.items.find(i => i.id == this.delID);
+      this.items = this.items.filter(i => i != item);
+      this.loadItems();
+    });
   }
 
   public closeRemoveDlg(status) {
@@ -135,42 +162,64 @@ export class InfoComponent implements OnInit {
       this.delete();
   }
 
-  public closeFaqDlg(status) {
+  public closeFaqDlg(status, foo: any = null, ) {
+    let sis = foo.getNewFaq();
+
     // console.log(`Dialog result: ${status}`);
     this.showFaqDlg = false;
     if (status == 'yes')
-      this.infoService.add(this.ut.faqToSave).subscribe(
-        i => this.filteredData.push(i),
-        error => console.log(error)
+      this.infoService.add(sis).subscribe(i =>
+        // i => this.filteredData.push(i),
+        // error => console.log(error)
+        console.log(i)
+
       );
   }
 
-     protected dataStateChange(state: DataStateChangeEvent): void {
-        this.state = state;
-        this.gridView = process(this.items, this.state);
-    }
+  protected dataStateChange(state: DataStateChangeEvent): void {
+    this.state = state;
+    this.gridView = process(this.items, this.state);
+  }
 
   private state: State = {
-        skip: 0,
-        take: 10
-    };
+    skip: 0,
+    take: 10
+  };
 
 
   dialogContent: string = 'למחוק רשומה?';
 
-  protected editHandler({ sender, rowIndex, dataItem }) {
+  protected editHandlerReactiveDriven({ sender, rowIndex, dataItem }) {
     this.closeEditor(sender);
 
     this.formGroup = new FormGroup({
 
-      'sln': new FormControl(dataItem.sln, Validators.required),
-      'prb': new FormControl(dataItem.prb, Validators.required),
+      'sln': new FormControl(dataItem.sln),
+      'prb': new FormControl(dataItem.prb),
     });
 
     this.editedRowIndex = rowIndex;
 
     sender.editRow(rowIndex, this.formGroup);
   }
+
+  protected editHandlerTemplateDriven({ sender, rowIndex, dataItem }) {
+    // close previously edited item
+    this.closeEditor(sender);
+
+    // track last edited row
+    // it will be used in `closeEditor` for closing previous edited row
+    this.editedRowIndex = rowIndex;
+
+    // clone current - `[(ngModel)]` will modify the orignal item
+    // we will use this copy to revert changes
+    this.editedItem = Object.assign({}, dataItem);
+
+    // edit the row
+    sender.editRow(rowIndex);
+  }
+  editedItem: SupportIssue;
+
 
 
   public cancelHandler({ sender, rowIndex }) {

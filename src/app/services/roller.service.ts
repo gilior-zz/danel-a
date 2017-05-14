@@ -12,7 +12,7 @@ export class RollerService {
 
   plug: number = 6;
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
-    this.config.apiEndpoint = config.apiEndpoint + '/rlrls';
+    this.config = JSON.parse(JSON.stringify(config));
   }
 
   getRllrs(): Promise<RollerResponse> {

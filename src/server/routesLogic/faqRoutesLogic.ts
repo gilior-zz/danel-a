@@ -1,4 +1,5 @@
 
+
 import { IFaQDal } from '../dal/faq/Ifaqdal';
 import { FaqsSql, SupportIssues } from '../dal/faq/faqs-sql';
 import { SupportIssue } from '../../models';
@@ -22,15 +23,19 @@ export class FaqRoutesHandler {
     }
 
 
-    public delHandler(id:number) {
+    public delHandler(req) {
         // faqs.splice(faqs.indexOf(req['faq']), 1);
-    console.log(`in  delHandler`);
-        this.faqDal.deleteItem(id);
+        console.log(`in  delHandler`);
+        this.faqDal.deleteItem(req);
     }
 
     public putHandler(req) {
-        req['faq'].prb = req.body.prb;
-        req['faq'].sln = req.body.sln;
+        this.faqDal.UpdateItem(req)
+    }
+
+    public async  postHandler(req): Promise<SupportIssue> {
+        let res = await this.faqDal.AddItem(req);
+        return res;
     }
 
     public patchHandler(req) {
@@ -41,12 +46,12 @@ export class FaqRoutesHandler {
         }
     }
 
-    public getAllHandler(req):Array<SupportIssue> {
+    public getAllHandler(req): Array<SupportIssue> {
         // faqs.forEach(i => {
         // let linkedFaq = Object.assign({}, i);
         // linkedFaq['links'] = {};
         // linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
-       return SupportIssues;
+        return SupportIssues;
         // })
     }
 

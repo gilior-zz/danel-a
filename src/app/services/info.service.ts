@@ -16,13 +16,13 @@ export class InfoService {
   config: AppConfig
   plug: number = 6;
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
-    this.config = config;
+    this.config = JSON.parse(JSON.stringify(config));
     this.config.apiEndpoint = config.apiEndpoint + '/faq';
   }
 
   getFaQs(): Observable<SupportIssueResponse> {
-    
-    
+
+
     return this.http.get(this.config.apiEndpoint)
       .map(this.extractData)
       .catch(this.handleError);
@@ -48,6 +48,8 @@ export class InfoService {
 
 
   add(si: SupportIssue): Observable<SupportIssueResponse> {
+    console.log(si);
+
     return this.http.post(this.config.apiEndpoint, si)
       .map((res: Response) => {
         const data = res.json();
@@ -65,7 +67,7 @@ export class InfoService {
       .catch(this.handleError);
   }
 
-  remove(id: number) {
+  remove(id: number): Observable<any> {
     return this.http.delete(`${this.config.apiEndpoint}/${id}`);
   }
 }

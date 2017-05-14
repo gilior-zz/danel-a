@@ -22,8 +22,7 @@ export class LinkResponse {
   lnks: Link[];
   time: Date;
 }
-export class SupportIssue {
-  del?: boolean;
+export class SupportIssue {  
   id?: number;
   prb?: string
   sln?: string

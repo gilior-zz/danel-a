@@ -10,6 +10,7 @@ export class MdlsService {
   config: any;
 
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
+    this.config = JSON.parse(JSON.stringify(config));
     this.config.apiEndpoint = config.apiEndpoint + '/mdls';
   }
 

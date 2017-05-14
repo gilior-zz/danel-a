@@ -40,10 +40,10 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder, private ut: UtilityService, public ms: MdlsService) {
     this.createForm();
-    
+
   }
 
-  onActiveChanged($event) { 
+  onActiveChanged($event) {
     console.log($event.isActive);
     this.mdlID = $event.isActive ? +$event.node.data.id : -1;
     this.mdlName == $event.isActive ? $event.node.data.name : null;
@@ -62,6 +62,19 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
     let sis: SupportIssue = { lnks: links, sln: formModel.sln, prb: formModel.prb };
     this.ut.faqToSave = sis;
+  }
+
+  getNewFaq(): SupportIssue {
+    const formModel = this.faqForm.value;
+    let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
+
+    for (let i = 0; this.lnks != null && i < this.lnks.length; i++) {
+      let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `$x:\lnks\{this.lnks[0].name}` };
+      links.push(l);
+    }
+
+    let sis: SupportIssue = { lnks: links, sln: formModel.sln, prb: formModel.prb };
+    return sis;
   }
 
 
@@ -124,8 +137,8 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
-    this.ms.getMdls().then(i => { this.mdls = i.mdls; console.log(this.mdls); });
-    this.ut.faqToSave = new SupportIssue();
+    // this.ms.getMdls().then(i => { this.mdls = i.mdls; console.log(this.mdls); });
+    // this.ut.faqToSave = new SupportIssue();
   }
 
 }

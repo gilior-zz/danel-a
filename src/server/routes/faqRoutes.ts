@@ -1,4 +1,4 @@
-import {  SupportIssues } from '../dal/faq/faqs-sql';
+import { SupportIssues } from '../dal/faq/faqs-sql';
 
 
 
@@ -12,9 +12,11 @@ import { FaqRoutesHandler } from "../routesLogic/faqRoutesLogic";
 let faqRoutesHandler: FaqRoutesHandler = new FaqRoutesHandler();
 
 
-export const faqRouter = express.Router();
+export const faqRouter = express.Router({ mergeParams: true });
 faqRouter.use('/:faqId', (req, res, next) => {
-    console.log(req.query.sln);
+
+    // console.log(req.query.sln);
+    console.log(req.params.faqId);
 
     req['faq'] = SupportIssues.find(i => (req.params.faqId == null || i.id == req.params.faqId)
         && (req.query.sln == null || i.sln == req.query.sln));
@@ -32,8 +34,13 @@ faqRouter.route('/')
         res.json(response);
     })
     .post((req, res) => {
+        let l = faqRoutesHandler.postHandler(req);
+        l.then(
+            (result) => {
+                res.send(201, result);
+            }
+        )
 
-        res.send(201, req.body);
     }
     )
 
@@ -58,8 +65,10 @@ faqRouter.route('/:faqID')
     )
 
     .delete((req, res) => {
-        faqRoutesHandler.delHandler(req.params.faqId);
-        res.send(204, req['faq']);
+
+
+        faqRoutesHandler.delHandler(req);
+        res.send(205, req['faq']);
     }
     );
 
