@@ -10,13 +10,15 @@ import { SupportIssue, SupportIssueLink } from "models";
 
 export let SupportIssues: Array<any>;
 export class FaqsSql implements IFaQDal {
+
+
     async  generateRequest(): Promise<sql.Request> {
         const pool1 = new sql.ConnectionPool(
             {
-                user: 'lior',
-                password: '1234',
-                server: '127.0.0.1',
-                database: 'info'
+                user: 'liorg',
+                password: '123qwe!@#asd',
+                server: 'DANEL-DB\\S16',
+                database: 'support_new'
             }
         )
         await pool1.connect();
@@ -26,23 +28,31 @@ export class FaqsSql implements IFaQDal {
 
     async  AddItem(req): Promise<SupportIssue> {
 
-        this.AddFaq(req).then(res => {
-            let newID = res.output.newID;
-            console.log(newID);
-            let newFaq = { id: newID, prb: req.body.prb, sln: req.body.sln, ts: new Date().getDate(), lnks: req.body.lnks };
-            SupportIssues.push(newFaq);
-            newFaq.lnks.forEach(i => {
-                this.AddLnks(i, newFaq.id);
-            })
-        }
+        // this.AddFaq(req).then(res => {
+        //     let newID = res.output.newID;
+        //     console.log(newID);
+        //     let newFaq = { id: newID, prb: req.body.prb, sln: req.body.sln, ts: new Date().getDate(), lnks: req.body.lnks };
+        //     SupportIssues.push(newFaq);
+        //     newFaq.lnks.forEach(i => {
+        //         this.AddLnks(i, newFaq.id);
+        //     })
+        // }
 
-        )
+        // )
 
-
-
-
-        return null;
+        let res = await this.AddFaq(req);
+        let newID = res.output.newID;
+        console.log(newID);
+        let newFaq = { id: newID, prb: req.body.prb, sln: req.body.sln, ts: new Date().getDate(), lnks: req.body.lnks };
+        SupportIssues.push(newFaq);
+        newFaq.lnks.forEach(i => {
+            this.AddLnks(i, newFaq.id);
+        })
+        return res;
     }
+
+
+
 
     private async AddLnks(supportIssueLink: SupportIssueLink, sID: number): Promise<any> {
 
@@ -56,11 +66,11 @@ export class FaqsSql implements IFaQDal {
             });
     }
 
-    private async  AddFaq(req): Promise<any> {
+    private async  AddFaq(req): Promise<sql.IProcedureResult<any>> {
 
 
         let sqlReqeust = await this.generateRequest();
-        sqlReqeust
+        return sqlReqeust
             .output('newID', sql.Int)
             .input('ID', null)
             .input('Problem', sql.NVarChar, req.body.prb)

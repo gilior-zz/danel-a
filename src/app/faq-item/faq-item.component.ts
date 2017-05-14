@@ -52,16 +52,16 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    const formModel = this.faqForm.value;
-    let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
+    // const formModel = this.faqForm.value;
+    // let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
 
-    for (let i = 0; this.lnks != null && i < this.lnks.length; i++) {
-      let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `$x:\lnks\{this.lnks[0].name}` };
-      links.push(l);
-    }
+    // for (let i = 0; this.lnks != null && i < this.lnks.length; i++) {
+    //   let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `$x:\lnks\{this.lnks[0].name}` };
+    //   links.push(l);
+    // }
 
-    let sis: SupportIssue = { lnks: links, sln: formModel.sln, prb: formModel.prb };
-    this.ut.faqToSave = sis;
+    // let sis: SupportIssue = { lnks: links, sln: formModel.sln, prb: formModel.prb };
+    // this.ut.faqToSave = sis;
   }
 
   getNewFaq(): SupportIssue {
@@ -91,12 +91,12 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   }
 
   fileChangeEvent(files: FileList) {
-    this.lnks = files;
-    this.ut.faqToSave.lnks.length = 0;
-    for (var index = 0; index < this.lnks.length; index++) {
-      var element = this.lnks[index];
-      this.ut.faqToSave.lnks.push({ nm: element.name, pth: element.name })
-    }
+    // this.lnks = files;
+    // this.ut.faqToSave.lnks.length = 0;
+    // for (var index = 0; index < this.lnks.length; index++) {
+    //   var element = this.lnks[index];
+    //   this.ut.faqToSave.lnks.push({ nm: element.name, pth: element.name })
+    // }
   }
 
   onNodeSelected(event) {
@@ -138,6 +138,9 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.ms.getMdls().then(i => { this.mdls = i.mdls; console.log(this.mdls); });
+    // this.ut.faqToSave = new SupportIssue();
+
+    this.ms.getMdls().then(i => { });
     // this.ut.faqToSave = new SupportIssue();
   }
 

@@ -163,17 +163,20 @@ export class InfoComponent implements OnInit {
   }
 
   public closeFaqDlg(status, foo: any = null, ) {
-    let sis = foo.getNewFaq();
+
 
     // console.log(`Dialog result: ${status}`);
     this.showFaqDlg = false;
-    if (status == 'yes')
+    if (status == 'yes') {
+      let sis = foo.getNewFaq();
       this.infoService.add(sis).subscribe(i =>
         // i => this.filteredData.push(i),
         // error => console.log(error)
         console.log(i)
 
       );
+    }
+
   }
 
   public dataStateChange(state: DataStateChangeEvent): void {

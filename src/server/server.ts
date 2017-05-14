@@ -9,6 +9,7 @@ import * as csrf from 'csurf'
 
 
 import { faqRouter } from "./routes/faqRoutes";
+import { mdlsRouter } from "./routes/mdlRoutes";
 
 
 
@@ -39,6 +40,7 @@ let port: number = process.env.port || 3000;
 
 
 app.use('/api/faq', faqRouter);
+app.use('/api/mdls', mdlsRouter);
 app.all('/*', (req, res) => {
 
     res.sendFile(path.resolve(__dirname + '/../index.html'));
@@ -53,12 +55,9 @@ app.listen(port, () => {
     console.log(path.join(__dirname + '/../index.html'));
     console.log(`listening on port ${port}`);
 })
-class foo {
 
 
-}
 
-new FaqRoutesHandler();
 
 
 

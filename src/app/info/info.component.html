@@ -4,8 +4,9 @@
     [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true" (add)="addHandler($event)">
 
     <kendo-grid-column title="בעיה" field="prb">
-      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+      <ng-template   kendoGridEditTemplate let-dataItem="dataItem" let-filter let-column="column">
         <textarea [(ngModel)]="dataItem.prb" name="prb" class="k-textbox" required></textarea>
+     
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column title="פתרון" field="sln">
