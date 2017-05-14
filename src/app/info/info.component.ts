@@ -32,7 +32,7 @@ export class InfoComponent implements OnInit {
   filteredData: Array<SupportIssue>;
   prbFilter: string;
   slnFilter: string;
-  private gridView: GridDataResult;
+  public gridView: GridDataResult;
   public editedRowIndex: number;
 
 
@@ -51,7 +51,7 @@ export class InfoComponent implements OnInit {
   }
 
 
-  protected pageChange(event: PageChangeEvent): void {
+  public pageChange(event: PageChangeEvent): void {
     this.skip = event.skip;
     this.loadItems();
   }
@@ -125,7 +125,7 @@ export class InfoComponent implements OnInit {
     sender.closeRow(rowIndex);
   }
 
-  protected saveHandlerTemplateDriven({ sender, rowIndex, dataItem, isNew }) {
+  public saveHandlerTemplateDriven({ sender, rowIndex, dataItem, isNew }) {
     // update the data source
     this.infoService.update(dataItem).subscribe(i => { });
 
@@ -176,12 +176,12 @@ export class InfoComponent implements OnInit {
       );
   }
 
-  protected dataStateChange(state: DataStateChangeEvent): void {
+  public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
     this.gridView = process(this.items, this.state);
   }
 
-  private state: State = {
+  public state: State = {
     skip: 0,
     take: 10
   };
@@ -189,7 +189,7 @@ export class InfoComponent implements OnInit {
 
   dialogContent: string = 'למחוק רשומה?';
 
-  protected editHandlerReactiveDriven({ sender, rowIndex, dataItem }) {
+  public editHandlerReactiveDriven({ sender, rowIndex, dataItem }) {
     this.closeEditor(sender);
 
     this.formGroup = new FormGroup({
@@ -203,7 +203,7 @@ export class InfoComponent implements OnInit {
     sender.editRow(rowIndex, this.formGroup);
   }
 
-  protected editHandlerTemplateDriven({ sender, rowIndex, dataItem }) {
+  public editHandlerTemplateDriven({ sender, rowIndex, dataItem }) {
     // close previously edited item
     this.closeEditor(sender);
 
