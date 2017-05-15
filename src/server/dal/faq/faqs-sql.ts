@@ -4,27 +4,56 @@
 import { IFaQDal } from './Ifaqdal';
 
 import * as _ from 'lodash'
-import * as sql from 'mssql'
+import { MsNodeSqlDriverApiModule as v8 } from '../lib/MsNodeSqlDriverApiModule'
+
+import v8Connection = v8.v8Connection;
+import v8PreparedStatement = v8.v8PreparedStatement;
+import v8BindCb = v8.v8BindCb;
+import v8BulkMgr = v8.v8BulkTableMgr;
+import v8Error = v8.v8Error;
+// import * as sql from 'mssql/msnodesqlv8'
+
+export const sql: v8.v8driver = require('msnodesqlv8');
 import { IProcedureResult } from "mssql";
 import { SupportIssue, SupportIssueLink } from "models";
 
 export let SupportIssues: Array<any>;
+let conn_str: string = 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={info};Trusted_Connection={yes};'
+var config = {
+    driver: 'msnodesqlv8',
+    connectionString: 'Driver={SQL Server Native Client XX.0};Server={SERVER\\NAME};Database={dbName};Trusted_Connection={yes};',
+};
 export class FaqsSql implements IFaQDal {
 
 
-    async  generateRequest(): Promise<sql.Request> {
-        const pool1 = new sql.ConnectionPool(
-            {
-                user: 'liorg',
-                password: '123qwe!@#asd',
-                server: 'DANEL-DB\\S16',
-                database: 'support_new'
-            }
-        )
-        await pool1.connect();
-        let sqlRequest = await pool1.request();
-        return sqlRequest;
-    }
+    // async  generateRequest(): Promise<sql.Request> {
+    //     var config = {
+    //         driver: 'msnodesqlv8',
+    //         connectionString: 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={noyaDB};Trusted_Connection={yes};',
+    //     };
+
+    //     sql.connect(config)
+    //         .then(function () {
+    //             console.log('connected to noyaDB');
+
+    //         })
+    //         .catch(function (err) {
+    //             console.log(err);
+    //         });
+
+    //     const pool1 = new sql.ConnectionPool(
+    //         {
+    //             // user: 'liorg',
+    //             // password: '123qwe!@#asd',
+    //             server: 'DANEL-DB\\S16',
+    //             database: 'support_new',
+
+    //         }
+    //     )
+    //     await pool1.connect();
+    //     let sqlRequest = await pool1.request();
+    //     return sqlRequest;
+    // }
 
     async  AddItem(req): Promise<SupportIssue> {
 
@@ -56,14 +85,20 @@ export class FaqsSql implements IFaQDal {
 
     private async AddLnks(supportIssueLink: SupportIssueLink, sID: number): Promise<any> {
 
-        let sqlReqeust = await this.generateRequest();
-        sqlReqeust
-            .input('@SupportIssueID', sql.NVarChar, sID)
-            .input('Path', sql.NVarChar, supportIssueLink.pth)
+        // let sqlReqeust = await this.generateRequest();
+        // sqlReqeust
+        //     .input('@SupportIssueID', sql.NVarChar, sID)
+        //     .input('Path', sql.NVarChar, supportIssueLink.pth)
 
-            .execute('SupportIssueLinksUpdate').then((res) => {
+        //     .execute('SupportIssueLinksUpdate').then((res) => {
+
+        //     });
+        sql.open(conn_str, function (err, conn) {
+            var pm = conn.procedureMgr();
+            pm.callproc('SupportIssueLinksUpdate', [sID, supportIssueLink.pth], (err, results, output) => {
 
             });
+        });
     }
 
     private async  AddFaq(req): Promise<sql.IProcedureResult<any>> {
