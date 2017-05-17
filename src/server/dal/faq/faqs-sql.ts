@@ -179,8 +179,10 @@ export class FaqsSql implements IFaQDal {
         });
 
     }
+    arr: Array<any> = new Array();
+      loadFaqS() {
 
-    async  loadFaqS(): Promise<any> {
+    var self = this;
         // try {
         //     let sqlReqeust = await this.generateRequest();
         //     sqlReqeust
@@ -194,16 +196,11 @@ export class FaqsSql implements IFaQDal {
         sql.open(conn_str, function (err, conn) {
             var pm = conn.procedureMgr();
             console.log('SupportIssuesSelect');
-            pm.callproc('SupportIssuesSelect', [], (err, results, output) => {
-
-               console.log(results.length);
-               
-
-
-
-
-
-
+            pm.callproc('SupportIssuesSelect', [], (err, results, output) => {                            
+                self.arr.push(results);               
+                SupportIssues=self.arr;
+                console.log(SupportIssues);
+                
             });
         });
 

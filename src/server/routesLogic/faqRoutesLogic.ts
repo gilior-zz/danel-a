@@ -13,13 +13,7 @@ export class FaqRoutesHandler {
     faqDal: IFaQDal;
     constructor() {
         this.faqDal = new FaqsSql();
-        this.faqDal.loadFaqS().then(i => {
-
-
-
-            // console.log(SupportIssues);
-            console.log('loadFaqS ended');
-        })
+        this.faqDal.loadFaqS();
     }
 
 
