@@ -19,7 +19,9 @@ import { IProcedureResult } from "mssql";
 import { SupportIssue, SupportIssueLink } from "models";
 
 export let SupportIssues: Array<any>;
-let conn_str: string = 'Driver={SQL Server Native Client 11.0};Server={DANEL-DB\\S16};Database={support_new};Trusted_Connection={yes};'
+// let conn_str: string = 'Driver={SQL Server Native Client 11.0};Server={DANEL-DB\\S16};Database={support_new};Trusted_Connection={yes};'
+let conn_str = 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={info};Trusted_Connection={yes};';
+
 var config = {
     driver: 'msnodesqlv8',
     connectionString: 'Driver={SQL Server Native Client XX.0};Server={SERVER\\NAME};Database={dbName};Trusted_Connection={yes};',
@@ -101,8 +103,9 @@ export class FaqsSql implements IFaQDal {
             });
         });
     }
-
-    private async  AddFaq(req): Promise<any> {
+    newID: number = -1;
+    private async  AddFaq(req) {
+        var self = this;
         // let sqlReqeust = await this.generateRequest();
         // return sqlReqeust
         //     .output('newID', sql.Int)
@@ -111,11 +114,12 @@ export class FaqsSql implements IFaQDal {
         //     .input('Solution', sql.NVarChar, req.body.sln)
         //     .input('ModuleID', sql.Int, -1)
         //     .execute('SupportIssuesUpdate')
-
+        console.log('in AddFaq');
 
         sql.open(conn_str, function (err, conn) {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesUpdate', [null, req.body.prb, req.body.sln, -1], (err, results, output) => {
+                console.log(output[1]);
 
             });
         });
@@ -180,9 +184,9 @@ export class FaqsSql implements IFaQDal {
 
     }
     arr: Array<any> = new Array();
-      loadFaqS() {
+    loadFaqS() {
 
-    var self = this;
+        var self = this;
         // try {
         //     let sqlReqeust = await this.generateRequest();
         //     sqlReqeust
@@ -195,25 +199,27 @@ export class FaqsSql implements IFaQDal {
         // }
         sql.open(conn_str, function (err, conn) {
             var pm = conn.procedureMgr();
-            console.log('SupportIssuesSelect');
-            pm.callproc('SupportIssuesSelect', [], (err, results, output) => {                            
-                self.arr.push(results);               
-                SupportIssues=self.arr;
-                console.log(SupportIssues);
-                
+
+            pm.callproc('SupportIssuesSelect', [], (err, results, output) => {
+                self.arr.push(results);
+                if (self.arr.length == 2) {
+                    self.extractData()
+                }
             });
         });
 
     }
 
-    extractData(res) {
+
+
+    extractData() {
         let sis: Array<SupportIssue> = [];
-        res.forEach(i => {
+        this.arr[0].forEach(i => {
             sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp })
         })
 
         let sisLnk: Array<SupportIssueLink> = [];
-        res.recordsets[1].forEach(i => {
+        this.arr[1].forEach(i => {
             sisLnk.push({ id: i.ID, sIid: i.SupportIssueID, pth: i.Path, nm: '' })
         })
 
@@ -226,18 +232,19 @@ export class FaqsSql implements IFaQDal {
 
             if (si != null) {
                 si.lnks = [];
-                // console.log(si);
+
 
                 _.each(lnk, (i) => {
-                    // console.log(i);
+
 
                     si.lnks.push({ id: i.id, sIid: +i.sIid, pth: i.pth, nm: i.nm });
-                    // console.log(si);
+
                 })
             }
-            // console.log(sis);
+
             SupportIssues = sis;
-            return sis;
+
+
         })
 
     }
