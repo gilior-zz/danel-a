@@ -19,8 +19,8 @@ import { IProcedureResult } from "mssql";
 import { SupportIssue, SupportIssueLink } from "models";
 
 export let SupportIssues: Array<any>;
-// let conn_str: string = 'Driver={SQL Server Native Client 11.0};Server={DANEL-DB\\S16};Database={support_new};Trusted_Connection={yes};'
-let conn_str = 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={info};Trusted_Connection={yes};';
+let conn_str: string = 'Driver={SQL Server Native Client 11.0};Server={DANEL-DB\\S16};Database={support_new};Trusted_Connection={yes};'
+// let conn_str = 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={info};Trusted_Connection={yes};';
 
 var config = {
     driver: 'msnodesqlv8',
@@ -72,15 +72,12 @@ export class FaqsSql implements IFaQDal {
 
         // )
 
-        let res = await this.AddFaq(req);
-        let newID = res.output.newID;
-        console.log(newID);
-        let newFaq = { id: newID, prb: req.body.prb, sln: req.body.sln, ts: new Date().getDate(), lnks: req.body.lnks };
-        SupportIssues.push(newFaq);
-        newFaq.lnks.forEach(i => {
-            this.AddLnks(i, newFaq.id);
+        this.AddFaq(req);       
+        SupportIssues.push(this.newFaq);
+        this.newFaq.lnks.forEach(i => {
+            this.AddLnks(i, this.newFaq.id);
         })
-        return res;
+        return Promise.resolve(this.newFaq);
     }
 
 
@@ -103,7 +100,7 @@ export class FaqsSql implements IFaQDal {
             });
         });
     }
-    newID: number = -1;
+    newFaq:SupportIssue;
     private async  AddFaq(req) {
         var self = this;
         // let sqlReqeust = await this.generateRequest();
@@ -119,8 +116,9 @@ export class FaqsSql implements IFaQDal {
         sql.open(conn_str, function (err, conn) {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesUpdate', [null, req.body.prb, req.body.sln, -1], (err, results, output) => {
-                console.log(output[1]);
-
+                let newID = output[1];
+                console.log(newID);
+                self.newFaq={id:newID,mID:req.body.mID,prb:req.body.prb,sln:req.body,ts:new Date(),lnks:req.body.lnks}
             });
         });
     }
@@ -217,12 +215,10 @@ export class FaqsSql implements IFaQDal {
         this.arr[0].forEach(i => {
             sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp })
         })
-
         let sisLnk: Array<SupportIssueLink> = [];
         this.arr[1].forEach(i => {
             sisLnk.push({ id: i.ID, sIid: i.SupportIssueID, pth: i.Path, nm: '' })
         })
-
         let grpd = _.groupBy(sisLnk, 'sIid');
 
         _.each(grpd, (lnk) => {
@@ -232,19 +228,11 @@ export class FaqsSql implements IFaQDal {
 
             if (si != null) {
                 si.lnks = [];
-
-
                 _.each(lnk, (i) => {
-
-
                     si.lnks.push({ id: i.id, sIid: +i.sIid, pth: i.pth, nm: i.nm });
-
                 })
             }
-
             SupportIssues = sis;
-
-
         })
 
     }
