@@ -28,19 +28,11 @@ faqRouter.use('/:faqId', (req, res, next) => {
 //http://localhost:3000/api/faq (w/out body) 
 faqRouter.route('/')
     .get((req, res) => {
-        // let sorted = SupportIssues.sort((a, b) => { return a.id - b.id });
-        let linkedFaqs = [];
-        let response = faqRoutesHandler.getAllHandler(req);
-        res.json(response);
+        faqRoutesHandler.getAllHandler(req, res);
+
     })
     .post((req, res) => {
-        let l = faqRoutesHandler.postHandler(req);
-        l.then(
-            (result) => {
-                res.send(201, result);
-            }
-        )
-
+        faqRoutesHandler.postHandler(req, res);
     }
     )
 
@@ -54,7 +46,7 @@ faqRouter.route('/:faqID')
         res.json(linkedFaq);
     })
     .put((req, res) => {
-        faqRoutesHandler.putHandler(req);
+        faqRoutesHandler.putHandler(req, res);
         res.send(200, req.body);
     }
     )
@@ -67,7 +59,7 @@ faqRouter.route('/:faqID')
     .delete((req, res) => {
 
 
-        faqRoutesHandler.delHandler(req);
+        faqRoutesHandler.delHandler(req, res);
         res.send(205, req['faq']);
     }
     );

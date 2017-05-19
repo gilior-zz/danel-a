@@ -69,7 +69,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
     let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
 
     for (let i = 0; this.lnks != null && i < this.lnks.length; i++) {
-      let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `$x:\lnks\{this.lnks[0].name}` };
+      let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `x:\\lnks\\${this.lnks[0].name}` };
       links.push(l);
     }
 
@@ -91,7 +91,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   }
 
   fileChangeEvent(files: FileList) {
-    // this.lnks = files;
+    this.lnks = files;
     // this.ut.faqToSave.lnks.length = 0;
     // for (var index = 0; index < this.lnks.length; index++) {
     //   var element = this.lnks[index];

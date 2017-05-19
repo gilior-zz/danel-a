@@ -1,10 +1,8 @@
 import { IProcedureResult } from 'mssql';
 import { SupportIssue } from '../../../models';
 export interface IFaQDal {
-
-
     loadFaqS();
-    deleteItem(req): Promise<any>;
-    UpdateItem(req): Promise<any>;
-    AddItem(req): Promise<SupportIssue>;
+    deleteItem(req, res): void;
+    UpdateItem(req, res):void;
+    AddItem(req, res): void;
 }

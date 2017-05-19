@@ -13,7 +13,7 @@ export class MdlsRoutesHandler {
     constructor() {
         this.mdlDal = new MdlSql();
          this.mdlDal.loadmdls().then(i=>{
-             console.log('ended load mdls');
+            //  console.log('ended load mdls');
              
          })
 

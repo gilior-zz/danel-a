@@ -17,7 +17,7 @@ import { mdlsRouter } from "./routes/mdlRoutes";
 let app = express();
 let csrfObj = csrf({ cookie: true });
 
-console.log('hello');
+// console.log('hello');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -52,7 +52,7 @@ app.all('/*', (req, res) => {
 // })
 
 app.listen(port, () => {
-    console.log(path.join(__dirname + '/../index.html'));
+    // console.log(path.join(__dirname + '/../index.html'));
     console.log(`listening on port ${port}`);
 })
 

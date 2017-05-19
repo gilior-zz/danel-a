@@ -43,7 +43,7 @@ export class InfoComponent implements OnInit {
   }
   private loadFaqs() {
     this.infoService.getFaQs().subscribe(i => {
-      this.items = <Array<SupportIssue>>JSON.parse(JSON.stringify(i));
+      this.items = <Array<SupportIssue>>JSON.parse(JSON.stringify(i.sis));
       this.loadItems();
 
 
@@ -120,7 +120,12 @@ export class InfoComponent implements OnInit {
   public saveHandlerReactiveDriven({ sender, rowIndex, formGroup, isNew }) {
     const si: SupportIssue = formGroup.value;
 
-    this.infoService.update(si);
+    this.infoService.update(si).subscribe(i => {
+
+    }, (err) => {
+      console.log('somthing is wrong');
+
+    });
 
     sender.closeRow(rowIndex);
   }
@@ -167,12 +172,18 @@ export class InfoComponent implements OnInit {
 
     // console.log(`Dialog result: ${status}`);
     this.showFaqDlg = false;
+    console.log('sdd');
+
     if (status == 'yes') {
       let sis = foo.getNewFaq();
-      this.infoService.add(sis).subscribe(i =>
-        // i => this.filteredData.push(i),
-        // error => console.log(error)
-        console.log(i)
+      this.infoService.add(sis).subscribe(i => {
+        console.log(i);
+        this.items.push(i);
+        this.loadItems();
+      }, (err) => {
+        console.log('somthing is wrong');
+
+      }
 
       );
     }

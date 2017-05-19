@@ -47,9 +47,7 @@ export class InfoService {
   }
 
 
-  add(si: SupportIssue): Observable<SupportIssueResponse> {
-    console.log(si);
-
+  add(si: SupportIssue): Observable<SupportIssue> {
     return this.http.post(this.config.apiEndpoint, si)
       .map((res: Response) => {
         const data = res.json();
@@ -58,7 +56,7 @@ export class InfoService {
       .catch(this.handleError);
   }
 
-  update(si: SupportIssue) {
+  update(si: SupportIssue):Observable<any> {
     return this.http.put(`${this.config.apiEndpoint}/${si.id}`, si)
       .map((res: Response) => {
         const data = res.json();

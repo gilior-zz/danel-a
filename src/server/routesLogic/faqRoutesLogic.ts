@@ -1,7 +1,8 @@
+import { SupportIssueResponse } from './../../models';
 
 
 import { IFaQDal } from '../dal/faq/Ifaqdal';
-import { FaqsSql, SupportIssues } from '../dal/faq/faqs-sql';
+import { FaqsSql, SupportIssues, SupportIssuesResponse } from '../dal/faq/faqs-sql';
 import { SupportIssue } from '../../models';
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
@@ -17,19 +18,22 @@ export class FaqRoutesHandler {
     }
 
 
-    public delHandler(req) {
+    public delHandler(req, res) {
         // faqs.splice(faqs.indexOf(req['faq']), 1);
         console.log(`in  delHandler`);
-        this.faqDal.deleteItem(req);
+        this.faqDal.deleteItem(req, res);
     }
 
-    public putHandler(req) {
-        this.faqDal.UpdateItem(req)
+    public async putHandler(req, res) {
+        let l = await this.faqDal.UpdateItem(req, res);
+
+
     }
 
-    public async  postHandler(req): Promise<SupportIssue> {
-        let res = await this.faqDal.AddItem(req);
-        return res;
+    public async  postHandler(req, res) {
+        this.faqDal.AddItem(req, res);
+
+
     }
 
     public patchHandler(req) {
@@ -40,13 +44,8 @@ export class FaqRoutesHandler {
         }
     }
 
-    public getAllHandler(req): Array<SupportIssue> {
-        // faqs.forEach(i => {
-        // let linkedFaq = Object.assign({}, i);
-        // linkedFaq['links'] = {};
-        // linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
-        return SupportIssues;
-        // })
+    public getAllHandler(req, res): void {
+       res.status(200).send(SupportIssuesResponse)
     }
 
     public getOneHandler(faq: SupportIssue, linkedFaq: SupportIssue, req) {
