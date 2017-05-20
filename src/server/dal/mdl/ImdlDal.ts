@@ -3,6 +3,6 @@ import { Module } from '../../../models';
 export interface ImdlDal {
 
 
-    loadmdls(): Promise<Array<Module>>;
+    loadmdls():void;
 
 }

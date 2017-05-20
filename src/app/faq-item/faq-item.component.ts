@@ -137,11 +137,9 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
-    // this.ms.getMdls().then(i => { this.mdls = i.mdls; console.log(this.mdls); });
-    // this.ut.faqToSave = new SupportIssue();
+    this.ms.getMdls().subscribe(i => {
+      this.mdls = i.mdls;
+    })
 
-    this.ms.getMdls().then(i => { });
-    // this.ut.faqToSave = new SupportIssue();
   }
-
 }

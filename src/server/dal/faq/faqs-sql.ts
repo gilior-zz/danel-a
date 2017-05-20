@@ -46,6 +46,7 @@ export class FaqsSql implements IFaQDal {
                     self.AddLnks(i, newFaq.id);
                 })
                 SupportIssues.push(newFaq);
+
                 res.status(201).send(newFaq)
 
             });
@@ -141,8 +142,11 @@ export class FaqsSql implements IFaQDal {
                 })
             }
             SupportIssues = sis;
-            SupportIssuesResponse = { sis: SupportIssues, time: new Date() };
-        })
 
+
+
+        })
+        SupportIssuesResponse = { sis: SupportIssues, time: new Date() };
+        console.log('faqs is loaded');
     }
 }

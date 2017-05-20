@@ -1,5 +1,7 @@
+import { ModulesResponse } from './../dal/mdl/mdl-sql';
 
-import {  Module } from '../../models';
+
+import { Module } from '../../models';
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import { ImdlDal } from "../dal/mdl/ImdlDal";
@@ -12,18 +14,16 @@ export class MdlsRoutesHandler {
     mdlDal: ImdlDal;
     constructor() {
         this.mdlDal = new MdlSql();
-         this.mdlDal.loadmdls().then(i=>{
-            //  console.log('ended load mdls');
-             
-         })
+        this.mdlDal.loadmdls();
 
     }
-     public getAllHandler(req): Array<Module> {
+    public getAllHandler(req, res): void {
         // faqs.forEach(i => {
         // let linkedFaq = Object.assign({}, i);
         // linkedFaq['links'] = {};
         // linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
-        return null;
+        res.status(200).send(ModulesResponse);
+
         // })
     }
 }

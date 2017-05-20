@@ -1,4 +1,4 @@
-<form  [formGroup]="faqForm" novalidate>
+<form [formGroup]="faqForm" novalidate>
   <div class="form-group" [class.has-error]="formErrors.prb">
     <label class="center-block">בעיה:
       <textarea rows="5" class="form-control" formControlName="prb"></textarea>
@@ -21,10 +21,10 @@
     </label>
 
   </div>
- <div class="form-group">
-     <label class="center-block" for="mdl">מודול:
+  <div class="form-group">
+    <label class="center-block" for="mdl">מודול:
        {{mdlName || 'ללא'}}
-  <!--<tree-root (onActiveChanged)="onActiveChanged($event)" id="mdl" [nodes]="mdls"></tree-root>-->
+  <tree-root (onActiveChanged)="onActiveChanged($event)" id="mdl" [nodes]="mdls"></tree-root>
   </label>
   </div>
 </form>
