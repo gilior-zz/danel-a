@@ -17,14 +17,19 @@
   </div>
   <div class="form-group">
     <label class="center-block" for="exampleInputFile">קבצים:
-    <input #files type="file" id="exampleInputFile" (change)="fileChangeEvent(files.files)"  multiple>
+    <input #files type="file" id="exampleInputFile"   (change)="fileChangeEvent(files.files)"  multiple>
     </label>
 
   </div>
   <div class="form-group">
     <label class="center-block" for="mdl">מודול:
-       {{mdlName || 'ללא'}}
-  <tree-root (onActiveChanged)="onActiveChanged($event)" id="mdl" [nodes]="mdls"></tree-root>
+      {{'sdff'}}
+      <input class="mdl-input" disabled (treeDrop)="onDrop($event)" formControlName="mdl" placeholder="גרור מודול מהעץ"
+     [treeAllowDrop]="allowDrop.bind(this)"/>
+  <tree-root  [options]="options" (onActiveChanged)="onActiveChanged($event)" id="mdl" [nodes]="mdls"></tree-root>
   </label>
   </div>
+  <input hidden type="number" formControlName="mdlID"/>
+  {{this.item|json}}
 </form>
+

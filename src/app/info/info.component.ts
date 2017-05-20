@@ -23,6 +23,7 @@ export class InfoComponent implements OnInit {
   public formGroup: FormGroup;
 
   public showFaqDlg: boolean;
+  public showUpdateFaqDlg: boolean;
   private data: Array<SupportIssue>;
   public showRemoveDlg: boolean;
   constructor(public infoService: InfoService, public ut: UtilityService) { }
@@ -167,22 +168,33 @@ export class InfoComponent implements OnInit {
       this.delete();
   }
 
-  public closeFaqDlg(status, foo: any = null, ) {
-
-
-    // console.log(`Dialog result: ${status}`);
+  public closeFaqDlg(status, newItemWindow: any = null, ) {
     this.showFaqDlg = false;
-    console.log('sdd');
-
     if (status == 'yes') {
-      let sis = foo.getNewFaq();
+      let sis = newItemWindow.getNewFaq();
       this.infoService.add(sis).subscribe(i => {
         console.log(i);
         this.items.push(i);
         this.loadItems();
       }, (err) => {
         console.log('somthing is wrong');
+      }
 
+      );
+    }
+
+  }
+
+  public closeUpdateFaqDlg(status, updateItemWindow: any = null, ) {
+    this.showUpdateFaqDlg = false;
+    if (status == 'yes') {
+      let sis = updateItemWindow.getNewFaq();
+      this.infoService.add(sis).subscribe(i => {
+        console.log(i);
+        this.items.push(i);
+        this.loadItems();
+      }, (err) => {
+        console.log('somthing is wrong');
       }
 
       );
@@ -233,6 +245,28 @@ export class InfoComponent implements OnInit {
     sender.editRow(rowIndex);
   }
   editedItem: SupportIssue;
+
+  public editHandlerModalWindow({ sender, rowIndex, dataItem }) {
+    // close previously edited item
+    // this.closeEditor(sender);
+
+    // track last edited row
+    // it will be used in `closeEditor` for closing previous edited row
+    this.editedRowIndex = rowIndex;
+
+    // clone current - `[(ngModel)]` will modify the orignal item
+    // we will use this copy to revert changes
+    this.editedItem = Object.assign({}, dataItem);
+    this.showUpdateFaqDlg = true;
+    // edit the row
+    // sender.editRow(rowIndex);
+  }
+
+
+
+
+
+
 
 
 

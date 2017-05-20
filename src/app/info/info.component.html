@@ -1,12 +1,12 @@
 <form novalidate #myForm="ngForm">
-  <kendo-grid #grid [data]="gridView" (edit)="editHandlerTemplateDriven($event)" (cancel)="cancelHandler($event)" (save)="saveHandlerTemplateDriven($event)"
+  <kendo-grid #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)" (save)="saveHandlerTemplateDriven($event)"
     (remove)="removeHandler($event)" [pageSize]="10" [selectable]="true" [pageable]="true" [height]=" 700" (pageChange)="pageChange($event)"
     [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true" (add)="addHandler($event)">
 
     <kendo-grid-column title="בעיה" field="prb">
-      <ng-template   kendoGridEditTemplate let-dataItem="dataItem" let-filter let-column="column">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-filter let-column="column">
         <textarea [(ngModel)]="dataItem.prb" name="prb" class="k-textbox" required></textarea>
-     
+
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column title="פתרון" field="sln">
@@ -14,9 +14,16 @@
         <textarea [(ngModel)]="dataItem.sln" name="sln" class="k-textbox" required></textarea>
       </ng-template>
     </kendo-grid-column>
+    <kendo-grid-column title="מודול" field="mdlName">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+        <input [(ngModel)]="dataItem.mdlName" name="mdlName" class="k-textbox" />
+      </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column title="מס מודול" field="mID" [hidden]="true">
+    </kendo-grid-column>
     <kendo-grid-column title="תאריך" field="ts" filter="date" format="{0:d}">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <span>{{dataItem.ts|date:"dd/MM/yy "}}</span>
+        <span>{{dataItem.ts|date:"dd/MM/yy HH:MM:ss"}}</span>
       </ng-template>
     </kendo-grid-column>
     <ng-template kendoGridDetailTemplate let-dataItem>
@@ -44,11 +51,19 @@
 </form>
 
 
-<kendo-dialog title="הוספת בעיה" *ngIf="showFaqDlg " (close)="closeFaqDlg( 'cancel') ">
-  <lg-faq-item #foo></lg-faq-item>
+<kendo-dialog title="הוספת נושא" *ngIf="showFaqDlg" (close)="closeFaqDlg( 'cancel') ">
+  <lg-faq-item #newItemWindow></lg-faq-item>
   <kendo-dialog-actions>
     <button kendoButton (click)="closeFaqDlg('no') " primary="true">ביטול</button>
-    <button kendoButton (click)="closeFaqDlg('yes',foo) " primary="true">אישור</button>
+    <button kendoButton (click)="closeFaqDlg('yes',newItemWindow) " primary="true">אישור</button>
+  </kendo-dialog-actions>
+</kendo-dialog>
+
+<kendo-dialog title="עדכון נושא" *ngIf="showUpdateFaqDlg" (close)="closeUpdateFaqDlg('cancel') ">
+  <lg-faq-item [item]="editedItem" #updateItemWindow></lg-faq-item>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="closeUpdateFaqDlg('no') " primary="true">ביטול</button>
+    <button kendoButton (click)="closeUpdateFaqDlg('yes',updateItemWindow) " primary="true">אישור</button>
   </kendo-dialog-actions>
 </kendo-dialog>
 

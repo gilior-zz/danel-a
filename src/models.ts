@@ -30,6 +30,7 @@ export class SupportIssue {
   mod?: Module;
   ts?: Date;
   lnks?: SupportIssueLink[];
+  mdlName?:string
 
 }
 export class SupportIssueLink {

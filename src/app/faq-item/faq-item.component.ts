@@ -1,5 +1,7 @@
+
+import { element } from 'protractor';
 import {
-  Component, OnInit, Output, EventEmitter, OnDestroy, ViewEncapsulation
+  Component, OnInit, Output, EventEmitter, OnDestroy, ViewEncapsulation, Input
 } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
@@ -39,16 +41,13 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   private lnks: FileList;
 
   constructor(private fb: FormBuilder, private ut: UtilityService, public ms: MdlsService) {
-    this.createForm();
+
 
   }
 
-  onActiveChanged($event) {
-    console.log($event.isActive);
-    this.mdlID = $event.isActive ? +$event.node.data.id : -1;
-    this.mdlName == $event.isActive ? $event.node.data.name : null;
-    this.ut.faqToSave.mID = this.mdlID;
-  }
+  @Input() item: SupportIssue
+
+
 
   ngOnDestroy() {
 
@@ -73,7 +72,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
       links.push(l);
     }
 
-    let sis: SupportIssue = { lnks: links, sln: formModel.sln, prb: formModel.prb };
+    let sis: SupportIssue = { lnks: links, sln: formModel.sln, prb: formModel.prb, mID: formModel.mdlID };
     return sis;
   }
 
@@ -81,10 +80,12 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.faqForm = this.fb.group({
-      prb: ['', Validators.required],
-      sln: ['', Validators.required],
-
+      prb: [this.item == null ? '' : this.item.prb, Validators.required],
+      sln: [this.item == null ? '' : this.item.sln, Validators.required],
+      mdl: [this.item == null ? '' : this.item.mdlName],
+      mdlID: [this.item == null ? '' : this.item.mID]
     });
+
     this.faqForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
     this.onValueChanged(); // (re)set validation messages now
@@ -99,11 +100,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
     // }
   }
 
-  onNodeSelected(event) {
-    this.mdlID = +event.node.data.id;
-    this.mdlName = event.node.data.name;
-    this.ut.faqToSave.mID = this.mdlID;
-  }
+
 
   onValueChanged(data?: any) {
     this.faqForm.get('prb').value;
@@ -136,7 +133,29 @@ export class FaqItemComponent implements OnInit, OnDestroy {
     }
   };
 
+  options = {
+    allowDrag: true,
+    allowDrop: false
+
+
+  }
+
+  onDrop($event): void {
+    console.log($event);
+    this.faqForm.get('mdl').setValue($event.element.data.name);
+    this.mdlID = $event.element.data.id;
+
+    this.faqForm.get('mdlID').setValue($event.element.data.name);
+    this.mdlID = $event.element.data.mID;
+
+  }
+
+  allowDrop(element): boolean {
+    return true;
+  }
+
   ngOnInit() {
+    this.createForm();
     this.ms.getMdls().subscribe(i => {
       this.mdls = i.mdls;
     })

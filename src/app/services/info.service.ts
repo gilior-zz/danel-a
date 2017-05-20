@@ -48,6 +48,8 @@ export class InfoService {
 
 
   add(si: SupportIssue): Observable<SupportIssue> {
+    console.log(si);
+    
     return this.http.post(this.config.apiEndpoint, si)
       .map((res: Response) => {
         const data = res.json();

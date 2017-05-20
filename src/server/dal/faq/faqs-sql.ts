@@ -36,7 +36,7 @@ export class FaqsSql implements IFaQDal {
         // Simulate server latency with 2 second delay
         sql.open(conn_str, (err, conn) => {
             var pm = conn.procedureMgr();
-            pm.callproc('SupportIssuesUpdate', [null, req.body.prb, req.body.sln, -1], (err, results, output) => {
+            pm.callproc('SupportIssuesUpdate', [null, req.body.prb, req.body.sln, req.body.mID || -1], (err, results, output) => {
                 let newID = output[1];
 
 
@@ -74,7 +74,7 @@ export class FaqsSql implements IFaQDal {
     UpdateItem(req, res) {
         sql.open(conn_str, (err, conn) => {
             var pm = conn.procedureMgr();
-            pm.callproc('SupportIssuesUpdate', [req.body.id, req.body.prb, req.body.sln, req.body.mID], (err, results, output) => {
+            pm.callproc('SupportIssuesUpdate', [req.body.id, req.body.prb, req.body.sln, req.body.mID || -1], (err, results, output) => {
                 let item = SupportIssuesResponse.sis.find(i => i.id == req.params.faqID);
                 item.mID = req.body.mID;
                 item.prb = req.body.prb;
@@ -122,7 +122,7 @@ export class FaqsSql implements IFaQDal {
     extractData() {
         let sis: Array<SupportIssue> = [];
         this.arr[0].forEach(i => {
-            sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp })
+            sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp,mdlName:i.Text })
         })
         let sisLnk: Array<SupportIssueLink> = [];
         this.arr[1].forEach(i => {
