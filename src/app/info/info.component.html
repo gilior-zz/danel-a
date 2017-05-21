@@ -2,7 +2,8 @@
   <kendo-grid #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)" (save)="saveHandlerTemplateDriven($event)"
     (remove)="removeHandler($event)" [pageSize]="10" [selectable]="true" [pageable]="true" [height]=" 700" (pageChange)="pageChange($event)"
     [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true" (add)="addHandler($event)">
-
+    <kendo-grid-column title="ID" field="id" [hidden]="true">
+    </kendo-grid-column>
     <kendo-grid-column title="בעיה" field="prb">
       <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-filter let-column="column">
         <textarea [(ngModel)]="dataItem.prb" name="prb" class="k-textbox" required></textarea>

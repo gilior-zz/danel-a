@@ -41,10 +41,10 @@ export class FaqsSql implements IFaQDal {
 
 
                 let newFaq = { id: newID, mID: req.body.mID, prb: req.body.prb, sln: req.body.sln, ts: new Date(), lnks: req.body.lnks }
-
-                newFaq.lnks.forEach(i => {
-                    self.AddLnks(i, newFaq.id);
-                })
+                if (newFaq.lnks != null)
+                    newFaq.lnks.forEach(i => {
+                        self.AddLnks(i, newFaq.id);
+                    })
                 SupportIssues.push(newFaq);
 
                 res.status(201).send(newFaq)
@@ -122,7 +122,7 @@ export class FaqsSql implements IFaQDal {
     extractData() {
         let sis: Array<SupportIssue> = [];
         this.arr[0].forEach(i => {
-            sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp,mdlName:i.Text })
+            sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp, mdlName: i.Text })
         })
         let sisLnk: Array<SupportIssueLink> = [];
         this.arr[1].forEach(i => {

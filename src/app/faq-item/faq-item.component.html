@@ -17,7 +17,7 @@
   </div>
   <div class="form-group">
     <label class="center-block" for="exampleInputFile">קבצים:
-    <input #files type="file" id="exampleInputFile"   (change)="fileChangeEvent(files.files)"  multiple>
+    <input #files type="file" id="exampleInputFile" formControlName="lnks"  (change)="fileChangeEvent(files.files)"  multiple>
     </label>
 
   </div>
@@ -30,6 +30,6 @@
   </label>
   </div>
   <input hidden type="number" formControlName="mdlID"/>
-  {{this.item|json}}
+  <input hidden type="number" formControlName="id"/>
 </form>
 

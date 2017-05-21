@@ -72,7 +72,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
       links.push(l);
     }
 
-    let sis: SupportIssue = { lnks: links, sln: formModel.sln, prb: formModel.prb, mID: formModel.mdlID };
+    let sis: SupportIssue = { lnks: formModel.lnks, sln: formModel.sln, prb: formModel.prb, mID: formModel.mdlID, id: formModel.id };
     return sis;
   }
 
@@ -83,7 +83,9 @@ export class FaqItemComponent implements OnInit, OnDestroy {
       prb: [this.item == null ? '' : this.item.prb, Validators.required],
       sln: [this.item == null ? '' : this.item.sln, Validators.required],
       mdl: [this.item == null ? '' : this.item.mdlName],
-      mdlID: [this.item == null ? '' : this.item.mID]
+      mdlID: [this.item == null ? null : this.item.mID],
+      id: [this.item == null ? null : this.item.id],
+      lnks: [this.item == null ? null : this.item.lnks]
     });
 
     this.faqForm.valueChanges
@@ -93,11 +95,12 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   fileChangeEvent(files: FileList) {
     this.lnks = files;
-    // this.ut.faqToSave.lnks.length = 0;
-    // for (var index = 0; index < this.lnks.length; index++) {
-    //   var element = this.lnks[index];
-    //   this.ut.faqToSave.lnks.push({ nm: element.name, pth: element.name })
-    // }
+    let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
+    for (let i = 0; this.lnks != null && i < this.lnks.length; i++) {
+      let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `x:\\lnks\\${this.lnks[0].name}` };
+      links.push(l);
+    }
+    this.faqForm.get('lnks').setValue(links);
   }
 
 
@@ -143,11 +146,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   onDrop($event): void {
     console.log($event);
     this.faqForm.get('mdl').setValue($event.element.data.name);
-    this.mdlID = $event.element.data.id;
-
-    this.faqForm.get('mdlID').setValue($event.element.data.name);
-    this.mdlID = $event.element.data.mID;
-
+    this.faqForm.get('mdlID').setValue($event.element.data.id);
   }
 
   allowDrop(element): boolean {
