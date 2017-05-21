@@ -1,4 +1,4 @@
-import { ImdlDal } from "server/dal/mdl/ImdlDal";
+import { Imdl } from "server/dal/mdl/ImdlDal";
 import { Module, ModuleResponse } from "../../../models";
 import { MsNodeSqlDriverApiModule as v8 } from '../lib/MsNodeSqlDriverApiModule'
 import * as _ from 'lodash'
@@ -12,7 +12,7 @@ import v8Error = v8.v8Error;
 export const sql: v8.v8driver = require('msnodesqlv8');
 let conn_str = 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={info};Trusted_Connection={yes};';
 export let ModulesResponse: ModuleResponse;
-export class MdlSql implements ImdlDal {
+export class MdlSql implements Imdl {
 
     loadmdls(): void {
         var self = this;

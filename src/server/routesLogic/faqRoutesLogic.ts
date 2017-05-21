@@ -1,7 +1,7 @@
 import { SupportIssueResponse } from './../../models';
 
 
-import { IFaQDal } from '../dal/faq/Ifaqdal';
+import { IFaQ } from '../dal/faq/Ifaqdal';
 import { FaqsSql, SupportIssues, SupportIssuesResponse } from '../dal/faq/faqs-sql';
 import { SupportIssue } from '../../models';
 import * as express from 'express'
@@ -11,7 +11,7 @@ import * as bodyParser from 'body-parser'
 
 
 export class FaqRoutesHandler {
-    faqDal: IFaQDal;
+    faqDal: IFaQ;
     constructor() {
         this.faqDal = new FaqsSql();
         this.faqDal.loadFaqS();

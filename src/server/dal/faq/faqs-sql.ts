@@ -2,7 +2,7 @@ import { SupportIssueResponse } from './../../../models';
 
 
 
-import { IFaQDal } from './Ifaqdal';
+import { IFaQ } from './Ifaqdal';
 
 import * as _ from 'lodash'
 import { MsNodeSqlDriverApiModule as v8 } from '../lib/MsNodeSqlDriverApiModule'
@@ -28,7 +28,7 @@ var config = {
     driver: 'msnodesqlv8',
     connectionString: 'Driver={SQL Server Native Client XX.0};Server={SERVER\\NAME};Database={dbName};Trusted_Connection={yes};',
 };
-export class FaqsSql implements IFaQDal {
+export class FaqsSql implements IFaQ {
 
     AddItem(req, res): void {
         var self = this;

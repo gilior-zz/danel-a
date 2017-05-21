@@ -1,6 +1,6 @@
 import { IProcedureResult } from 'mssql';
 import { Module } from '../../../models';
-export interface ImdlDal {
+export interface Imdl {
 
 
     loadmdls():void;

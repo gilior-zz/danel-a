@@ -1,6 +1,6 @@
 import { IProcedureResult } from 'mssql';
 import { SupportIssue } from '../../../models';
-export interface IFaQDal {
+export interface IFaQ {
     loadFaqS();
     deleteItem(req, res): void;
     UpdateItem(req, res):void;

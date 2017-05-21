@@ -4,14 +4,14 @@ import { ModulesResponse } from './../dal/mdl/mdl-sql';
 import { Module } from '../../models';
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
-import { ImdlDal } from "../dal/mdl/ImdlDal";
+import { Imdl } from "../dal/mdl/ImdlDal";
 import { MdlSql } from "../dal/mdl/mdl-sql";
 
 
 
 
 export class MdlsRoutesHandler {
-    mdlDal: ImdlDal;
+    mdlDal: Imdl;
     constructor() {
         this.mdlDal = new MdlSql();
         this.mdlDal.loadmdls();
