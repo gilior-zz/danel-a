@@ -7,6 +7,7 @@ import v8PreparedStatement = v8.v8PreparedStatement;
 import v8BindCb = v8.v8BindCb;
 import v8BulkMgr = v8.v8BulkTableMgr;
 import v8Error = v8.v8Error;
+import { Danel } from "../../dal/sql.config";
 // import * as sql from 'mssql/msnodesqlv8'
 
 export const sql: v8.v8driver = require('msnodesqlv8');
@@ -16,7 +17,7 @@ export class MdlSql implements Imdl {
 
     loadmdls(): void {
         var self = this;
-        sql.open(conn_str, (err, conn) => {
+        sql.open(Danel.conn_str_dev, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('ModulesTreeSelect', [], (err, results, output) => {
                 let arr: Array<Module> = new Array();

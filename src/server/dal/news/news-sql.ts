@@ -7,7 +7,7 @@ import v8PreparedStatement = v8.v8PreparedStatement;
 import v8BindCb = v8.v8BindCb;
 import v8BulkMgr = v8.v8BulkTableMgr;
 import v8Error = v8.v8Error;
-
+import { Danel } from "../../dal/sql.config";
 
 export const sql: v8.v8driver = require('msnodesqlv8');
 
@@ -17,8 +17,6 @@ import { Inews } from "server/dal/news/Inews";
 
 
 export let newsResponse: NewsResponse
-// let conn_str: string = 'Driver={SQL Server Native Client 11.0};Server={DANEL-DB\\S16};Database={support_new};Trusted_Connection={yes};'
-let conn_str = 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={info};Trusted_Connection={yes};';
 
 var config = {
     driver: 'msnodesqlv8',
@@ -29,7 +27,7 @@ export class NewsSql implements Inews {
     arr: Array<any> = new Array();
     loadNews(): void {
         var self = this;
-        sql.open(conn_str, (err, conn) => {
+        sql.open(Danel.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('rollerSelect', [], (err, results, output) => {
                 self.arr.push(results);
