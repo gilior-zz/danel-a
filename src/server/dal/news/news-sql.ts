@@ -1,3 +1,4 @@
+
 import * as _ from 'lodash'
 import { MsNodeSqlDriverApiModule as v8 } from '../lib/MsNodeSqlDriverApiModule'
 
@@ -11,11 +12,11 @@ import v8Error = v8.v8Error;
 export const sql: v8.v8driver = require('msnodesqlv8');
 
 
-import { RollerResponse, Roller } from "models";
+import { NewsResponse, Roller } from "models";
 import { Inews } from "server/dal/news/Inews";
 
 
-export let RollersResponse: RollerResponse
+export let newsResponse: NewsResponse
 // let conn_str: string = 'Driver={SQL Server Native Client 11.0};Server={DANEL-DB\\S16};Database={support_new};Trusted_Connection={yes};'
 let conn_str = 'Driver={SQL Server Native Client 11.0};Server={USER-PC\\SQL};Database={info};Trusted_Connection={yes};';
 
@@ -32,9 +33,8 @@ export class NewsSql implements Inews {
             var pm = conn.procedureMgr();
             pm.callproc('rollerSelect', [], (err, results, output) => {
                 self.arr.push(results);
-                if (self.arr.length == 2) {
-                    self.extractData()
-                }
+                self.extractData()
+
             });
         });
 
@@ -48,8 +48,10 @@ export class NewsSql implements Inews {
             rlrs.push({ id: i.rol_id, msg: i.rol_massage, time: i.rol_timeStamp })
         })
 
-        RollersResponse = { rlrs: rlrs, time: new Date() };
-        console.log('faqs is loaded');
+        newsResponse = { news: rlrs, time: new Date() };
+
+
+        console.log('news is loaded');
     }
 
 }

@@ -82,7 +82,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
     this.faqForm = this.fb.group({
       prb: [this.item == null ? '' : this.item.prb, Validators.required],
       sln: [this.item == null ? '' : this.item.sln, Validators.required],
-      mdl: [this.item == null ? '' : this.item.mdlName],
+      mdl: [{ value: this.item == null ? '' : this.item.mdlName, disabled: true }],
       mdlID: [this.item == null ? null : this.item.mID],
       id: [this.item == null ? null : this.item.id],
       lnks: [this.item == null ? null : this.item.lnks]
@@ -94,13 +94,20 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   }
 
   fileChangeEvent(files: FileList) {
-    this.lnks = files;
-    let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
-    for (let i = 0; this.lnks != null && i < this.lnks.length; i++) {
-      let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `x:\\lnks\\${this.lnks[0].name}` };
-      links.push(l);
+    // this.lnks = files;
+    // let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
+    // for (let i = 0; this.lnks != null && i < this.lnks.length; i++) {
+    //   let l: SupportIssueLink = { nm: this.lnks[0].name, pth: `x:\\lnks\\${this.lnks[0].name}` };
+    //   links.push(l);
+    // }
+    let lnks = [];
+    for (let i = 0; files != null && i < files.length; i++) {
+      console.log(files[i]);
+      
+      let l: SupportIssueLink = { nm: files[i].name, pth: `x:\\lnks\\${lnks[i].name}` };
+      lnks.push(l);
     }
-    this.faqForm.get('lnks').setValue(links);
+    this.faqForm.get('lnks').setValue(lnks);
   }
 
 

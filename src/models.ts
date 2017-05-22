@@ -61,8 +61,8 @@ export class Roller {
   time: Date;
 }
 
-export class RollerResponse {
-  rlrs: Roller[]
+export class NewsResponse {
+  news: Roller[]
   time: Date;
 }
 

@@ -1,12 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
 
 import { Http, Response } from "@angular/http";
-import { RollerResponse } from "../../models";
+import { NewsResponse } from "../../models";
 import { APP_CONFIG, AppConfig } from "../app-config";
 
 
 @Injectable()
-export class RollerService {
+export class NewsService {
   config: any;
 
 
@@ -15,7 +15,7 @@ export class RollerService {
     this.config = JSON.parse(JSON.stringify(config));
   }
 
-  getRllrs(): Promise<RollerResponse> {
+  getRllrs(): Promise<NewsResponse> {
     return this.http.get(this.config.apiEndpoint)
       .toPromise()
       .then(this.extractData)

@@ -1,11 +1,13 @@
-import { ModulesResponse } from './../dal/mdl/mdl-sql';
+import { newsResponse } from './../dal/news/news-sql';
+import { NewsSql } from '../dal/news/news-sql';
 
 
-import { Module } from '../../models';
+
+
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
-import { Inews } from "server/dal/news/Inews";
-import { NewsSql, RollersResponse } from "server/dal/news/news-sql";
+import { Inews } from "../dal/news/Inews";
+
 
 
 
@@ -22,7 +24,7 @@ export class RlrsRoutesHandler {
         // let linkedFaq = Object.assign({}, i);
         // linkedFaq['links'] = {};
         // linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
-        res.status(200).send(RollersResponse);
+        res.status(200).send(newsResponse);
 
         // })
     }

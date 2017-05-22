@@ -10,6 +10,7 @@ import * as csrf from 'csurf'
 
 import { faqRouter } from "./routes/faqRoutes";
 import { mdlsRouter } from "./routes/mdlRoutes";
+import { newsRouter } from "./routes/newsRoutes";
 
 
 
@@ -41,6 +42,7 @@ let port: number = process.env.port || 3000;
 
 app.use('/api/faq', faqRouter);
 app.use('/api/mdls', mdlsRouter);
+app.use('/api/news', newsRouter);
 app.all('/*', (req, res) => {
 
     res.sendFile(path.resolve(__dirname + '/../index.html'));
