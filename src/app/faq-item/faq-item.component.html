@@ -1,4 +1,5 @@
 <form [formGroup]="faqForm" novalidate>
+  {{faqForm.value.lnks|json}}
   <div class="form-group" [class.has-error]="formErrors.prb">
     <label class="center-block">בעיה:
       <textarea rows="5" class="form-control" formControlName="prb"></textarea>
@@ -19,7 +20,8 @@
     <label class="center-block" for="exampleInputFile">קבצים:
     <!--<input #files type="file" id="exampleInputFile" formControlName="lnks"  (change)="fileChangeEvent(files.files)"  multiple>-->
    <div class="file-div">
-    <input #files type='file' (change)="fileChangeEvent(files.files)"  multiple> <input type="text" formControlName="lnks" id='val'/>
+    <input #files type='file' (change)="fileChangeEvent(files.files)"  multiple> 
+    <input type="text" formControlName="lnks"class="file-display-text text-left"/>
  <span class="file-btn" (click)="files.click()">בחירת קובץ</span>
 
 </div>
