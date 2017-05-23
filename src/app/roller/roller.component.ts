@@ -1,6 +1,7 @@
+import { Observable } from 'rxjs/Observable';
 import {Component, OnInit} from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
-import {Observable} from "rxjs";
+
 
 import { NewsResponse } from "../../models";
 import { NewsService } from "../services/news.service";
@@ -46,7 +47,7 @@ export class RollerComponent implements OnInit {
     'Will you be my hero?'
   ];
   spanState:string="start";
-  public rollerResponse: Promise<NewsResponse>;
+  public rollerResponse: Observable<NewsResponse>;
   constructor(private  rs:NewsService,private  us:UtilityService) { this.resend(); }
   resend() {
     this.message$ = Observable.interval(500)

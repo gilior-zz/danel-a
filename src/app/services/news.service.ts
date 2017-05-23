@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject } from '@angular/core';
 
 import { Http, Response } from "@angular/http";
@@ -13,12 +14,12 @@ export class NewsService {
   plug: number = 6;
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
     this.config = JSON.parse(JSON.stringify(config));
+    this.config.apiEndpoint = config.apiEndpoint + '/news';
   }
 
-  getRllrs(): Promise<NewsResponse> {
+  getRllrs(): Observable<NewsResponse> {
     return this.http.get(this.config.apiEndpoint)
-      .toPromise()
-      .then(this.extractData)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 

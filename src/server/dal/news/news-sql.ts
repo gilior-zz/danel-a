@@ -1,4 +1,5 @@
 
+
 import * as _ from 'lodash'
 import { MsNodeSqlDriverApiModule as v8 } from '../lib/MsNodeSqlDriverApiModule'
 
@@ -7,7 +8,7 @@ import v8PreparedStatement = v8.v8PreparedStatement;
 import v8BindCb = v8.v8BindCb;
 import v8BulkMgr = v8.v8BulkTableMgr;
 import v8Error = v8.v8Error;
-import { Danel } from "../../dal/sql.config";
+import { Danel, Home } from "../../dal/sql.config";
 
 export const sql: v8.v8driver = require('msnodesqlv8');
 
@@ -27,10 +28,13 @@ export class NewsSql implements Inews {
     arr: Array<any> = new Array();
     loadNews(): void {
         var self = this;
-        sql.open(Danel.conn_str_support, (err, conn) => {
+        sql.open(Home.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('rollerSelect', [], (err, results, output) => {
-                self.arr.push(results);
+
+
+
+                self.arr = results;
                 self.extractData()
 
             });
@@ -41,12 +45,17 @@ export class NewsSql implements Inews {
 
 
     extractData() {
-        let rlrs: Array<Roller> = [];
+        let rlrs: Array<Roller> = new Array();
+        console.log(this.arr);
+
+
         this.arr.forEach(i => {
             rlrs.push({ id: i.rol_id, msg: i.rol_massage, time: i.rol_timeStamp })
         })
 
+
         newsResponse = { news: rlrs, time: new Date() };
+
 
 
         console.log('news is loaded');

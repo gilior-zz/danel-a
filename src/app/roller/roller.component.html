@@ -1,14 +1,12 @@
-
 <div class="marquee-wrp">
 
-  <marquee onmouseover="stop();" onmouseout="start();" class="text-left well"  direction="right">
+  <marquee onmouseover="stop();" onmouseout="start();" class="text-left well" direction="right">
 
-    <span class="marquee-wrp--roller-wrp" *ngFor="let rlr of  (rollerResponse|async)?.rlrs">
+    <span class="marquee-wrp--roller-wrp" *ngFor="let rlr of  (rollerResponse|async)?.news">
 
          <span class="msg">{{rlr.msg}}</span><span class="date"> {{rlr.time|date:'dd/MM/yy'}}</span>
 
-</span>
+    </span>
   </marquee>
 </div>
-
 

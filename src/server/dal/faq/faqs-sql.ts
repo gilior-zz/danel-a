@@ -18,7 +18,7 @@ export const sql: v8.v8driver = require('msnodesqlv8');
 
 import { IProcedureResult } from "mssql";
 import { SupportIssue, SupportIssueLink } from "models";
-import { Danel } from "../../dal/sql.config";
+import { Danel, Home } from "../../dal/sql.config";
 
 export let SupportIssues: Array<SupportIssue>;
 export let SupportIssuesResponse: SupportIssueResponse
@@ -34,7 +34,7 @@ export class FaqsSql implements IFaQ {
         var self = this;
 
         // Simulate server latency with 2 second delay
-        sql.open(Danel.conn_str_support, (err, conn) => {
+        sql.open(Home.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesUpdate', [null, req.body.prb, req.body.sln, req.body.mID || -1], (err, results, output) => {
                 let newID = output[1];
@@ -56,7 +56,7 @@ export class FaqsSql implements IFaQ {
     }
 
     private AddLnks(supportIssueLink: SupportIssueLink, sID: number): void {
-        sql.open(Danel.conn_str_support, function (err, conn) {
+        sql.open(Home.conn_str_support, function (err, conn) {
             var pm = conn.procedureMgr();
             // console.log(supportIssueLink);
 
@@ -72,7 +72,7 @@ export class FaqsSql implements IFaQ {
 
     newFaq: SupportIssue;
     UpdateItem(req, res) {
-        sql.open(Danel.conn_str_support, (err, conn) => {
+        sql.open(Home.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesUpdate', [req.body.id, req.body.prb, req.body.sln, req.body.mID || -1], (err, results, output) => {
                 let item = SupportIssuesResponse.sis.find(i => i.id == req.params.faqID);
@@ -90,7 +90,7 @@ export class FaqsSql implements IFaQ {
 
     deleteItem(req, res): void {
 
-        sql.open(Danel.conn_str_support, (err, conn) => {
+        sql.open(Home.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesDelete', [req.params.faqID], (err, results, output) => {
                 let item = SupportIssuesResponse.sis.find(i => i.id == req.params.faqID);
@@ -105,7 +105,7 @@ export class FaqsSql implements IFaQ {
 
     loadFaqS() {
         var self = this;
-        sql.open(Danel.conn_str_support, (err, conn) => {
+        sql.open(Home.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesSelect', [], (err, results, output) => {
                 self.arr.push(results);

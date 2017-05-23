@@ -32,7 +32,7 @@
     <label class="center-block" for="mdl">מודול:
       {{'sdff'}}
       <input class="mdl-input"  (treeDrop)="onDrop($event)" formControlName="mdl" placeholder="גרור מודול מהעץ"
-     [treeAllowDrop]="allowDrop.bind(this)"/>
+     [treeAllowDrop]="allowDrop.bind(this)" draggable/>
   <tree-root  [options]="options" (onActiveChanged)="onActiveChanged($event)" id="mdl" [nodes]="mdls"></tree-root>
   </label>
   </div>

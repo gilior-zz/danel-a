@@ -24,6 +24,8 @@ export class RlrsRoutesHandler {
         // let linkedFaq = Object.assign({}, i);
         // linkedFaq['links'] = {};
         // linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
+        console.log(newsResponse);
+        
         res.status(200).send(newsResponse);
 
         // })
