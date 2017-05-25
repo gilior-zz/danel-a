@@ -2,13 +2,14 @@ export class DanelVersion {
   vr: Version;
   dbName: string;
   fp: string;
+  _Version: number;
 }
 
 export class Version {
-  _Major: number; _Minor: number; _Build: number; _Revision: number;
+  _Major: number; _Minor: number; _Build: number; _Revision: number; 
 }
 export class DanelVersionResponse {
-  vers: DanelVersion[];
+  vers: DanelVersion[][];
   time: Date;
 }
 
@@ -22,7 +23,7 @@ export class LinkResponse {
   lnks: Link[];
   time: Date;
 }
-export class SupportIssue {  
+export class SupportIssue {
   id?: number;
   prb?: string
   sln?: string
@@ -30,7 +31,7 @@ export class SupportIssue {
   mod?: Module;
   ts?: Date;
   lnks?: SupportIssueLink[];
-  mdlName?:string
+  mdlName?: string
 
 }
 export class SupportIssueLink {

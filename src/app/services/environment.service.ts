@@ -1,20 +1,24 @@
-import { Injectable } from '@angular/core';
-import  {Observable} from 'rxjs/observable'
+import { Injectable, Inject } from '@angular/core';
+import { Observable } from 'rxjs/observable'
 import 'rxjs/add/observable/of';
 import * as  _ from 'lodash'
-
+import { AppConfig, APP_CONFIG } from "../app-config";
 import { Response, Http } from "@angular/http";
 import { DanelVersionResponse } from "../../models";
 
 
 @Injectable()
 export class EnvironmentService {
-  url='http://localhost:20158/api/Values/GetVers';
-plug:number=6;
-  constructor(private  http:Http) { }
+  config: AppConfig
+  plug: number = 6;
+  constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
+    this.config = Object.assign({}, config);
 
-  getEnvs():Observable<DanelVersionResponse> {
-    return this.http.get(this.url)     
+    this.config.apiEndpoint = config.apiEndpoint + '/envs';
+  }
+
+  getEnvs(): Observable<DanelVersionResponse> {
+    return this.http.get(this.config.apiEndpoint)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -22,7 +26,7 @@ plug:number=6;
     let body = res.json();
     return body;
   }
-  private handleError (error: Response | any) {
+  private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {

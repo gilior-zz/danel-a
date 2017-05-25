@@ -26,6 +26,7 @@ var config = {
 
 
 export class EnvsSql implements Ienvs {
+
     rowArr: Array<any> = new Array();
     loadEnvs(): void {
         var self = this;
@@ -75,30 +76,43 @@ export class EnvsSql implements Ienvs {
         return clientLocation;
     }
 
+    private generateVersion(data): number {
+        return +`${data.MajorVersion}${data.MinorVersion}${data.SubVersion}${data.BuildNumber}`;
+    }
+
     extractData() {
 
         let arr: Array<DanelVersion> = new Array();
         this.rowArr.forEach(i => {
-
-
             let rawClientLocation = i[0].clientLocation;
-
-
             let serverName = i[0].serverName;
             let clientLocation = this.generateClientLocation(rawClientLocation, serverName);
-            arr.push({ vr: { _Major: i[0].MajorVersion, _Minor: i[0].MinorVersion, _Build: i[0].SubVersion, _Revision: i[0].BuildNumber }, dbName: i[0].DB_NAME, fp: clientLocation });
+            let versionNumber = this.generateVersion(i[0]);
+            arr.push({ _Version: versionNumber, vr: {_Major: i[0].MajorVersion, _Minor: i[0].MinorVersion, _Build: i[0].SubVersion, _Revision: i[0].BuildNumber }, dbName: i[0].DB_NAME, fp: clientLocation });
         })
 
         // console.log(arr[0]);
-        let l = _.groupBy(arr, (i) => {
-            i.vr._Major + '#'
-                + i.vr._Minor + '#'
-                + i.vr._Build + '#'
-                + i.vr._Revision
-        });
-        console.log(l);
+        let lll: Map<number, DanelVersion[]> = new Map();
+
+        let l = _.groupBy(arr, '_Version');
+        // console.log(l);
+
+
+
+        // console.log(keys);
+
+
+        // for (var key in l) {
+        //     // var value = l[key];
+        //     console.log(key);
+
+        // }
+        // console.log(l.length);
         let ll = _.toArray(l);
+        // console.log(ll);
+
         envsResponse = { vers: ll, time: new Date() }
+
 
         // let rlrs: Array<Roller> = new Array();
 
@@ -113,7 +127,7 @@ export class EnvsSql implements Ienvs {
 
 
 
-        // console.log('news is loaded');
+        console.log('envs is loaded');
     }
 
 }
