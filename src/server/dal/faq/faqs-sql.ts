@@ -34,7 +34,7 @@ export class FaqsSql implements IFaQ {
         var self = this;
 
         // Simulate server latency with 2 second delay
-        sql.open(Home.conn_str_support, (err, conn) => {
+        sql.open(Danel.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesUpdate', [null, req.body.prb, req.body.sln, req.body.mID || -1], (err, results, output) => {
                 let newID = output[1];
@@ -56,7 +56,7 @@ export class FaqsSql implements IFaQ {
     }
 
     private AddLnks(supportIssueLink: SupportIssueLink, sID: number): void {
-        sql.open(Home.conn_str_support, function (err, conn) {
+        sql.open(Danel.conn_str_support, function (err, conn) {
             var pm = conn.procedureMgr();
             // console.log(supportIssueLink);
 
@@ -72,7 +72,7 @@ export class FaqsSql implements IFaQ {
 
     newFaq: SupportIssue;
     UpdateItem(req, res) {
-        sql.open(Home.conn_str_support, (err, conn) => {
+        sql.open(Danel.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesUpdate', [req.body.id, req.body.prb, req.body.sln, req.body.mID || -1], (err, results, output) => {
                 let item = SupportIssuesResponse.sis.find(i => i.id == req.params.faqID);
@@ -90,7 +90,7 @@ export class FaqsSql implements IFaQ {
 
     deleteItem(req, res): void {
 
-        sql.open(Home.conn_str_support, (err, conn) => {
+        sql.open(Danel.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesDelete', [req.params.faqID], (err, results, output) => {
                 let item = SupportIssuesResponse.sis.find(i => i.id == req.params.faqID);
@@ -105,10 +105,10 @@ export class FaqsSql implements IFaQ {
 
     loadFaqS() {
         var self = this;
-        sql.open(Home.conn_str_support, (err, conn) => {
+        sql.open(Danel.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('SupportIssuesSelect', [], (err, results, output) => {
-                self.arr.push(results);
+                self.arr.push(results)
                 if (self.arr.length == 2) {
                     self.extractData()
                 }
@@ -120,16 +120,21 @@ export class FaqsSql implements IFaQ {
 
 
     extractData() {
-        console.log('in extractData');
-        
+
+
+
         let sis: Array<SupportIssue> = [];
         this.arr[0].forEach(i => {
             sis.push({ id: i.ID, prb: i.Problem, sln: i.Solution, mID: i.ModuleID, ts: i.TimeStamp, mdlName: i.Text })
         })
+
+
+
         let sisLnk: Array<SupportIssueLink> = [];
         this.arr[1].forEach(i => {
             sisLnk.push({ id: i.ID, sIid: i.SupportIssueID, pth: i.Path, nm: '' })
         })
+
         let grpd = _.groupBy(sisLnk, 'sIid');
 
         _.each(grpd, (lnk) => {
@@ -150,5 +155,6 @@ export class FaqsSql implements IFaQ {
         })
         SupportIssuesResponse = { sis: SupportIssues, time: new Date() };
         console.log('faqs is loaded');
+
     }
 }

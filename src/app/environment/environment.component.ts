@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
 import { DanelVersionResponse } from "../../models";
 import { EnvironmentService } from "../services/environment.service";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'lg-environment',
@@ -21,7 +22,7 @@ import { EnvironmentService } from "../services/environment.service";
 
 })
 export class EnvironmentComponent implements OnInit {
-  danelVersionResponse:Promise <DanelVersionResponse>;
+  danelVersionResponse:Observable <DanelVersionResponse>;
   constructor(private  environmentService:EnvironmentService) { }
 
   ngOnInit() {

@@ -1,4 +1,5 @@
 .marquee-wrp{
+  margin-top: 200px;
   //animation: moving 5s infinite;
   //position: relative;
   //height:25px;
@@ -7,7 +8,7 @@
   direction: ltr;
   &--roller-wrp{
     margin-left: 30px;
-    direction: rtl;
+    // direction: rtl;
   }
 }
 
@@ -16,6 +17,8 @@
   //display: inline;
   //overflow: hidden;
 cursor: default;
+// direction: rtl;
+// text-align: right;
 }
 .date {
   font-weight: bold;

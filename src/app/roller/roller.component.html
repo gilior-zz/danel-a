@@ -4,7 +4,7 @@
 
     <span class="marquee-wrp--roller-wrp" *ngFor="let rlr of  (rollerResponse|async)?.news">
 
-         <span class="msg">{{rlr.msg}}</span><span class="date"> {{rlr.time|date:'dd/MM/yy'}}</span>
+         <span  class="msg">{{rlr.msg}}</span><span class="date"> {{rlr.time|date:'dd/MM/yy'}}</span>
 
     </span>
   </marquee>

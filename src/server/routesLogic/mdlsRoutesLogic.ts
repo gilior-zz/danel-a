@@ -22,6 +22,8 @@ export class MdlsRoutesHandler {
         // let linkedFaq = Object.assign({}, i);
         // linkedFaq['links'] = {};
         // linkedFaq['links']['self'] = `http://${req.headers.host}/api/faq/${i.id}`
+        console.log(ModulesResponse);
+        
         res.status(200).send(ModulesResponse);
 
         // })

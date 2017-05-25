@@ -17,7 +17,7 @@ export class MdlSql implements Imdl {
 
     loadmdls(): void {
         var self = this;
-        sql.open(Home.conn_str_dev, (err, conn) => {
+        sql.open(Danel.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('ModulesTreeSelect', [], (err, results, output) => {
                 let arr: Array<Module> = new Array();

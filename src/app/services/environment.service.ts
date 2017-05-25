@@ -13,10 +13,9 @@ export class EnvironmentService {
 plug:number=6;
   constructor(private  http:Http) { }
 
-  getEnvs():Promise<DanelVersionResponse> {
-    return this.http.get(this.url)
-      .toPromise()
-      .then(this.extractData)
+  getEnvs():Observable<DanelVersionResponse> {
+    return this.http.get(this.url)     
+      .map(this.extractData)
       .catch(this.handleError);
   }
   private extractData(res: Response) {

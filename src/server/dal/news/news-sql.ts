@@ -28,12 +28,9 @@ export class NewsSql implements Inews {
     arr: Array<any> = new Array();
     loadNews(): void {
         var self = this;
-        sql.open(Home.conn_str_support, (err, conn) => {
+        sql.open(Danel.conn_str_support, (err, conn) => {
             var pm = conn.procedureMgr();
             pm.callproc('rollerSelect', [], (err, results, output) => {
-
-
-
                 self.arr = results;
                 self.extractData()
 
@@ -46,7 +43,7 @@ export class NewsSql implements Inews {
 
     extractData() {
         let rlrs: Array<Roller> = new Array();
-        console.log(this.arr);
+       
 
 
         this.arr.forEach(i => {
