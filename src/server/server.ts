@@ -12,6 +12,7 @@ import { faqRouter } from "./routes/faqRoutes";
 import { mdlsRouter } from "./routes/mdlRoutes";
 import { newsRouter } from "./routes/newsRoutes";
 import { envsRouter } from "./routes/envsRoutes";
+import { lnksRouter } from "./routes/lnksRoutes";
 
 
 
@@ -38,13 +39,14 @@ app.use(function (req, res, next) {
 //     next();
 // });
 // this.registerStatic();
-let port: number = process.env.port || 3000;
+let port: number = process.env.PORT || 3000;
 
 
 app.use('/api/faq', faqRouter);
 app.use('/api/mdls', mdlsRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/envs', envsRouter);
+app.use('/api/lnks', lnksRouter);
 app.all('/*', (req, res) => {
 
     res.sendFile(path.resolve(__dirname + '/../index.html'));

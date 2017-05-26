@@ -88,14 +88,24 @@ export class EnvsSql implements Ienvs {
             let serverName = i[0].serverName;
             let clientLocation = this.generateClientLocation(rawClientLocation, serverName);
             let versionNumber = this.generateVersion(i[0]);
-            arr.push({ _Version: versionNumber, vr: {_Major: i[0].MajorVersion, _Minor: i[0].MinorVersion, _Build: i[0].SubVersion, _Revision: i[0].BuildNumber }, dbName: i[0].DB_NAME, fp: clientLocation });
+            arr.push({ _Version: versionNumber, vr: { _Major: i[0].MajorVersion, _Minor: i[0].MinorVersion, _Build: i[0].SubVersion, _Revision: i[0].BuildNumber }, dbName: i[0].DB_NAME, fp: clientLocation });
         })
 
-        // console.log(arr[0]);
+
+
+        // arr = arr.sort((a, b) => { return b.vr._Major - a.vr._Major })
+        //     .sort((a, b) => { return b.vr._Minor - a.vr._Minor })
+        //     .sort((a, b) => { return b.vr._Build - a.vr._Build })
+        //     .sort((a, b) => { return b.vr._Revision - a.vr._Revision });
+        arr = _.sortBy(arr, 'vr._Major','vr._Minor','vr._Build','vr._Revision');
+        // console.log(arr.map((a) => { return a._Version }));
+
+
+        // console.log(arr);
         let lll: Map<number, DanelVersion[]> = new Map();
 
         let l = _.groupBy(arr, '_Version');
-        // console.log(l);
+        console.log(l);
 
 
 

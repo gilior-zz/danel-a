@@ -1,4 +1,4 @@
 
 export interface Inews {
-    loadNews(): void;
+    loadLnks(): void;
 }

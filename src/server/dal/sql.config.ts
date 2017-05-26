@@ -17,10 +17,6 @@ export let Danel = {
 											  ,(select [InstallPath] from [dbo].[ConfigAddresses] where [ComponentName]=''DanelXClient'') clientLocation 
 											   ,(select [ServerName] from [dbo].[ConfigAddresses] where [ComponentName]=''DanelXServer'') serverName     
 											    FROM DatabaseVersions                                       
-												WHERE VersionID = (select max(VersionID) from DatabaseVersions)   
-												ORDER BY MajorVersion DESC ,
-														MinorVersion DESC ,
-														SubVersion DESC ,
-														BuildNumber DESC 
-										END'`
+												WHERE VersionID = (select max(VersionID) from DatabaseVersions)   												
+										END'` 
 }

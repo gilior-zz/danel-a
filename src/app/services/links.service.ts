@@ -12,13 +12,14 @@ import { APP_CONFIG, AppConfig } from "../app-config";
 
 @Injectable()
 export class LinksService {
-    config: any;
+  config: any;
   // url='http://localhost:20158/api/Values/GetLnks';
 
   plug: number = 15;
 
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
-    this.config.apiEndpoint = config.apiEndpoint + '/links';
+    this.config = Object.assign({}, config);
+    this.config.apiEndpoint = config.apiEndpoint + '/lnks';
   }
 
   getLinks(): Observable<LinkResponse> {

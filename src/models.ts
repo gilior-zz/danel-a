@@ -20,7 +20,7 @@ export class Link {
 }
 
 export class LinkResponse {
-  lnks: Link[];
+  lnks: Link[][];
   time: Date;
 }
 export class SupportIssue {

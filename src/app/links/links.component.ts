@@ -28,11 +28,11 @@ export class LinksComponent implements OnInit {
 
     this.linkResponse = this.linksService.getLinks();
 
-    let lnks: Link[] = [];
-    for (var index = 0; index < 20; index++) {
-      lnks.push({ nm: `nm ${index}`, pth: `pth ${index}`, ctg: `ctg ${index}` })
-    }
-    let l = lnks.find(i => i.nm == '');
+    // let lnks: Link[] = [];
+    // for (var index = 0; index < 20; index++) {
+    //   lnks.push({ nm: `nm ${index}`, pth: `pth ${index}`, ctg: `ctg ${index}` })
+    // }
+    // let l = lnks.find(i => i.nm == '');
 
   }
 
