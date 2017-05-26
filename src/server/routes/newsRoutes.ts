@@ -1,13 +1,13 @@
-import { RlrsRoutesHandler } from '../routesLogic/newsRoutesHandler';
+import { NewsRoutesHandler } from '../routesLogic/newsRoutesHandler';
 
 
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
-let rlrsRoutesHandler: RlrsRoutesHandler = new RlrsRoutesHandler();
+let newsRoutesHandler: NewsRoutesHandler = new NewsRoutesHandler();
 
 export const newsRouter = express.Router({ mergeParams: true });
 
 newsRouter.route('/')
   .get((req, res) => {
-    rlrsRoutesHandler.getAllHandler(req, res);
+    newsRoutesHandler.getAllHandler(req, res);
   })

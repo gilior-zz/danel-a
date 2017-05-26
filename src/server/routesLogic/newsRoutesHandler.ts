@@ -12,7 +12,7 @@ import { Inews } from "../dal/news/Inews";
 
 
 
-export class RlrsRoutesHandler {
+export class NewsRoutesHandler {
     newsDal: Inews;
     constructor() {
         this.newsDal = new NewsSql();
