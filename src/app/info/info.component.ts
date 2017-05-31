@@ -175,6 +175,7 @@ export class InfoComponent implements OnInit {
       this.infoService.add(sis).subscribe(i => {
         console.log(i);
         this.items.push(i);
+        this.items = this.items.sort((a, b) => { return new Date(b.ts).getDate() - new Date(a.ts).getDate() })
         this.loadItems();
       }, (err) => {
         console.log('somthing is wrong');
@@ -186,12 +187,41 @@ export class InfoComponent implements OnInit {
   }
 
   public closeUpdateFaqDlg(status, updateItemWindow: any = null, ) {
+
+
     this.showUpdateFaqDlg = false;
     if (status == 'yes') {
       let sis = updateItemWindow.getNewFaq();
-      this.infoService.add(sis).subscribe(i => {
+
+
+      this.infoService.update(sis).subscribe(i => {
+        console.log('i sent to server');
+        console.log(sis);
+        console.log(' from server:');
         console.log(i);
-        this.items.push(i);
+        for (var index = 0; index < this.items.length; index++) {
+          var element = this.items[index];
+          if (element.id == i.id)
+            this.items[index] = i;
+        }
+        // this.items.forEach(arrayItem => {
+        //   if (i.id == arrayItem.id) {
+        //     console.log('old item');
+        //     console.log(arrayItem);
+        //     arrayItem = i;
+        //     console.log('new item');
+        //     console.log(arrayItem);
+        //   }
+
+
+
+        // });
+        console.log('new array');
+        console.log(this.items[0]);
+
+
+
+        this.items = this.items.sort((a, b) => { return new Date(b.ts).getDate() - new Date(a.ts).getDate() })
         this.loadItems();
       }, (err) => {
         console.log('somthing is wrong');

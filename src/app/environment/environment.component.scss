@@ -19,20 +19,44 @@
   border-radius: 15px;
   margin: 5px;
   color: white;
-  transform: scale(1);
-  transition-property: transform;
-  transition-duration: 1s;
+  // transform: scale(1);
+  transition-property: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
   &:hover{
-    transform: scale(1.1);
+   color: red;
     text-decoration: none;
-    font-weight: bold;
-
-
+    // font-weight: bold;
+      cursor:pointer;
   }
+
 }
 
 
 
 .version-caption{
   color: white;
+}
+
+.copied{
+ position: fixed;
+    z-index: 100; 
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+ &--text{
+font-size: xx-large;
+    background-color: brown;
+    color: wheat;
+    padding: 15px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+ }
+
+ &--img{
+      border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    // height: 80px;
+ }
+ 
 }

@@ -9,10 +9,14 @@
         </div>
       </div>
       <div class="col-xs-12 text-center lnk-wrpr">
-        <a class="link" href="\\danel-db\Apps\1.url" *ngFor="let ver of arr">{{ver.dbName}}</a>
+        <span #span id="id{{index}}" (click)="displyCopied('id'+index,ver.fp)" class="link" *ngFor="let ver of arr;let index=index">{{ver.dbName}}</span>
+
       </div>
     </div>
   </div>
+</div>
+
+<div [@flyInOut]="'in'" *ngIf="showCopied" class="copied text-center">
+  <span class="copied--text">הועתק</span>
 
 </div>
-<!--{{((danelVersionResponse|async)?.vers)[5]|json}} -->

@@ -10,6 +10,7 @@ import { HttpModule } from '@angular/http';
 import { TreeModule } from 'angular-tree-component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CopyDirective } from './copy.directive';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { CommonModule } from '@angular/common';
     LayoutModule,
     DialogModule,
     TreeModule,
-    BrowserAnimationsModule,]
+    BrowserAnimationsModule,],
+  declarations: [CopyDirective]
 })
 export class SharedModule { }

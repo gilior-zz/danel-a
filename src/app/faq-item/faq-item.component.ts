@@ -72,7 +72,11 @@ export class FaqItemComponent implements OnInit, OnDestroy {
       links.push(l);
     }
 
-    let sis: SupportIssue = { lnks: formModel.lnks, sln: formModel.sln, prb: formModel.prb, mID: formModel.mdlID, id: formModel.id };
+    console.log('formModel');
+
+    console.log(formModel);
+
+    let sis: SupportIssue = { mdlName: formModel.mdl, lnks: formModel.lnks, sln: formModel.sln, prb: formModel.prb, mID: formModel.mdlID, id: formModel.id };
     return sis;
   }
 
@@ -94,7 +98,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   }
 
   fileChangeEvent(files: FileList) {
-    console.log(files);
+
 
     // this.lnks = files;
     // let links: Array<SupportIssueLink> = new Array<SupportIssueLink>();
@@ -104,7 +108,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
     // }
     let lnks = [];
     for (let i = 0; files != null && i < files.length; i++) {
-      console.log(files[i]);
+
 
       let l: SupportIssueLink = { nm: files[i].name, pth: `x:\\lnks\\${files[i].name}` };
       lnks.push(l);
@@ -152,10 +156,17 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   }
 
+  onClear(){
+     this.faqForm.get('mdl').setValue(null);
+    this.faqForm.get('mdlID').setValue(null);
+  }
+
   onDrop($event): void {
     console.log($event);
+    // console.log('b4 dropped '+JSON.stringify(this.faqForm.get('mdl')) );
     this.faqForm.get('mdl').setValue($event.element.data.name);
     this.faqForm.get('mdlID').setValue($event.element.data.id);
+    //  console.log('after dropped '+JSON.stringify(this.faqForm.get('mdl')) );
   }
 
   allowDrop(element): boolean {

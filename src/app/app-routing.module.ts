@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EnvironmentComponent } from "../environment/environment.component";
-import { InfoComponent } from "../info/info.component";
-import { LinksComponent } from "../links/links.component";
+import { EnvironmentComponent } from "app/environment/environment.component";
+import { InfoComponent } from "app/info/info.component";
+import { LinksComponent } from "app/links/links.component";
+
 
 
 const routes: Routes = [

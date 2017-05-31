@@ -14,6 +14,13 @@
 
 .info-link{
   direction: ltr;
+  span{
+background: darkgreen;
+    cursor: pointer;
+    color: white;
+    font-size: larger;
+  }
+  
 }
 
 .k-header{

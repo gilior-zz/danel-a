@@ -8,8 +8,16 @@ form{
   overflow-x: hidden;
 }
 
+
+.mdl-input-clear{
+  float: left;
+}
 .tree{
   direction: ltr !important;
+}
+
+.mdl-input-wrp{
+  overflow: hidden;
 }
 
 .mdl-input{

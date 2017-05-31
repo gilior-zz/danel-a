@@ -1,5 +1,5 @@
 <form [formGroup]="faqForm" novalidate>
-  {{faqForm.value.lnks|json}}
+
   <div class="form-group" [class.has-error]="formErrors.prb">
     <label class="center-block">בעיה:
       <textarea rows="5" class="form-control" formControlName="prb"></textarea>
@@ -30,11 +30,16 @@
   </div>
   <div class="form-group">
     <label class="center-block" for="mdl">מודול:
-      {{'sdff'}}
-      <input class="mdl-input"  (treeDrop)="onDrop($event)" formControlName="mdl" placeholder="גרור מודול מהעץ"
-     [treeAllowDrop]="allowDrop.bind(this)" draggable/>
-  <tree-root  [options]="options" (onActiveChanged)="onActiveChanged($event)" id="mdl" [nodes]="mdls"></tree-root>
-  </label>
+   </label>
+    <button (click)="onClear()" class="mdl-input-clear" type="button">איפוס</button>
+    <div class="mdl-input-wrp">
+      <input class="mdl-input" (treeDrop)="onDrop($event)" formControlName="mdl" placeholder="גרור מודול מהעץ" [treeAllowDrop]="allowDrop.bind(this)"
+        draggable/>
+    </div>
+
+
+    <tree-root [options]="options" id="mdl" [nodes]="mdls"></tree-root>
+    
   </div>
   <input hidden type="number" formControlName="mdlID" />
   <input hidden type="number" formControlName="id" />
