@@ -8,6 +8,7 @@ export class AppConfig {
 }
 
 export const HERO_DI_CONFIG: AppConfig = {
+    // apiEndpoint: 'http://danel-db/smart-office-server/api',
     apiEndpoint: 'http://localhost:3000/api',
 
 };

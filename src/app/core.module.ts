@@ -14,13 +14,13 @@ import { RTL } from "@progress/kendo-angular-l10n/dist/es/rtl";
 
 @NgModule({
   imports: [
-  
+
   ],
   providers: [requestOptionsProvider,
     InfoService, EnvironmentService,
-     LinksService, NewsService, 
-     UtilityService, 
-     MdlsService,
-     AppConfigProvider,{ provide: RTL, useValue: true }]
+    LinksService, NewsService,
+    UtilityService,
+    MdlsService,
+    AppConfigProvider, { provide: RTL, useValue: true }]
 })
 export class CoreModule { }

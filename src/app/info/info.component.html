@@ -2,6 +2,7 @@
   <kendo-grid #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)" (save)="saveHandlerTemplateDriven($event)"
     (remove)="removeHandler($event)" [pageSize]="10" [selectable]="true" [pageable]="true" [height]=" 700" (pageChange)="pageChange($event)"
     [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true" (add)="addHandler($event)">
+
     <kendo-grid-column title="ID" field="id" [hidden]="true">
     </kendo-grid-column>
     <kendo-grid-column title="בעיה" field="prb">
@@ -14,22 +15,24 @@
       <ng-template kendoGridEditTemplate let-dataItem="dataItem">
         <textarea [(ngModel)]="dataItem.sln" name="sln" class="k-textbox" required></textarea>
       </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column title="מודול" field="mdlName">
+    </kendo-grid-column> 
+    <kendo-grid-column title="מודול" width="160px" field="mdlName">
       <ng-template kendoGridEditTemplate let-dataItem="dataItem">
         <input [(ngModel)]="dataItem.mdlName" name="mdlName" class="k-textbox" />
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column title="מס מודול" field="mID" [hidden]="true">
     </kendo-grid-column>
-    <kendo-grid-column title="תאריך" field="ts" filter="date" format="{0:d}">
+    <kendo-grid-column [filterable]="false" title="תאריך" width="90px" field="ts" filter="date" format="{0:d}">
       <ng-template kendoGridCellTemplate let-dataItem>
         <span>{{dataItem.ts|date:"dd/MM/yy HH:MM:ss"}}</span>
       </ng-template>
     </kendo-grid-column>
     <ng-template kendoGridDetailTemplate let-dataItem>
       <section>
-        <p class="info-link" *ngFor="let lnk of dataItem.lnks "><span>{{lnk.pth}}</span></p>
+        <p class="info-link" *ngFor="let lnk of dataItem.lnks;let index=index ">
+          <span [lgCopy]="lnk.pth" id="{{'id'+index}}">{{lnk.pth}}</span>
+        </p>
 
       </section>
     </ng-template>
@@ -48,6 +51,7 @@
         <span kendoGridCancelCommand class="k-icon k-i-undo "></span>
       </ng-template>
     </kendo-grid-command-column>
+
   </kendo-grid>
 </form>
 

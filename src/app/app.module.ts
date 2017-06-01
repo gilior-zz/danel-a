@@ -14,6 +14,7 @@ import { RollerComponent } from "app/roller/roller.component";
 import { CurtainComponent } from "app/curtain/curtain.component";
 import { DialogWindowComponent } from "app/dialog-window/dialog-window.component";
 import { FaqItemComponent } from "app/faq-item/faq-item.component";
+import { CopyComponent } from './copy/copy.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,8 @@ import { FaqItemComponent } from "app/faq-item/faq-item.component";
     RollerComponent,
     CurtainComponent,
     DialogWindowComponent,
-    FaqItemComponent
+    FaqItemComponent,
+    CopyComponent
   ],
   imports: [
     BrowserModule,

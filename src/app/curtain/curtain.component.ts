@@ -35,7 +35,7 @@ export class CurtainComponent implements OnInit {
   get showContent(): boolean { return this.us.showContent }
   ngOnInit() {
     setTimeout(() =>
-      this.us.showContent = true, 5000);
+      this.us.showContent = true, 4000);
   }
 
 }
