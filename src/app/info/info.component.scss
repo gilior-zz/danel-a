@@ -12,6 +12,24 @@
 
 }
 
+iframe{
+  
+}
+
+re-captcha.k-grid tr.k-state-selected{
+      // background-color: red;
+    }
+
+
+.k-dialog-wrapper .k-window kendo-dialog-titlebar .k-window-content re-captcha.rc-anchor div div div iframe html body .rc-anchor-compact-footer{
+  display: none !important;
+  float: left;
+}
+
+.k-state-selected{
+  background: RED;
+}
+
 .info-link{
   direction: ltr;
   span{

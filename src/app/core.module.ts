@@ -8,7 +8,7 @@ import { UtilityService } from "app/services/utility.service";
 import { MdlsService } from "app/services/mdls.service";
 import { LinksService } from "app/services/links.service";
 import { AppConfigProvider } from "app/app-config";
-import { RTL } from "@progress/kendo-angular-l10n/dist/es/rtl";
+import { RTL } from "@progress/kendo-angular-l10n";
 
 
 

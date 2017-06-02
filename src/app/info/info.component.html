@@ -1,7 +1,8 @@
 <form novalidate #myForm="ngForm">
-  <kendo-grid #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)" (save)="saveHandlerTemplateDriven($event)"
-    (remove)="removeHandler($event)" [pageSize]="10" [selectable]="true" [pageable]="true" [height]=" 700" (pageChange)="pageChange($event)"
-    [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true" (add)="addHandler($event)">
+  <kendo-grid [pageSize]="pageSize" #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)"
+    (save)="saveHandlerTemplateDriven($event)" (remove)="removeHandler($event)" [pageSize]="10" [selectable]="true" [pageable]="pageable"
+    (pageChange)="pageChange($event)" [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true"
+    (add)="addHandler($event)">
 
     <kendo-grid-column title="ID" field="id" [hidden]="true">
     </kendo-grid-column>
@@ -15,7 +16,7 @@
       <ng-template kendoGridEditTemplate let-dataItem="dataItem">
         <textarea [(ngModel)]="dataItem.sln" name="sln" class="k-textbox" required></textarea>
       </ng-template>
-    </kendo-grid-column> 
+    </kendo-grid-column>
     <kendo-grid-column title="מודול" width="160px" field="mdlName">
       <ng-template kendoGridEditTemplate let-dataItem="dataItem">
         <input [(ngModel)]="dataItem.mdlName" name="mdlName" class="k-textbox" />
@@ -65,6 +66,8 @@
 </kendo-dialog>
 
 <kendo-dialog title="עדכון נושא" *ngIf="showUpdateFaqDlg" (close)="closeUpdateFaqDlg('cancel') ">
+  <re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6LeObAwUAAAAANlcxV6KExfLKNunrLNppCBiWbx4>"></re-captcha>
+
   <lg-faq-item [item]="editedItem" #updateItemWindow></lg-faq-item>
   <kendo-dialog-actions>
     <button kendoButton (click)="closeUpdateFaqDlg('no') " primary="true">ביטול</button>
@@ -74,7 +77,13 @@
 
 <kendo-dialog title="מחיקת רשומה" *ngIf="showRemoveDlg " (close)="closeRemoveDlg( 'cancel') ">
   <input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">
+  <div class="captcha-wrp">
+    <re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6LeObAwUAAAAANlcxV6KExfLKNunrLNppCBiWbx4>"></re-captcha>
+
+
+  </div>
   <p style="margin: 30px; text-align: center; ">האם למחוק רשומה?</p>
+
   <kendo-dialog-actions>
     <button kendoButton (click)="closeRemoveDlg( 'no') " primary="true ">ביטול</button>
     <button kendoButton (click)="closeRemoveDlg( 'yes') " primary="true ">אישור</button>

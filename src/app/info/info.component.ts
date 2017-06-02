@@ -28,7 +28,7 @@ export class InfoComponent implements OnInit {
   public showRemoveDlg: boolean;
   constructor(public infoService: InfoService, public ut: UtilityService) { }
   gridData: Array<SupportIssue>;
-  private pageSize: number = 10;
+  private pageSize: number = 5;
   private items: Array<SupportIssue>;
   filteredData: Array<SupportIssue>;
   prbFilter: string;
@@ -52,10 +52,12 @@ export class InfoComponent implements OnInit {
   }
 
 
-  public pageChange(event: PageChangeEvent): void {
-    this.skip = event.skip;
+  protected pageChange({ skip, take }: PageChangeEvent): void {
+    this.skip = skip;
+    this.pageSize = take;
     this.loadItems();
   }
+
   private loadItems(): void {
     // debugger;
     this.gridView = {
@@ -150,6 +152,10 @@ export class InfoComponent implements OnInit {
     this.showRemoveDlg = true;
   }
 
+  pageable = {
+    pageSizes: true
+  }
+
   delID: number;
 
   delete() {
@@ -161,11 +167,19 @@ export class InfoComponent implements OnInit {
     });
   }
 
+  deletePassword: number;
+
   public closeRemoveDlg(status) {
     // console.log(`Dialog result: ${status}`);
-    this.showRemoveDlg = false;
-    if (status == 'yes')
+
+    if (status == 'yes') {
+      if (this.deletePassword != 1234) {
+        return;
+      }
+      this.showRemoveDlg = false;
       this.delete();
+    }
+
   }
 
   public closeFaqDlg(status, newItemWindow: any = null, ) {
@@ -232,6 +246,7 @@ export class InfoComponent implements OnInit {
 
   }
 
+
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
     this.gridView = process(this.items, this.state);
@@ -239,7 +254,7 @@ export class InfoComponent implements OnInit {
 
   public state: State = {
     skip: 0,
-    take: 10
+    // take: 10
   };
 
 
@@ -257,6 +272,11 @@ export class InfoComponent implements OnInit {
     this.editedRowIndex = rowIndex;
 
     sender.editRow(rowIndex, this.formGroup);
+  }
+
+  handleCorrectCaptcha($event) {
+    console.log($event);
+
   }
 
   public editHandlerTemplateDriven({ sender, rowIndex, dataItem }) {

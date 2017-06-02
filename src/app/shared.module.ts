@@ -1,6 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DialogModule } from '@progress/kendo-angular-dialog';
+
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
@@ -12,10 +13,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CopyDirective } from './copy.directive';
 
+import { ReCaptchaModule } from 'angular2-recaptcha';
+
 
 
 @NgModule({
   imports: [
+    BrowserAnimationsModule,
     CommonModule,
     TreeModule,
     HttpModule,
@@ -27,7 +31,8 @@ import { CopyDirective } from './copy.directive';
     ReactiveFormsModule,
     LayoutModule,
     DialogModule,
-    BrowserAnimationsModule,
+    ReCaptchaModule
+
   ],
   exports: [
     CommonModule,
@@ -41,8 +46,9 @@ import { CopyDirective } from './copy.directive';
     LayoutModule,
     DialogModule,
     TreeModule,
+    ReCaptchaModule,
     BrowserAnimationsModule, CopyDirective],
-  declarations: [CopyDirective, CopyDirective]
+  declarations: [CopyDirective]
 
 })
 export class SharedModule { }
