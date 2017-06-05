@@ -3,13 +3,24 @@ export class DanelVersion {
   dbName: string;
   fp: string;
   _Version: number;
+  serverName: string;
+  danelXListener: number;
+  notificationsListener: number;
+  clientFolder: string;
+  winServiceName: string;
+  winNotificationName: string;
+  winServiceIsUp: boolean;
+  winNotificationIsUp: boolean;
+  id: number;
+
 }
 
 export class Version {
-  _Major: number; _Minor: number; _Build: number; _Revision: number; 
+  _Major: number; _Minor: number; _Build: number; _Revision: number;
 }
 export class DanelVersionResponse {
   vers: DanelVersion[][];
+  ver: DanelVersion;
   time: Date;
 }
 

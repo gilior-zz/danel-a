@@ -28,8 +28,8 @@ export class InfoComponent implements OnInit {
   public showRemoveDlg: boolean;
   constructor(public infoService: InfoService, public ut: UtilityService) { }
   gridData: Array<SupportIssue>;
-  private pageSize: number = 5;
-  private items: Array<SupportIssue>;
+  public pageSize: number = 5;
+  public items: Array<SupportIssue>;
   filteredData: Array<SupportIssue>;
   prbFilter: string;
   slnFilter: string;
@@ -52,7 +52,7 @@ export class InfoComponent implements OnInit {
   }
 
 
-  protected pageChange({ skip, take }: PageChangeEvent): void {
+  pageChange({ skip, take }: PageChangeEvent): void {
     this.skip = skip;
     this.pageSize = take;
     this.loadItems();
@@ -179,6 +179,7 @@ export class InfoComponent implements OnInit {
       this.showRemoveDlg = false;
       this.delete();
     }
+    this.showRemoveDlg = false;
 
   }
 

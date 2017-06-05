@@ -15,6 +15,8 @@ import { CurtainComponent } from "app/curtain/curtain.component";
 import { DialogWindowComponent } from "app/dialog-window/dialog-window.component";
 import { FaqItemComponent } from "app/faq-item/faq-item.component";
 import { CopyComponent } from './copy/copy.component';
+import { EnvironmentUnitComponent } from './environment-unit/environment-unit.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,12 +28,13 @@ import { CopyComponent } from './copy/copy.component';
     CurtainComponent,
     DialogWindowComponent,
     FaqItemComponent,
-    CopyComponent
+    CopyComponent,
+    EnvironmentUnitComponent
   ],
   imports: [
     BrowserModule,
     SharedModule,
-    CoreModule   
+    CoreModule
   ],
   bootstrap: [AppComponent]
 })

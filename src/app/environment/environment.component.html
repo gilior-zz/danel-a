@@ -5,14 +5,50 @@
       <div class="col-xs-12">
         <!--{{ver.vr._Revision}}-->
         <div class="h1 version-caption text-center">
-         {{arr[0].vr._Revision}} .{{arr[0].vr._Build}} . {{arr[0].vr._Minor}}. {{arr[0].vr._Major}}
+          {{arr[0].vr._Revision}} .{{arr[0].vr._Build}} . {{arr[0].vr._Minor}}. {{arr[0].vr._Major}}
         </div>
       </div>
       <div class="col-xs-12 text-center lnk-wrpr">
-        <span [lgCopy]="ver.fp"  #span id="id{{index}}"
-          class="link" *ngFor="let ver of arr;let index=index">{{ver.dbName}}</span>
-
+        <ng-container *ngFor="let ver of arr;let index=index">
+          <!--<span [style.border-color]="ver.winServiceIsUp?'greenyellow':'darkred'" [style.color]="ver.winNotificationIsUp?'greenyellow':'darkred'"-->
+            <!--(dblclick)="onDoubleCLick(ver)" [lgCopy]="ver.fp" #span id="id{{index}}" class="link">{{ver.dbName}}</span>-->
+          <!--<a *ngFor="let ver of arr" (dblclick)="onDoubleCLick(ver)" class="link" href="file:///{{ver.clientFolder}}">{{ver.dbName}}</a>-->
+          <lg-environment-unit [danelVersion]="ver"></lg-environment-unit>
+        </ng-container>
       </div>
     </div>
   </div>
 </div>
+
+<kendo-dialog title="נתונים" *ngIf="showDtataDlg" (close)="showDtataDlg=false">
+  <input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">
+
+
+  <p>
+    <label for="">
+      שם שרת
+      <mark>{{ver.serverName}}</mark>
+
+
+    </label>
+  </p>
+  <p>
+    <label for="">
+פורט שרת
+<mark>{{ver.danelXListener}}</mark>
+ 
+ 
+    </label>
+
+
+  </p>
+  <p>
+    <label for="">
+ פורט נוטיפיקיישן
+ <mark>{{ver.notificationsListener}}</mark>
+
+
+    </label>
+  </p>
+
+</kendo-dialog>

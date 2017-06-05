@@ -17,6 +17,14 @@ export class EnvironmentService {
     this.config.apiEndpoint = config.apiEndpoint + '/envs';
   }
 
+  getEnv(id: number): Observable<DanelVersionResponse> {
+    return this.http.get(this.config.apiEndpoint + `/${id}`)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+
+
   getEnvs(): Observable<DanelVersionResponse> {
     return this.http.get(this.config.apiEndpoint)
       .map(this.extractData)
