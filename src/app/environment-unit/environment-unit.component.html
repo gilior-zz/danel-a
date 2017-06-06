@@ -29,11 +29,15 @@
         </div>
     </div>
     <div class="row">
-         <div class="col-xs-6">
-               <p> <label for="">     סטטוס       <mark>{{danelVersion.winServiceIsUp?'למעלה':'למטה'}}</mark>    </label> </p>
-         </div>
-          <div class="col-xs-6">
-               <p> <label for="">     סטטוס       <mark>{{danelVersion.winNotificationIsUp?'למעלה':'למטה'}}</mark>    </label> </p>
-         </div>
+        <div class="col-xs-6">
+            <p> <label for="">     סטטוס       <mark>{{danelVersion.winServiceIsUp?'למעלה':'למטה'}}</mark>    </label>
+                <button class="k-button-decrease" type="">{{danelVersion.winServiceIsUp?'להוריד':'להרים'}}</button>
+            </p>
+        </div>
+        <div class="col-xs-6">
+            <p> <label for="">     סטטוס       <mark>{{danelVersion.winNotificationIsUp?'למעלה':'למטה'}}</mark>    </label>
+                <button class="k-button-decrease" type="">{{danelVersion.winNotificationIsUp?'להוריד':'להרים'}}</button>
+            </p>
+        </div>
     </div>
 </kendo-dialog>
