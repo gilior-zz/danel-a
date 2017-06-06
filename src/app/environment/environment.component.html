@@ -20,35 +20,3 @@
   </div>
 </div>
 
-<kendo-dialog title="נתונים" *ngIf="showDtataDlg" (close)="showDtataDlg=false">
-  <input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">
-
-
-  <p>
-    <label for="">
-      שם שרת
-      <mark>{{ver.serverName}}</mark>
-
-
-    </label>
-  </p>
-  <p>
-    <label for="">
-פורט שרת
-<mark>{{ver.danelXListener}}</mark>
- 
- 
-    </label>
-
-
-  </p>
-  <p>
-    <label for="">
- פורט נוטיפיקיישן
- <mark>{{ver.notificationsListener}}</mark>
-
-
-    </label>
-  </p>
-
-</kendo-dialog>

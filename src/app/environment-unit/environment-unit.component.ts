@@ -11,11 +11,16 @@ export class EnvironmentUnitComponent implements OnInit {
   @Input() danelVersion: DanelVersion
   constructor(private environmentService: EnvironmentService) { }
 
+  showDtataDlg: boolean;
+  onCLick() {
+    this.showDtataDlg = true;
+  }
+
   ngOnInit() {
-this.environmentService.getEnv(this.danelVersion.id).subscribe(i=>{
-  this.danelVersion.winNotificationIsUp=i.ver.winNotificationIsUp;
-  this.danelVersion.winServiceIsUp=i.ver.winNotificationIsUp;
-})
+    this.environmentService.getEnv(this.danelVersion.id).subscribe(i => {
+      this.danelVersion.winNotificationIsUp = i.ver.winNotificationIsUp;
+      this.danelVersion.winServiceIsUp = i.ver.winServiceIsUp;
+    })
   }
 
 }

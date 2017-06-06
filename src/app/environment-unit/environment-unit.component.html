@@ -1,2 +1,39 @@
-<span [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'" (dblclick)="onDoubleCLick(danelVersion)" [lgCopy]="danelVersion.fp" #span id="id{{index}}" class="link">{{danelVersion.dbName}}</span>
+<span [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'"
+    (click)="onCLick(danelVersion)" #span id="id{{index}}" class="link">{{danelVersion.dbName}}</span>
+<!--<span [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'" (lclick)="onDoubleCLick(danelVersion)" [lgCopy]="danelVersion.fp" #span id="id{{index}}" class="link">{{danelVersion.dbName}}</span>-->
 
+<kendo-dialog title="{{danelVersion.serverName}}" *ngIf="showDtataDlg" (close)="showDtataDlg=false">
+    <!--<input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">-->
+    <div class="row">
+        <div class="col-xs-6 h3">
+            <p> שרת </p>
+        </div>
+        <div class="col-xs-6 h3">
+            <p> נוטיפיקיישן </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <p> <label for="">פורט <mark>{{danelVersion.danelXListener}}</mark>      </label> </p>
+        </div>
+        <div class="col-xs-6">
+            <p> <label for=""> פורט  <mark>{{danelVersion.notificationsListener}}</mark>    </label> </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <p> <label for="">     שם       <mark>{{danelVersion.winServiceName}}</mark>    </label> </p>
+        </div>
+        <div class="col-xs-6">
+            <p> <label for="">      שם       <mark>{{danelVersion.winNotificationName}}</mark>    </label> </p>
+        </div>
+    </div>
+    <div class="row">
+         <div class="col-xs-6">
+               <p> <label for="">     סטטוס       <mark>{{danelVersion.winServiceIsUp?'למעלה':'למטה'}}</mark>    </label> </p>
+         </div>
+          <div class="col-xs-6">
+               <p> <label for="">     סטטוס       <mark>{{danelVersion.winNotificationIsUp?'למעלה':'למטה'}}</mark>    </label> </p>
+         </div>
+    </div>
+</kendo-dialog>
