@@ -1,15 +1,22 @@
-<span [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'"
-    (click)="onCLick(danelVersion)" #span id="id{{index}}" class="link">{{danelVersion.dbName}}</span>
+<span (click)="onCLick()" [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'"
+    #span class="link">{{danelVersion.dbName}}</span>
 <!--<span [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'" (lclick)="onDoubleCLick(danelVersion)" [lgCopy]="danelVersion.fp" #span id="id{{index}}" class="link">{{danelVersion.dbName}}</span>-->
-
+ 
 <kendo-dialog title="{{danelVersion.serverName}}" *ngIf="showDtataDlg" (close)="showDtataDlg=false">
-    <!--<input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">-->
+    <div class="row">
+        <div class="col-xs-12 h3">
+            <p>
+                <button [disabled]="isLoadingFile" #btn id="{{'id'+danelVersion.id}}" (click)="copyExeFilePath(btn.id)" class="btn btn-success" type="">הפעלת סביבה</button>
+            </p>
+        </div>
+
+    </div>
     <div class="row">
         <div class="col-xs-6 h3">
             <p> שרת </p>
         </div>
         <div class="col-xs-6 h3">
-            <p> נוטיפיקיישן </p>
+            <p> הפצה </p>
         </div>
     </div>
     <div class="row">
@@ -30,14 +37,31 @@
     </div>
     <div class="row">
         <div class="col-xs-6">
-            <p> <label for="">     סטטוס       <mark>{{danelVersion.winServiceIsUp?'למעלה':'למטה'}}</mark>    </label>
-                <button class="k-button-decrease" type="">{{danelVersion.winServiceIsUp?'להוריד':'להרים'}}</button>
-            </p>
+            <span>     סטטוס       <mark>{{danelVersion.winServiceIsUp?'למעלה':'למטה'}}</mark>    </span>
         </div>
         <div class="col-xs-6">
-            <p> <label for="">     סטטוס       <mark>{{danelVersion.winNotificationIsUp?'למעלה':'למטה'}}</mark>    </label>
-                <button class="k-button-decrease" type="">{{danelVersion.winNotificationIsUp?'להוריד':'להרים'}}</button>
-            </p>
+            <span>     סטטוס       <mark>{{danelVersion.winNotificationIsUp?'למעלה':'למטה'}}</mark>    </span>
+            <!--<button *ngIf="isManager" class="k-button-decrease" type="">{{danelVersion.winNotificationIsUp?'להוריד':'להרים'}}</button>-->
+
         </div>
     </div>
+    <ng-container *ngIf="isManager">
+        <div class="row">
+            <div class="col-xs-6">
+                <p>
+                    <button [disabled]="winServiceIsChanging" (click)="changeWinService()" class="btn btn-info" type="">{{danelVersion.winServiceIsUp?'עצירה':'הפעלה'}}</button>
+                    <button [disabled]="winServiceIsChanging"  (click)="restartwinService()" *ngIf="danelVersion.winServiceIsUp" class="btn btn-info" type="">אתחול</button>
+
+                </p>
+            </div>
+            <div class="col-xs-6">
+                <p>
+                    <button [disabled]="notificationIsChanging" (click)="changeNotification()" class="btn btn-info" type="">{{danelVersion.winNotificationIsUp?'עצירה':'הפעלה'}}</button>
+                    <button [disabled]="notificationIsChanging" (click)="restartNotification()" *ngIf="danelVersion.winNotificationIsUp" class="btn btn-info" type="">אתחול</button>
+
+                </p>
+            </div>
+        </div>
+    </ng-container>
+
 </kendo-dialog>

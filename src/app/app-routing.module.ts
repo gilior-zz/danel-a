@@ -7,15 +7,15 @@ import { LinksComponent } from "app/links/links.component";
 
 
 const routes: Routes = [
-  { path: 'env', component: EnvironmentComponent },
-  { path: 'inf', component: InfoComponent },
-  { path: 'lnk', component: LinksComponent },
+  { path: 'env', loadChildren: 'app/environment/environment.module#EnvironmentModule' },
+  { path: 'inf', loadChildren: 'app/info/info.module#InfoModule' },
+  { path: 'lnk', loadChildren: 'app/links/links.module#LinksModule' },
   { path: '', redirectTo: 'env', pathMatch: 'full' }
 
 ]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
   providers: []
 })

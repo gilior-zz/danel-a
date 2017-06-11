@@ -4,7 +4,7 @@ import 'rxjs/add/observable/of';
 import * as  _ from 'lodash'
 import { AppConfig, APP_CONFIG } from "../app-config";
 import { Response, Http } from "@angular/http";
-import { DanelVersionResponse } from "../../models";
+import { DanelVersionResponse, DanelVersion } from "../../models";
 
 
 @Injectable()
@@ -15,10 +15,21 @@ export class EnvironmentService {
     this.config = Object.assign({}, config);
 
     this.config.apiEndpoint = config.apiEndpoint + '/envs';
+    
   }
 
   getEnv(id: number): Observable<DanelVersionResponse> {
     return this.http.get(this.config.apiEndpoint + `/${id}`)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+ 
+
+  //0-stop 1-start 2-restart //winservice
+  //10-stop 11-start 12-restart //notification
+  changeService(toStatus: number, danelVersiond: DanelVersion): Observable<DanelVersionResponse> {
+    return this.http.put(this.config.apiEndpoint + `/${toStatus}`, danelVersiond)
       .map(this.extractData)
       .catch(this.handleError);
   }

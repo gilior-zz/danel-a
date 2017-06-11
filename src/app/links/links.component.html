@@ -1,8 +1,14 @@
-<div class="row">
-  <div class="col-xs-4" *ngFor="let grp of (linkResponse|async)?.lnks">
-    <span class="caption">{{grp[0].ctg}}</span>
-    <div class="well">
-      <button id="{{'id'+index}}" [lgCopy]="lnk.pth" class="link-btn" *ngFor="let lnk of grp;let index=index" kendoButton [icon]="'folder'">{{lnk.nm}}</button>
+<div id="lg-links" class="container-fluid lg-links">
+  <div class="row">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-4" *ngFor="let grp of (linkResponse|async)?.lnks">
+          <span class="caption">{{grp[0].ctg}}</span>
+          <div class="well">
+            <button [disabled]="isLoadingFile" (click)="runFile(lnk.pth)" id="{{'id'+index}}"  class="link-btn" *ngFor="let lnk of grp;let index=index" kendoButton [icon]="'folder'">{{lnk.nm}}</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

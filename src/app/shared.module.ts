@@ -1,4 +1,4 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { DialogModule } from '@progress/kendo-angular-dialog';
 
@@ -19,7 +19,7 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
+   
     CommonModule,
     TreeModule,
     HttpModule,
@@ -47,7 +47,7 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
     DialogModule,
     TreeModule,
     ReCaptchaModule,
-    BrowserAnimationsModule, CopyDirective],
+     CopyDirective],
   declarations: [CopyDirective]
 
 })

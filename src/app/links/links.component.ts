@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/observable';
 import { Component, OnInit } from '@angular/core';
 import { LinkResponse, Link } from "../../models";
 import { LinksService } from "../services/links.service";
+import { UtilityService } from "app/services/utility.service";
 
 
 @Component({
@@ -12,7 +13,14 @@ import { LinksService } from "../services/links.service";
 export class LinksComponent implements OnInit {
   public linkResponse: Observable<LinkResponse>;
 
-  constructor(private linksService: LinksService) {
+  constructor(private linksService: LinksService, private us: UtilityService) {
+  }
+public isLoadingFile: boolean;
+  runFile(pth: string) {
+     this.isLoadingFile = true;
+    this.us.runFile(pth).subscribe(i => {
+      this.isLoadingFile = false;
+    }, err => { this.isLoadingFile = false; })
   }
 
   onClick(lnk: string) {

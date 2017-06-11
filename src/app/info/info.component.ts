@@ -14,7 +14,7 @@ import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
 
 @Component({
-  selector: 'lg-info',
+
   templateUrl: 'info.component.html',
   styleUrls: ['info.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -153,7 +153,7 @@ export class InfoComponent implements OnInit {
   }
 
   pageable = {
-    pageSizes: true
+    pageSizes: [5, 10, 20, 30, 40, 50, 100, 600]
   }
 
   delID: number;
@@ -352,13 +352,19 @@ export class InfoComponent implements OnInit {
       ;
   }
 
-
+  isLoadingFile: boolean
   isGridActive: boolean = true;
   skip: number = 0;
   public searchATermStream = new Subject<string>();
   public searchQTermStream = new Subject<string>();
   searchA(term: string) { this.searchATermStream.next(term); }
   searchQ(term: string) { this.searchQTermStream.next(term); }
+
+  runFile(pth: string) {
+    this.ut.runFile(pth).subscribe(i => {
+      this.isLoadingFile = false;
+    }, err => { this.isLoadingFile = false; })
+  }
 
   getData(): Array<SupportIssue> {
     if (this.gridData == null) return;

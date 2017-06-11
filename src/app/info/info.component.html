@@ -1,8 +1,47 @@
+<div id="lg-info" class="container-fluid lg-info">
+  <div class="row">
+    <div class="">
+      <kendo-dialog title="הוספת נושא" *ngIf="showFaqDlg" (close)="closeFaqDlg( 'cancel') ">
+        <lg-faq-item #newItemWindow></lg-faq-item>
+        <kendo-dialog-actions>
+          <button kendoButton (click)="closeFaqDlg('no') " primary="true">ביטול</button>
+          <button kendoButton (click)="closeFaqDlg('yes',newItemWindow) " primary="true">אישור</button>
+        </kendo-dialog-actions>
+      </kendo-dialog>
+
+      <kendo-dialog title="עדכון נושא" *ngIf="showUpdateFaqDlg" (close)="closeUpdateFaqDlg('cancel') ">
+        <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6LeObAwUAAAAANlcxV6KExfLKNunrLNppCBiWbx4>"></re-captcha>-->
+        <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6Ldh8yMUAAAAAFDeabGm5TQCGXrxEwQOJYB-jA_8>"></re-captcha>-->
+
+        <lg-faq-item [item]="editedItem" #updateItemWindow></lg-faq-item>
+        <kendo-dialog-actions>
+          <button kendoButton (click)="closeUpdateFaqDlg('no') " primary="true">ביטול</button>
+          <button kendoButton (click)="closeUpdateFaqDlg('yes',updateItemWindow) " primary="true">אישור</button>
+        </kendo-dialog-actions>
+      </kendo-dialog>
+
+      <kendo-dialog title="מחיקת רשומה" *ngIf="showRemoveDlg " (close)="closeRemoveDlg( 'cancel') ">
+        <input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">
+        <div class="captcha-wrp">
+          <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6LeObAwUAAAAANlcxV6KExfLKNunrLNppCBiWbx4>"></re-captcha>-->
+          <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6Ldh8yMUAAAAAFDeabGm5TQCGXrxEwQOJYB-jA_8>"></re-captcha>-->
+
+
+        </div>
+        <p style="margin: 30px; text-align: center; ">האם למחוק רשומה?</p>
+
+        <kendo-dialog-actions>
+          <button kendoButton (click)="closeRemoveDlg( 'no') " primary="true ">ביטול</button>
+          <button kendoButton (click)="closeRemoveDlg( 'yes') " primary="true ">אישור</button>
+        </kendo-dialog-actions>
+      </kendo-dialog>
+    </div>
+  </div>
+</div>
 <form novalidate #myForm="ngForm">
   <kendo-grid [pageSize]="pageSize" #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)"
-    (save)="saveHandlerTemplateDriven($event)" (remove)="removeHandler($event)" [pageSize]="10" [selectable]="true" [pageable]="pageable"
-    (pageChange)="pageChange($event)" [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true"
-    (add)="addHandler($event)">
+    (save)="saveHandlerTemplateDriven($event)" (remove)="removeHandler($event)" [selectable]="true" [pageable]="pageable" (pageChange)="pageChange($event)"
+    [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true" (add)="addHandler($event)">
 
     <kendo-grid-column title="ID" field="id" [hidden]="true">
     </kendo-grid-column>
@@ -24,15 +63,15 @@
     </kendo-grid-column>
     <kendo-grid-column title="מס מודול" field="mID" [hidden]="true">
     </kendo-grid-column>
-    <kendo-grid-column [filterable]="false" title="תאריך" width="90px" field="ts" filter="date" format="{0:d}">
+    <!--<kendo-grid-column [filterable]="false" title="תאריך" width="90px" field="ts" filter="date" format="{0:d}">
       <ng-template kendoGridCellTemplate let-dataItem>
         <span>{{dataItem.ts|date:"dd/MM/yy HH:MM:ss"}}</span>
       </ng-template>
-    </kendo-grid-column>
+    </kendo-grid-column>-->
     <ng-template kendoGridDetailTemplate let-dataItem>
       <section>
         <p class="info-link" *ngFor="let lnk of dataItem.lnks;let index=index ">
-          <span [lgCopy]="lnk.pth" id="{{'id'+index}}">{{lnk.pth}}</span>
+          <span  (click)="runFile(lnk.pth)" id="{{'id'+index}}">{{lnk.pth}}</span>
         </p>
 
       </section>
@@ -55,39 +94,3 @@
 
   </kendo-grid>
 </form>
-
-
-<kendo-dialog title="הוספת נושא" *ngIf="showFaqDlg" (close)="closeFaqDlg( 'cancel') ">
-  <lg-faq-item #newItemWindow></lg-faq-item>
-  <kendo-dialog-actions>
-    <button kendoButton (click)="closeFaqDlg('no') " primary="true">ביטול</button>
-    <button kendoButton (click)="closeFaqDlg('yes',newItemWindow) " primary="true">אישור</button>
-  </kendo-dialog-actions>
-</kendo-dialog>
-
-<kendo-dialog title="עדכון נושא" *ngIf="showUpdateFaqDlg" (close)="closeUpdateFaqDlg('cancel') ">
-   <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6LeObAwUAAAAANlcxV6KExfLKNunrLNppCBiWbx4>"></re-captcha>-->
-    <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6Ldh8yMUAAAAAFDeabGm5TQCGXrxEwQOJYB-jA_8>"></re-captcha>-->
-
-  <lg-faq-item [item]="editedItem" #updateItemWindow></lg-faq-item>
-  <kendo-dialog-actions>
-    <button kendoButton (click)="closeUpdateFaqDlg('no') " primary="true">ביטול</button>
-    <button kendoButton (click)="closeUpdateFaqDlg('yes',updateItemWindow) " primary="true">אישור</button>
-  </kendo-dialog-actions>
-</kendo-dialog>
-
-<kendo-dialog title="מחיקת רשומה" *ngIf="showRemoveDlg " (close)="closeRemoveDlg( 'cancel') ">
-  <input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">
-  <div class="captcha-wrp">
-    <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6LeObAwUAAAAANlcxV6KExfLKNunrLNppCBiWbx4>"></re-captcha>-->
-    <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6Ldh8yMUAAAAAFDeabGm5TQCGXrxEwQOJYB-jA_8>"></re-captcha>-->
-
-
-  </div>
-  <p style="margin: 30px; text-align: center; ">האם למחוק רשומה?</p>
-
-  <kendo-dialog-actions>
-    <button kendoButton (click)="closeRemoveDlg( 'no') " primary="true ">ביטול</button>
-    <button kendoButton (click)="closeRemoveDlg( 'yes') " primary="true ">אישור</button>
-  </kendo-dialog-actions>
-</kendo-dialog>

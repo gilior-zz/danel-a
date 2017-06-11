@@ -7,7 +7,7 @@ import * as Clipboard from "Clipboard";
 import { UtilityService } from "app/services/utility.service";
 
 @Component({
-  selector: 'lg-environment',
+  
   templateUrl: 'environment.component.html',
   styleUrls: ['environment.component.scss'],
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
+import { UtilityService } from "app/services/utility.service";
 
 @Component({
   selector: 'lg-mnu',
@@ -20,8 +21,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class MnuComponent implements OnInit {
-
-  constructor() { }
+  managerCode: number;
+  constructor(private us: UtilityService) { }
 
   ngOnInit() {
   }
@@ -34,16 +35,23 @@ export class MnuComponent implements OnInit {
     this.menuVisible = this.pageYOffset > window.pageYOffset || window.pageYOffset <= 30;
 
     this.pageYOffset = window.pageYOffset;
-   
+
 
 
   }
 
+  get isManager(): boolean { return this.us.isManager }
+  managerIn() {
+    if (this.managerCode == 1234) this.us.isManager = true;
+  }
+  managerOut() {
+    this.us.isManager = false;
+  }
 
   goTo(id: string) {
-    $('html, body').animate({
-      scrollTop: $(`#${id}`).offset().top
-    }, 2000);
+    // $('html, body').animate({
+    //   scrollTop: $(`#${id}`).offset().top
+    // }, 2000);
   }
 
 }
