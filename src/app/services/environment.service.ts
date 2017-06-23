@@ -10,12 +10,17 @@ import { DanelVersionResponse, DanelVersion } from "../../models";
 @Injectable()
 export class EnvironmentService {
   config: AppConfig
+  listenerConfig: AppConfig
+  notificationConfig: AppConfig
   plug: number = 6;
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
     this.config = Object.assign({}, config);
-
+    this.listenerConfig = Object.assign({}, config);
+    this.notificationConfig = Object.assign({}, config);
     this.config.apiEndpoint = config.apiEndpoint + '/envs';
-    
+    this.listenerConfig.apiEndpoint = config.apiEndpoint + '/listener';
+    this.notificationConfig.apiEndpoint = config.apiEndpoint + '/notification';
+
   }
 
   getEnv(id: number): Observable<DanelVersionResponse> {
@@ -24,7 +29,21 @@ export class EnvironmentService {
       .catch(this.handleError);
   }
 
- 
+  GetNotificationStatus(winNotificationName: string, serverName: string): Observable<string> {
+    let id = `${winNotificationName};${serverName}`;
+    return this.http.get(this.notificationConfig.apiEndpoint + `/${id}`)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  GetListenerStatus(winNotificationName: string, serverName: string): Observable<string> {
+    let id = `${winNotificationName};${serverName}`;
+    return this.http.get(this.listenerConfig.apiEndpoint + `/${id}`)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+
 
   //0-stop 1-start 2-restart //winservice
   //10-stop 11-start 12-restart //notification

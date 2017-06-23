@@ -19,6 +19,12 @@ $mnu-text-color: white;
     &--menu-anchor-item-wrp{
       background-color: $mnu-color;
       &--li{
+        &--select-a{
+          padding: 15px;
+           &:hover{
+            // background-color: $mnu-color !important;
+          }
+        }
         &--active{
         background-color: black !important;
           color: red !important;

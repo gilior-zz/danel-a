@@ -14,6 +14,7 @@ export class UtilityService {
   showFaqDlg: boolean;
   delRecord: boolean;
   faqToSave: SupportIssue;
+  userType: string='support';
   public isManager: boolean;
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
     this.config = Object.assign({}, config)

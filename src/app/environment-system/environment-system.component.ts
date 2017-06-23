@@ -5,34 +5,34 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { Subject } from 'rxjs/Subject';
-import { RTL } from "@progress/kendo-angular-l10n";
 
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SupportIssue } from "../../models";
+import { SupportIssue, DanelVersion } from "../../models";
 import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
+import { FlatEnvironmentService } from "app/services/flat-environment.service";
+import { EnvironmentService } from "app/services/environment.service";
 
 @Component({
 
-  templateUrl: 'info.component.html',
-  styleUrls: ['info.component.scss'],
+  templateUrl: 'environment-system.component.html',
+  styleUrls: ['environment-system.component.scss'],
   // encapsulation: ViewEncapsulation.None,
-  providers:[{ provide: RTL, useValue: true }]
 })
-export class InfoComponent implements OnInit {
+export class EnvironmentSystemComponent implements OnInit {
   public formGroup: FormGroup;
 
   public showFaqDlg: boolean;
   public showUpdateFaqDlg: boolean;
-  private data: Array<SupportIssue>;
+  private data: Array<DanelVersion>;
   public showRemoveDlg: boolean;
-  constructor(public infoService: InfoService, public ut: UtilityService) { }
-  gridData: Array<SupportIssue>;
-  public pageSize: number = 5;
-  public items: Array<SupportIssue>;
-  filteredData: Array<SupportIssue>;
+  constructor(public flatEnvironmentService: FlatEnvironmentService, public ut: UtilityService, public environmentService: EnvironmentService) { }
+  gridData: Array<DanelVersion>;
+  public pageSize: number = 100;
+  public items: Array<DanelVersion>;
+  filteredData: Array<DanelVersion>;
   prbFilter: string;
   slnFilter: string;
   public gridView: GridDataResult;
@@ -44,15 +44,38 @@ export class InfoComponent implements OnInit {
     // this.handleAStream();
     // this.handleQStream();
   }
-  private loadFaqs() {
-    this.infoService.getFaQs().subscribe(i => {
-      this.items = <Array<SupportIssue>>JSON.parse(JSON.stringify(i.sis));
+  loadFaqs() {
+    this.flatEnvironmentService.getEnvs().subscribe(i => {
+      this.items = <Array<DanelVersion>>JSON.parse(JSON.stringify(i.flatVers));
       this.loadItems();
-
+      this.items.forEach(i => {
+        let re = /\./gi;
+        let winServiceName = i.winServiceName.replace(re, '^');
+        let winNotificationName = i.winNotificationName.replace(re, '^');
+        this.environmentService.GetListenerStatus(winServiceName, i.serverName).subscribe(j => {
+          i.winListenerStatus = j;
+        });
+        this.environmentService.GetNotificationStatus(winNotificationName, i.serverName).subscribe(j => {
+          i.winNotificationStatus = j;
+        });
+      })
 
     });
+
   }
 
+  GetNotificationStatus(winNotificationName: string, serverName: string): Observable<string> {
+    return this.environmentService.GetNotificationStatus(winNotificationName, serverName);
+  }
+
+
+  GetListenerStatus(winServiceName: string, serverName: string): Observable<string> {
+    return this.environmentService.GetListenerStatus(winServiceName, serverName);
+  }
+
+  setHeaderStyle() {
+    return { 'background-color': '#666', 'color': '#fff', 'line-height': '1em','text-align':'center' }
+  }
 
   pageChange({ skip, take }: PageChangeEvent): void {
     this.skip = skip;
@@ -122,37 +145,10 @@ export class InfoComponent implements OnInit {
   //       sender.addRow(this.formGroup);
   //   }
 
-  public saveHandlerReactiveDriven({ sender, rowIndex, formGroup, isNew }) {
-    const si: SupportIssue = formGroup.value;
 
-    this.infoService.update(si).subscribe(i => {
 
-    }, (err) => {
-      console.log('somthing is wrong');
 
-    });
 
-    sender.closeRow(rowIndex);
-  }
-
-  public saveHandlerTemplateDriven({ sender, rowIndex, dataItem, isNew }) {
-    // update the data source
-    this.infoService.update(dataItem).subscribe(i => { });
-
-    // close the editor, i.e revert the row back into view mode
-    sender.closeRow(rowIndex);
-  }
-
-  public removeHandler({ dataItem }) {
-
-    //this.infoService.remove(dataItem);
-    this.delID = dataItem.id;
-    // console.log(`dataItem ${dataItem.id}`)
-    // console.log(`dataItem ${dataItem.prb}`)
-    // console.log(`dataItem ${dataItem.prb}`)
-
-    this.showRemoveDlg = true;
-  }
 
   pageable = {
     pageSizes: [5, 10, 20, 30, 40, 50, 100, 600]
@@ -160,94 +156,15 @@ export class InfoComponent implements OnInit {
 
   delID: number;
 
-  delete() {
-    console.log(`delete from DB ${this.delID}`);
-    this.infoService.remove(this.delID).subscribe(() => {
-      let item = this.items.find(i => i.id == this.delID);
-      this.items = this.items.filter(i => i != item);
-      this.loadItems();
-    });
-  }
+
 
   deletePassword: number;
 
-  public closeRemoveDlg(status) {
-    // console.log(`Dialog result: ${status}`);
-
-    if (status == 'yes') {
-      if (this.deletePassword != 1234) {
-        return;
-      }
-      this.showRemoveDlg = false;
-      this.delete();
-    }
-    this.showRemoveDlg = false;
-
-  }
-
-  public closeFaqDlg(status, newItemWindow: any = null, ) {
-    this.showFaqDlg = false;
-    if (status == 'yes') {
-      let sis = newItemWindow.getNewFaq();
-      this.infoService.add(sis).subscribe(i => {
-        console.log(i);
-        this.items.push(i);
-        this.items = this.items.sort((a, b) => { return new Date(b.ts).getDate() - new Date(a.ts).getDate() })
-        this.loadItems();
-      }, (err) => {
-        console.log('somthing is wrong');
-      }
-
-      );
-    }
-
-  }
-
-  public closeUpdateFaqDlg(status, updateItemWindow: any = null, ) {
-
-
-    this.showUpdateFaqDlg = false;
-    if (status == 'yes') {
-      let sis = updateItemWindow.getNewFaq();
-
-
-      this.infoService.update(sis).subscribe(i => {
-        console.log('i sent to server');
-        console.log(sis);
-        console.log(' from server:');
-        console.log(i);
-        for (var index = 0; index < this.items.length; index++) {
-          var element = this.items[index];
-          if (element.id == i.id)
-            this.items[index] = i;
-        }
-        // this.items.forEach(arrayItem => {
-        //   if (i.id == arrayItem.id) {
-        //     console.log('old item');
-        //     console.log(arrayItem);
-        //     arrayItem = i;
-        //     console.log('new item');
-        //     console.log(arrayItem);
-        //   }
 
 
 
-        // });
-        console.log('new array');
-        console.log(this.items[0]);
 
 
-
-        this.items = this.items.sort((a, b) => { return new Date(b.ts).getDate() - new Date(a.ts).getDate() })
-        this.loadItems();
-      }, (err) => {
-        console.log('somthing is wrong');
-      }
-
-      );
-    }
-
-  }
 
 
   public dataStateChange(state: DataStateChangeEvent): void {
@@ -276,6 +193,8 @@ export class InfoComponent implements OnInit {
 
     sender.editRow(rowIndex, this.formGroup);
   }
+
+
 
   handleCorrectCaptcha($event) {
     console.log($event);
@@ -368,14 +287,6 @@ export class InfoComponent implements OnInit {
     }, err => { this.isLoadingFile = false; })
   }
 
-  getData(): Array<SupportIssue> {
-    if (this.gridData == null) return;
-    let l = this.gridData;
-
-    l = l.filter(i => i.prb.includes(this.prbFilter) || this.prbFilter == null);
-
-    return l;
-  }
 
 
 

@@ -1,0 +1,38 @@
+<kendo-grid [scrollable]="'scrollable'" [pageSize]="pageSize" #grid [data]="gridView" [pageable]="pageable" (pageChange)="pageChange($event)"
+    [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true">
+    <kendo-grid-column [style]="{'background-color': '#888','color': '#fff'}" [headerStyle]="setHeaderStyle()" field="dbName"
+        title="db-Name">
+    </kendo-grid-column>
+    <kendo-grid-column [headerStyle]="setHeaderStyle()" field="serverName" title="server-Name">
+    </kendo-grid-column>
+    <kendo-grid-column [headerStyle]="setHeaderStyle()" field="vr" title="Version" [width]="80">
+        <ng-template kendoGridCellTemplate let-dataItem>
+            <span>{{dataItem.vr._Major}}.{{dataItem.vr._Minor}}.{{dataItem.vr._Build}}.{{dataItem.vr._Revision}}   </span>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column-group [headerStyle]="setHeaderStyle()" title="Listener" [locked]="false">
+        <kendo-grid-column [headerStyle]="setHeaderStyle()" field="winServiceName" title="Name" [locked]="false">
+        </kendo-grid-column>
+        <kendo-grid-column [headerStyle]="setHeaderStyle()" field="listenerPort" title="Port" [locked]="false" [width]="100" [filterable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span>{{dataItem.listenerPort}};{{dataItem.wcfport}}</span>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerStyle]="setHeaderStyle()" field="winListenerStatus" title="Status" [locked]="false">
+
+        </kendo-grid-column>
+    </kendo-grid-column-group>
+    <kendo-grid-column-group [headerStyle]="setHeaderStyle()" title="Notification" [locked]="false">
+        <kendo-grid-column [headerStyle]="setHeaderStyle()" field="winNotificationName" title="Name" [locked]="false">
+        </kendo-grid-column>
+        <kendo-grid-column [headerStyle]="setHeaderStyle()" field="notificationPort" title="Port" [locked]="false" [width]="100"
+            [filterable]="false">
+            <ng-template kendoGridCellTemplate let-dataItem>
+                <span>{{dataItem.notificationPort}};{{dataItem.notificationSubscriptionsPort}}</span>
+            </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column [headerStyle]="setHeaderStyle()" field="winNotificationStatus" title="Status" [locked]="false">
+
+        </kendo-grid-column>
+    </kendo-grid-column-group>
+</kendo-grid>

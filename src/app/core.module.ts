@@ -9,6 +9,7 @@ import { MdlsService } from "app/services/mdls.service";
 import { LinksService } from "app/services/links.service";
 import { AppConfigProvider } from "app/app-config";
 import { RTL } from "@progress/kendo-angular-l10n";
+import { FlatEnvironmentService } from "app/services/flat-environment.service";
 
 
 
@@ -21,6 +22,10 @@ import { RTL } from "@progress/kendo-angular-l10n";
     LinksService, NewsService,
     UtilityService,
     MdlsService,
-    AppConfigProvider, { provide: RTL, useValue: true }]
+    AppConfigProvider,
+
+    FlatEnvironmentService,
+    // 
+    ]
 })
 export class CoreModule { }

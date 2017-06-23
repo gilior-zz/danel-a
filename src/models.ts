@@ -4,14 +4,18 @@ export class DanelVersion {
   fp: string;
   _Version: number;
   serverName: string;
-  danelXListener: number;
-  notificationsListener: number;
+  listenerPort: number;
+  notificationPort: number;
   clientFolder: string;
   winServiceName: string;
   winNotificationName: string;
   winServiceIsUp: boolean;
   winNotificationIsUp: boolean;
   id: number;
+  winNotificationStatus: string;
+  winListenerStatus: string;
+  wcfport: string;
+  notificationSubscriptionsPort: string;
 
 }
 
@@ -20,6 +24,7 @@ export class Version {
 }
 export class DanelVersionResponse {
   vers: DanelVersion[][];
+  flatVers: DanelVersion[];
   ver: DanelVersion;
   time: Date;
 }

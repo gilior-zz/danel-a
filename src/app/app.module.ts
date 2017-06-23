@@ -15,6 +15,7 @@ import { AppRoutingModule } from "app/app-routing.module";
 import { CopyComponent } from "app/copy/copy.component";
 import { MnuComponent } from "app/mnu/mnu.component";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { MnuComponent } from "app/mnu/mnu.component";
     RollerComponent,
     CurtainComponent,
     DialogWindowComponent,
-    CopyComponent
+    CopyComponent,
+   
   ],
   imports: [
 BrowserAnimationsModule,

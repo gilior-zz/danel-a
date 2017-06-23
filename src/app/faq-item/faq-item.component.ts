@@ -15,7 +15,7 @@ import { MdlsService } from "../services/mdls.service";
 
 
 @Component({
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
   selector: 'lg-faq-item',
   templateUrl: './faq-item.component.html',
   styleUrls: ['./faq-item.component.scss'],
