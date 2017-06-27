@@ -8,18 +8,19 @@ import { Subject } from 'rxjs/Subject';
 
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SupportIssue, DanelVersion } from "../../models";
+import { SupportIssue, DanelVersion, ServiceControllerStatus } from "../../models";
 import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
 import { FlatEnvironmentService } from "app/services/flat-environment.service";
 import { EnvironmentService } from "app/services/environment.service";
+import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 
 @Component({
 
   templateUrl: 'environment-system.component.html',
   styleUrls: ['environment-system.component.scss'],
-  // encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None,
 })
 export class EnvironmentSystemComponent implements OnInit {
   public formGroup: FormGroup;
@@ -28,7 +29,7 @@ export class EnvironmentSystemComponent implements OnInit {
   public showUpdateFaqDlg: boolean;
   private data: Array<DanelVersion>;
   public showRemoveDlg: boolean;
-  constructor(public flatEnvironmentService: FlatEnvironmentService, public ut: UtilityService, public environmentService: EnvironmentService) { }
+  constructor(public domSanitizer: DomSanitizer, public flatEnvironmentService: FlatEnvironmentService, public ut: UtilityService, public environmentService: EnvironmentService) { }
   gridData: Array<DanelVersion>;
   public pageSize: number = 100;
   public items: Array<DanelVersion>;
@@ -44,24 +45,72 @@ export class EnvironmentSystemComponent implements OnInit {
     // this.handleAStream();
     // this.handleQStream();
   }
+
+  get isManager():boolean{return this.ut.isManager}
   loadFaqs() {
     this.flatEnvironmentService.getEnvs().subscribe(i => {
       this.items = <Array<DanelVersion>>JSON.parse(JSON.stringify(i.flatVers));
       this.loadItems();
-      this.items.forEach(i => {
-        let re = /\./gi;
-        let winServiceName = i.winServiceName.replace(re, '^');
-        let winNotificationName = i.winNotificationName.replace(re, '^');
-        this.environmentService.GetListenerStatus(winServiceName, i.serverName).subscribe(j => {
-          i.winListenerStatus = j;
-        });
-        this.environmentService.GetNotificationStatus(winNotificationName, i.serverName).subscribe(j => {
-          i.winNotificationStatus = j;
-        });
+      this.flatEnvironmentService.GetListenersStatuses().subscribe(listenersStatuses => {
+
+        listenersStatuses.forEach(item => {
+          let envs = this.items.filter(env => env.id == item.Key);
+          if (envs != null) {
+            let env = envs[0];
+            if (env != null)
+              env.winListenerStatus = item.Value;
+          }
+        })
       })
+
+      this.flatEnvironmentService.GetNotificationsStatuses().subscribe(listenersStatuses => {
+
+        listenersStatuses.forEach(item => {
+          let envs = this.items.filter(env => env.id == item.Key);
+          if (envs != null) {
+            let env = envs[0];
+            if (env != null)
+              env.winNotificationStatus = item.Value;
+          }
+        })
+      })
+      // this.items.forEach(i => {
+      //   let re = /\./gi;
+      //   let winServiceName = i.winServiceName.replace(re, '^');
+      //   let winNotificationName = i.winNotificationName.replace(re, '^');
+      //   this.environmentService.GetListenerStatus(winServiceName, i.serverName).subscribe(j => {
+      //     i.winListenerStatus = j;
+      //   });
+      //   this.environmentService.GetNotificationStatus(winNotificationName, i.serverName).subscribe(j => {
+      //     i.winNotificationStatus = j;
+      //   });
+      // })
 
     });
 
+  }
+
+  setListenerHeaderStyle() {
+    return { 'background-color': 'darksalmon', 'color': '#fff', 'line-height': '1em', 'text-align': 'center' }
+
+  }
+
+   setNotificationHeaderStyle() {
+    return { 'background-color': 'darkslateblue', 'color': '#fff', 'line-height': '1em', 'text-align': 'center' }
+
+  }
+
+  setStatusSpanStyle(status: number): SafeStyle {
+    switch (<ServiceControllerStatus>status) {
+      case ServiceControllerStatus.NotExists:
+        return this.domSanitizer.bypassSecurityTrustStyle('background-color:black;display: inline-block;height:20px;width:20px;');
+      case ServiceControllerStatus.Running:
+        return this.domSanitizer.bypassSecurityTrustStyle('background-color:green;display: inline-block;height:20px;width:20px;');
+      case ServiceControllerStatus.Stopped:
+        return this.domSanitizer.bypassSecurityTrustStyle('background-color:red;display: inline-block;height:20px;width:20px;');
+      default:
+        return this.domSanitizer.bypassSecurityTrustStyle('background-color:orange;display: inline-block;height:20px;width:20px;');
+    }
   }
 
   GetNotificationStatus(winNotificationName: string, serverName: string): Observable<string> {
@@ -74,7 +123,7 @@ export class EnvironmentSystemComponent implements OnInit {
   }
 
   setHeaderStyle() {
-    return { 'background-color': '#666', 'color': '#fff', 'line-height': '1em','text-align':'center' }
+    return { 'background-color': '#666', 'color': '#fff', 'line-height': '1em', 'text-align': 'center' }
   }
 
   pageChange({ skip, take }: PageChangeEvent): void {
@@ -89,6 +138,61 @@ export class EnvironmentSystemComponent implements OnInit {
       data: this.items.slice(this.skip, this.skip + this.pageSize),
       total: this.items.length
     };
+  }
+
+  chnageWinListenerStatus(dataItem: DanelVersion) {
+    dataItem.winListenerStatusIsCahnging = true;
+    let toStatus = -1;
+    let originStatus = dataItem.winListenerStatus;
+    switch (dataItem.winListenerStatus) {
+      case ServiceControllerStatus.Running:
+        toStatus = ServiceControllerStatus.Stopped;
+        dataItem.winListenerStatus = ServiceControllerStatus.StopPending;
+        break;
+      case ServiceControllerStatus.Stopped:
+        toStatus = ServiceControllerStatus.Running;
+        dataItem.winListenerStatus = ServiceControllerStatus.StartPending;
+        break;
+    }
+
+
+    this.flatEnvironmentService.chnageWinListenerStatus(dataItem.id, toStatus).subscribe(i => {
+      dataItem.winListenerStatus = toStatus;
+      dataItem.winListenerStatusIsCahnging = false;
+    }, err => {
+      dataItem.winListenerStatus = originStatus;
+      dataItem.winListenerStatusIsCahnging = false
+    }
+    )
+  }
+
+  chnageWinNotificationStatus(dataItem: DanelVersion) {
+
+    dataItem.winNotificationStatusIsCahnging = true;
+    let originStatus = dataItem.winListenerStatus;
+    let toStatus = -1;
+
+
+    switch (dataItem.winNotificationStatus) {
+      case ServiceControllerStatus.Running:
+        toStatus = ServiceControllerStatus.Stopped;
+        dataItem.winNotificationStatus = ServiceControllerStatus.StopPending;
+        break;
+      case ServiceControllerStatus.Stopped:
+        toStatus = ServiceControllerStatus.Running;
+        dataItem.winNotificationStatus = ServiceControllerStatus.StartPending;
+        break;
+    }
+
+    this.flatEnvironmentService.chnageWinNotificationStatus(dataItem.id, toStatus).subscribe(i => {
+      dataItem.winNotificationStatus = toStatus;
+      dataItem.winNotificationStatusIsCahnging = false;
+    }, err => {
+      dataItem.winNotificationStatusIsCahnging = false;
+      dataItem.winNotificationStatus = originStatus
+    }
+    )
+
   }
   public handleQStream() {
     this.searchQTermStream

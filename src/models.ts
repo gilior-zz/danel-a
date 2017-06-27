@@ -12,11 +12,26 @@ export class DanelVersion {
   winServiceIsUp: boolean;
   winNotificationIsUp: boolean;
   id: number;
-  winNotificationStatus: string;
-  winListenerStatus: string;
+  winNotificationStatus: ServiceControllerStatus;
+  winListenerStatus: ServiceControllerStatus;
   wcfport: string;
   notificationSubscriptionsPort: string;
+  winListenerStatusIsCahnging: boolean;
+  winNotificationStatusIsCahnging: boolean;
+  version: string;
+  listenerPorts: string;
+  notificationPorts: string;
+}
 
+export enum ServiceControllerStatus {
+  NotExists = -1,
+  ContinuePending = 5,
+  Paused = 7,
+  PausePending = 6,
+  Running = 4,
+  StartPending = 2,
+  Stopped = 1,
+  StopPending = 3,
 }
 
 export class Version {

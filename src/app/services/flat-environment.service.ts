@@ -4,21 +4,57 @@ import 'rxjs/add/observable/of';
 import * as  _ from 'lodash'
 import { AppConfig, APP_CONFIG } from "../app-config";
 import { Response, Http } from "@angular/http";
-import { DanelVersionResponse, DanelVersion } from "../../models";
+import { DanelVersionResponse, DanelVersion, ServiceControllerStatus } from "../../models";
 
 
 @Injectable()
 export class FlatEnvironmentService {
     config: AppConfig
+    listenerConfig: AppConfig
+    notificationConfig: AppConfig
+    flatConfig: AppConfig
+
     plug: number = 6;
     constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
         this.config = Object.assign({}, config);
-        this.config.apiEndpoint = config.apiEndpoint + '/flatEnvs';
+        this.listenerConfig = Object.assign({}, config);
+        this.notificationConfig = Object.assign({}, config);
+        this.flatConfig = Object.assign({}, config);
+        this.config.apiEndpoint = config.apiEndpoint + '/envs';
+        this.listenerConfig.apiEndpoint = config.apiEndpoint + '/listener';
+        this.notificationConfig.apiEndpoint = config.apiEndpoint + '/notification';
+        this.flatConfig.apiEndpoint = config.apiEndpoint + '/flatEnvs';
+
+    }
+
+    GetListenersStatuses(): Observable<Array<any>> {
+        return this.http.get(this.listenerConfig.apiEndpoint)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    GetNotificationsStatuses(): Observable<Array<any>> {
+
+        return this.http.get(this.notificationConfig.apiEndpoint)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    public chnageWinListenerStatus(id: number, toStatus: ServiceControllerStatus): Observable<any> {
+        return this.http.put(`${this.listenerConfig.apiEndpoint}/${id}`, toStatus)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
+    public chnageWinNotificationStatus(id: number, toStatus: ServiceControllerStatus): Observable<ServiceControllerStatus> {
+        return this.http.put(`${this.notificationConfig.apiEndpoint}/${id}`, toStatus)
+            .map(this.extractData)
+            .catch(this.handleError);
     }
 
 
     getEnvs(): Observable<DanelVersionResponse> {
-        return this.http.get(this.config.apiEndpoint)
+        return this.http.get(this.flatConfig.apiEndpoint)
             .map(this.extractData)
             .catch(this.handleError);
     }

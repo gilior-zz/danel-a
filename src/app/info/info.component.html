@@ -50,15 +50,28 @@
         <textarea [(ngModel)]="dataItem.prb" name="prb" class="k-textbox" required></textarea>
 
       </ng-template>
+
+      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
+        </kendo-grid-string-filter-cell>
+      </ng-template>
     </kendo-grid-column>
     <kendo-grid-column title="פתרון" field="sln">
       <ng-template kendoGridEditTemplate let-dataItem="dataItem">
         <textarea [(ngModel)]="dataItem.sln" name="sln" class="k-textbox" required></textarea>
       </ng-template>
+      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
+        </kendo-grid-string-filter-cell>
+      </ng-template>
     </kendo-grid-column>
     <kendo-grid-column title="מודול" width="160px" field="mdlName">
       <ng-template kendoGridEditTemplate let-dataItem="dataItem">
         <input [(ngModel)]="dataItem.mdlName" name="mdlName" class="k-textbox" />
+      </ng-template>
+      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+        <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
+        </kendo-grid-string-filter-cell>
       </ng-template>
     </kendo-grid-column>
     <kendo-grid-column title="מס מודול" field="mID" [hidden]="true">
@@ -71,7 +84,7 @@
     <ng-template kendoGridDetailTemplate let-dataItem>
       <section>
         <p class="info-link" *ngFor="let lnk of dataItem.lnks;let index=index ">
-          <span  (click)="runFile(lnk.pth)" id="{{'id'+index}}">{{lnk.pth}}</span>
+          <span (click)="runFile(lnk.pth)" id="{{'id'+index}}">{{lnk.pth}}</span>
         </p>
 
       </section>

@@ -13,11 +13,11 @@
     </div>
     <div class="collapse navbar-collapse menu-wrp--menu--menu-anchor-item-wrp" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a [routerLink]="isSystem?'/env-system':'/env'" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active"
-            class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">סביבות</a></li>
+        <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/env" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">סביבות</a></li>
+        <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/env-system" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">סביבות-מפורט</a></li>
         <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/inf" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">FaQ</a></li>
         <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/lnk" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">קישורים</a></li>
-        <li class="menu-wrp--menu--menu-anchor-item-wrp--li">
+        <!--<li class="menu-wrp--menu--menu-anchor-item-wrp--li">
           <span class="menu-wrp--menu--menu-anchor-item-wrp--li--select-a" href="#">
             <form>
               <select (change)="goToEnvs()" name="userType" [(ngModel)]="userType" class="k-select">
@@ -26,12 +26,12 @@
 </select>
             </form>
           </span>
-        </li>
+        </li>-->
 
 
 
       </ul>
-      <div [@flyInOut]="'in'" *ngIf="isSystem">
+      <div>
         <form class="navbar-form navbar-left">
           <div class="form-group">
             <input *ngIf="!isManager" #passInput [(ngModel)]="managerCode" type="password" name="managerCode" class="form-control" placeholder="סיסמת מנהל">

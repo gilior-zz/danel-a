@@ -43,6 +43,9 @@ export class EnvironmentService {
       .catch(this.handleError);
   }
 
+  
+
+
 
 
   //0-stop 1-start 2-restart //winservice
