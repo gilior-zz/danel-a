@@ -21,7 +21,7 @@
       </kendo-dialog>
 
       <kendo-dialog title="מחיקת רשומה" *ngIf="showRemoveDlg " (close)="closeRemoveDlg( 'cancel') ">
-        <input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">
+        <!--<input type="number" class="k-textbox text-center" placeholder="סיסמה" [(ngModel)]="deletePassword">-->
         <div class="captcha-wrp">
           <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6LeObAwUAAAAANlcxV6KExfLKNunrLNppCBiWbx4>"></re-captcha>-->
           <!--<re-captcha (captchaResponse)="handleCorrectCaptcha($event)" language="iw" theme="light" size="normal" site_key="<6Ldh8yMUAAAAAFDeabGm5TQCGXrxEwQOJYB-jA_8>"></re-captcha>-->
@@ -99,7 +99,7 @@
 
         <span kendoGridSaveCommand kendoGridEditCommand class="k-icon k-i-save k-i-floppy "></span>
 
-        <span kendoGridRemoveCommand class="k-icon k-i-delete k-i-trash "></span>
+        <span *ngIf="isManager" kendoGridRemoveCommand class="k-icon k-i-delete k-i-trash "></span>
 
         <span kendoGridCancelCommand class="k-icon k-i-undo "></span>
       </ng-template>

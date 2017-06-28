@@ -19,7 +19,7 @@ import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress
   templateUrl: 'info.component.html',
   styleUrls: ['info.component.scss'],
   // encapsulation: ViewEncapsulation.None,
-  providers:[{ provide: RTL, useValue: true }]
+  providers: [{ provide: RTL, useValue: true }]
 })
 export class InfoComponent implements OnInit {
   public formGroup: FormGroup;
@@ -52,6 +52,8 @@ export class InfoComponent implements OnInit {
 
     });
   }
+
+  get isManager(): boolean { return this.ut.isManager; }
 
 
   pageChange({ skip, take }: PageChangeEvent): void {
