@@ -17,8 +17,10 @@
 
 
 
-.k-grid .k-filtercell-wrapper{
+:host /deep/  {
+
+    & .k-grid .k-filtercell-wrapper{
     background: rebeccapurple;
     padding: 0;
-
+}
 }

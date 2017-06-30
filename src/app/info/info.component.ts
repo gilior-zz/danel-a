@@ -214,10 +214,8 @@ export class InfoComponent implements OnInit {
 
 
       this.infoService.update(sis).subscribe(i => {
-        console.log('i sent to server');
-        console.log(sis);
-        console.log(' from server:');
-        console.log(i);
+     
+        
         for (var index = 0; index < this.items.length; index++) {
           var element = this.items[index];
           if (element.id == i.id)
@@ -235,8 +233,7 @@ export class InfoComponent implements OnInit {
 
 
         // });
-        console.log('new array');
-        console.log(this.items[0]);
+       
 
 
 

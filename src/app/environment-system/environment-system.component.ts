@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SupportIssue, DanelVersion, ServiceControllerStatus } from "../../models";
+import { SupportIssue, DanelVersion, ServiceControllerStatus, Module } from "../../models";
 import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
@@ -20,7 +20,7 @@ import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 
   templateUrl: 'environment-system.component.html',
   styleUrls: ['environment-system.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class EnvironmentSystemComponent implements OnInit {
   public formGroup: FormGroup;
@@ -32,7 +32,7 @@ export class EnvironmentSystemComponent implements OnInit {
   constructor(public domSanitizer: DomSanitizer, public flatEnvironmentService: FlatEnvironmentService, public ut: UtilityService, public environmentService: EnvironmentService) { }
   gridData: Array<DanelVersion>;
   public pageSize: number = 100;
-  public items: Array<DanelVersion>;
+  public allItems: Array<DanelVersion>;
   filteredData: Array<DanelVersion>;
   prbFilter: string;
   slnFilter: string;
@@ -46,15 +46,15 @@ export class EnvironmentSystemComponent implements OnInit {
     // this.handleQStream();
   }
 
-  get isManager():boolean{return this.ut.isManager}
+  get isManager(): boolean { return this.ut.isManager }
   loadFaqs() {
     this.flatEnvironmentService.getEnvs().subscribe(i => {
-      this.items = <Array<DanelVersion>>JSON.parse(JSON.stringify(i.flatVers));
+      this.allItems = <Array<DanelVersion>>JSON.parse(JSON.stringify(i.flatVers));
       this.loadItems();
       this.flatEnvironmentService.GetListenersStatuses().subscribe(listenersStatuses => {
 
         listenersStatuses.forEach(item => {
-          let envs = this.items.filter(env => env.id == item.Key);
+          let envs = this.allItems.filter(env => env.id == item.Key);
           if (envs != null) {
             let env = envs[0];
             if (env != null)
@@ -66,7 +66,7 @@ export class EnvironmentSystemComponent implements OnInit {
       this.flatEnvironmentService.GetNotificationsStatuses().subscribe(listenersStatuses => {
 
         listenersStatuses.forEach(item => {
-          let envs = this.items.filter(env => env.id == item.Key);
+          let envs = this.allItems.filter(env => env.id == item.Key);
           if (envs != null) {
             let env = envs[0];
             if (env != null)
@@ -90,12 +90,18 @@ export class EnvironmentSystemComponent implements OnInit {
 
   }
 
+  onMdlIDChanged(mdl: Module) {
+    console.log(mdl);
+    
+
+  }
+
   setListenerHeaderStyle() {
     return { 'background-color': 'darksalmon', 'color': '#fff', 'line-height': '1em', 'text-align': 'center' }
 
   }
 
-   setNotificationHeaderStyle() {
+  setNotificationHeaderStyle() {
     return { 'background-color': 'darkslateblue', 'color': '#fff', 'line-height': '1em', 'text-align': 'center' }
 
   }
@@ -135,8 +141,8 @@ export class EnvironmentSystemComponent implements OnInit {
   private loadItems(): void {
     // debugger;
     this.gridView = {
-      data: this.items.slice(this.skip, this.skip + this.pageSize),
-      total: this.items.length
+      data: this.allItems.slice(this.skip, this.skip + this.pageSize),
+      total: this.allItems.length
     };
   }
 
@@ -273,7 +279,11 @@ export class EnvironmentSystemComponent implements OnInit {
 
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
-    this.gridView = process(this.items, this.state);
+    this.updateState();
+  }
+
+  updateState() {
+    this.gridView = process(this.allItems, this.state);
   }
 
   public state: State = {

@@ -1,3 +1,7 @@
+<div>
+    <lg-locked-mdls (onChanged)="onMdlIDChanged($event)"></lg-locked-mdls>
+</div>
+
 <kendo-grid class="environment-system.component-grid" [scrollable]="'scrollable'" [pageSize]="pageSize" #grid [data]="gridView"
     [pageable]="pageable" (pageChange)="pageChange($event)" [filter]="state.filter" (dataStateChange)="dataStateChange($event)"
     [filterable]="true">
@@ -8,7 +12,7 @@
             </kendo-grid-string-filter-cell>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column [headerStyle]="setHeaderStyle()" field="serverName" title="server-Name">
+    <kendo-grid-column [headerStyle]="setHeaderStyle()" field="sqlInstance" title="server" [width]="140">
         <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
             <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
             </kendo-grid-string-filter-cell>

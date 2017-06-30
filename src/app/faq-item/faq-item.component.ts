@@ -72,9 +72,9 @@ export class FaqItemComponent implements OnInit, OnDestroy {
       links.push(l);
     }
 
-    console.log('formModel');
+  
 
-    console.log(formModel);
+    
 
     let sis: SupportIssue = { mdlName: formModel.mdl, lnks: formModel.lnks, sln: formModel.sln, prb: formModel.prb, mID: formModel.mdlID, id: formModel.id };
     return sis;

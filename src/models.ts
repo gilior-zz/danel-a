@@ -21,6 +21,8 @@ export class DanelVersion {
   version: string;
   listenerPorts: string;
   notificationPorts: string;
+  sqlInstance: string;
+  lckdMdls:Array<number>;
 }
 
 export enum ServiceControllerStatus {

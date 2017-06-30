@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from "@angular/http";
-import { ModuleResponse } from "../../models";
+import { ModuleResponse, Module } from "../../models";
 import { APP_CONFIG, AppConfig } from "../app-config";
 
 
@@ -19,6 +19,12 @@ export class MdlsService {
   public getMdls(): Observable<ModuleResponse> {
     return this.http.get(this.config.apiEndpoint)
 
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  public getLockedMdls(): Observable<Array<Module>> {
+    return this.http.get(this.config.apiEndpoint + `/1`)
       .map(this.extractData)
       .catch(this.handleError);
   }
