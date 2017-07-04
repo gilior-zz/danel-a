@@ -32,7 +32,9 @@ export class EnvironmentSystemComponent implements OnInit {
   constructor(public domSanitizer: DomSanitizer, public flatEnvironmentService: FlatEnvironmentService, public ut: UtilityService, public environmentService: EnvironmentService) { }
   gridData: Array<DanelVersion>;
   public pageSize: number = 100;
+  public mdlFilteredItems: Array<DanelVersion>;
   public allItems: Array<DanelVersion>;
+
   filteredData: Array<DanelVersion>;
   prbFilter: string;
   slnFilter: string;
@@ -50,6 +52,7 @@ export class EnvironmentSystemComponent implements OnInit {
   loadFaqs() {
     this.flatEnvironmentService.getEnvs().subscribe(i => {
       this.allItems = <Array<DanelVersion>>JSON.parse(JSON.stringify(i.flatVers));
+      this.mdlFilteredItems = this.allItems;
       this.loadItems();
       this.flatEnvironmentService.GetListenersStatuses().subscribe(listenersStatuses => {
 
@@ -91,9 +94,11 @@ export class EnvironmentSystemComponent implements OnInit {
   }
 
   onMdlIDChanged(mdl: Module) {
+    this.mdlFilteredItems = this.allItems;
     console.log(mdl);
-    
-
+    if (mdl != null)
+      this.mdlFilteredItems = this.mdlFilteredItems.filter(i => i.lckdMdls != null && i.lckdMdls.includes(mdl.id));
+    this.updateState();
   }
 
   setListenerHeaderStyle() {
@@ -141,8 +146,8 @@ export class EnvironmentSystemComponent implements OnInit {
   private loadItems(): void {
     // debugger;
     this.gridView = {
-      data: this.allItems.slice(this.skip, this.skip + this.pageSize),
-      total: this.allItems.length
+      data: this.mdlFilteredItems.slice(this.skip, this.skip + this.pageSize),
+      total: this.mdlFilteredItems.length
     };
   }
 
@@ -283,7 +288,7 @@ export class EnvironmentSystemComponent implements OnInit {
   }
 
   updateState() {
-    this.gridView = process(this.allItems, this.state);
+    this.gridView = process(this.mdlFilteredItems, this.state);
   }
 
   public state: State = {

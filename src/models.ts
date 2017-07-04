@@ -9,6 +9,7 @@ export class DanelVersion {
   clientFolder: string;
   winServiceName: string;
   winNotificationName: string;
+  isInvisible: boolean;
   winServiceIsUp: boolean;
   winNotificationIsUp: boolean;
   id: number;
@@ -22,7 +23,7 @@ export class DanelVersion {
   listenerPorts: string;
   notificationPorts: string;
   sqlInstance: string;
-  lckdMdls:Array<number>;
+  lckdMdls: Array<number>;
 }
 
 export enum ServiceControllerStatus {

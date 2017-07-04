@@ -9,20 +9,29 @@ import { Module } from "models";
   styleUrls: ['./locked-mdls.component.scss']
 })
 export class LockedMdlsComponent implements OnInit {
-  view: Observable<Array<Module>>;
+  view: Array<Module>;
+  allView: Array<Module>;
   @Output() onChanged: EventEmitter<Module>;
   constructor(private mdlsService: MdlsService) {
-    this.onChanged=new EventEmitter();
-   }
+    this.onChanged = new EventEmitter();
+  }
 
   ngOnInit() {
-    console.log('ngOnInit LockedMdlsComponent');
-    
-    this.view = this.mdlsService.getLockedMdls();
-  } 
+
+
+    this.mdlsService.getLockedMdls().subscribe(i => {
+      this.view = i;
+      this.allView = i;
+    })
+
+  }
   public valueChange(value: Module): void {
-    console.log("valueChange", value);
     this.onChanged.emit(value);
+  }
+
+
+  handleFilter(value) {
+    this.view = this.allView.filter((s) => s.name.toLocaleLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
 
 }

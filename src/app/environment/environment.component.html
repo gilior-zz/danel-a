@@ -1,8 +1,15 @@
 <div id="lg-environment" class="container-fluid lg-environment">
+  <div class="container">
+    <div class="row tool-bar">
+      <div class="col-xs-12">
+        <lg-locked-mdls (onChanged)="onMdlIDChanged($event)"></lg-locked-mdls>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="container">
       <div class="row">
-        <div class="col-xs-6" *ngFor="let arr of (danelVersionResponse|async)?.vers">
+        <div class="col-xs-6" *ngFor="let arr of vers">
 
           <div class="row version-wrp">
             <div class="col-xs-12">
@@ -16,7 +23,7 @@
                 <!--<span [style.border-color]="ver.winServiceIsUp?'greenyellow':'darkred'" [style.color]="ver.winNotificationIsUp?'greenyellow':'darkred'"-->
                 <!--(dblclick)="onDoubleCLick(ver)" [lgCopy]="ver.fp" #span id="id{{index}}" class="link">{{ver.dbName}}</span>-->
                 <!--<a *ngFor="let ver of arr" (dblclick)="onDoubleCLick(ver)" class="link" href="file:///{{ver.clientFolder}}">{{ver.dbName}}</a>-->
-                <lg-environment-unit [danelVersion]="ver"></lg-environment-unit>
+                <lg-environment-unit *ngIf="!ver.isInvisible" [danelVersion]="ver"></lg-environment-unit>
               </ng-container>
             </div>
           </div>

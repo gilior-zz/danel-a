@@ -19,8 +19,49 @@
 
 :host /deep/  {
 
+
+.notification-header{
+    background-color: darkslateblue;
+     color: #fff; 
+     line-height: 1em;
+      text-align: center 
+}
+    .dbName-column{
+        background-color: #888;
+        color: #fff
+    }
+.listener-header{
+    background-color: darksalmon;
+     color: #fff;
+     line-height:      1em;
+      text-align: center
+}
+
+.version-header{
+    background-color: #666; 
+    color: #fff;
+     line-height: 1em; 
+     text-align: center
+}
+     td {
+   border: 1px solid black;
+}
+
+tr:not(.k-header){
+        line-height: 40px;
+}
+
     & .k-grid .k-filtercell-wrapper{
     background: rebeccapurple;
-    padding: 0;
+    padding: 0;   
 }
+
+
+}
+
+
+.tool-bar{
+        border: solid;
+    padding: 5px;
+    border-radius: 5px;
 }

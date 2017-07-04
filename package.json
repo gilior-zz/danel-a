@@ -7,7 +7,7 @@
     "start": "concurrently \"npm run rc\" \"npm run rs\"",
     "rs": "nodemon ./src/server/server.ts",
     "rc": "ng serve -o",
-    "bc": "ng build --prod -bh=smart-office -op=V:\\",
+    "bc": "ng build --prod --aot -bh=smart-office -op=V:\\",
     "bcl": "ng build --prod",
     "bs": "tsc ./src/server/server.ts",
     "test": "ng test",

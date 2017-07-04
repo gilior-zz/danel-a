@@ -20,9 +20,49 @@ iframe{
 
 :host /deep/  {
 
-    & .k-grid .k-filtercell-wrapper{
+
+.mdlName-header{
+background: darkblue;
+color: white;
+}
+
+.mdlName-cell{
+background: lightcyan
+}
+  .k-button.k-button-icon {
+    display: none;
+  }
+.prb-header{
+  text-align: center;
+  color: white;
+  background: darkmagenta;
+}
+.prb-cell{
+  color: white;
+  background: darkmagenta;
+}
+
+.sln-header{
+  text-align: center;
+color: white;
+  background: darkseagreen;
+}
+
+.sln-cell{
+// color: white;
+  background:lightgreen;
+}
+    .k-grid .k-filtercell-wrapper{
     background: rebeccapurple;
     padding: 0;
+    }
+      td {
+   border: 1px solid black;
+}
+
+tr:not(.k-header){
+        line-height: 40px;
+
 }       
 }
 

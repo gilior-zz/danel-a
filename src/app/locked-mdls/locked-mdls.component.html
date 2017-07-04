@@ -1,2 +1,3 @@
-<kendo-combobox (valueChange)="valueChange($event)" [data]="view | async" [textField]="'name'" [valueField]="'id'" [placeholder]="'locked-module'">
+<kendo-combobox [filterable]="true" (filterChange)="handleFilter($event)" (selectionChange)="valueChange($event)" [data]="view"
+  [textField]="'name'" [valueField]="'id'" placeholder="סינון לפי מודול">
 </kendo-combobox>
