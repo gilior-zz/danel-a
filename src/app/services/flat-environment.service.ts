@@ -4,7 +4,7 @@ import 'rxjs/add/observable/of';
 import * as  _ from 'lodash'
 import { AppConfig, APP_CONFIG } from "../app-config";
 import { Response, Http } from "@angular/http";
-import { DanelVersionResponse, DanelVersion, ServiceControllerStatus } from "../../models";
+import { DanelVersionResponse, DanelVersion, CustomServiceControllerStatus } from "../../models";
 
 
 @Injectable()
@@ -40,13 +40,13 @@ export class FlatEnvironmentService {
             .catch(this.handleError);
     }
 
-    public chnageWinListenerStatus(id: number, toStatus: ServiceControllerStatus): Observable<any> {
+    public chnageWinListenerStatus(id: number, toStatus: CustomServiceControllerStatus): Observable<any> {
         return this.http.put(`${this.listenerConfig.apiEndpoint}/${id}`, toStatus)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    public chnageWinNotificationStatus(id: number, toStatus: ServiceControllerStatus): Observable<ServiceControllerStatus> {
+    public chnageWinNotificationStatus(id: number, toStatus: CustomServiceControllerStatus): Observable<CustomServiceControllerStatus> {
         return this.http.put(`${this.notificationConfig.apiEndpoint}/${id}`, toStatus)
             .map(this.extractData)
             .catch(this.handleError);

@@ -47,8 +47,8 @@ export class EnvironmentComponent implements OnInit {
   onMdlIDChanged(mdl: Module) {
     // Object.assign(this.vers, this.allVers);
     this.vers = JSON.parse(JSON.stringify(this.allVers));
-    console.log('vers ' + this.vers[0][1].isInvisible);
-    console.log('allVers ' + this.allVers[0][1].isInvisible);
+    // console.log('vers ' + this.vers[0][1].isInvisible);
+    // console.log('allVers ' + this.allVers[0][1].isInvisible);
     // let l = [];
     // Object.assign(this.vers, this.allVers);
     // console.log(this.vers);

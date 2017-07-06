@@ -128,7 +128,8 @@ export class InfoComponent implements OnInit {
     const si: SupportIssue = formGroup.value;
 
     this.infoService.update(si).subscribe(i => {
-
+      console.log(rowIndex);
+      console.log(si);
     }, (err) => {
       console.log('somthing is wrong');
 
@@ -139,7 +140,10 @@ export class InfoComponent implements OnInit {
 
   public saveHandlerTemplateDriven({ sender, rowIndex, dataItem, isNew }) {
     // update the data source
-    this.infoService.update(dataItem).subscribe(i => { });
+    this.infoService.update(dataItem).subscribe(i => {
+      console.log(rowIndex);
+      console.log(dataItem);
+    });
 
     // close the editor, i.e revert the row back into view mode
     sender.closeRow(rowIndex);
@@ -214,8 +218,8 @@ export class InfoComponent implements OnInit {
 
 
       this.infoService.update(sis).subscribe(i => {
-     
-        
+
+
         for (var index = 0; index < this.items.length; index++) {
           var element = this.items[index];
           if (element.id == i.id)
@@ -233,7 +237,7 @@ export class InfoComponent implements OnInit {
 
 
         // });
-       
+
 
 
 

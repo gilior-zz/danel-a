@@ -1,8 +1,8 @@
 export class DanelVersion {
   vr: Version;
+  appVr: Version;
   dbName: string;
   fp: string;
-  _Version: number;
   serverName: string;
   listenerPort: number;
   notificationPort: number;
@@ -11,22 +11,23 @@ export class DanelVersion {
   winNotificationName: string;
   isInvisible: boolean;
   winServiceIsUp: boolean;
-  winNotificationIsUp: boolean;
-  id: number;
-  winNotificationStatus: ServiceControllerStatus;
-  winListenerStatus: ServiceControllerStatus;
-  wcfport: string;
-  notificationSubscriptionsPort: string;
   winListenerStatusIsCahnging: boolean;
   winNotificationStatusIsCahnging: boolean;
+  winNotificationIsUp: boolean;
+  id: number;
+  winNotificationStatus: CustomServiceControllerStatus;
+  winListenerStatus: CustomServiceControllerStatus;
+  wcfport: string;
+  notificationSubscriptionsPort: string;
   version: string;
+  appVersion: string;
   listenerPorts: string;
   notificationPorts: string;
   sqlInstance: string;
   lckdMdls: Array<number>;
 }
 
-export enum ServiceControllerStatus {
+export enum CustomServiceControllerStatus {
   NotExists = -1,
   ContinuePending = 5,
   Paused = 7,
@@ -65,8 +66,7 @@ export class SupportIssue {
   mod?: Module;
   ts?: Date;
   lnks?: SupportIssueLink[];
-  mdlName?: string
-
+  mdlName?: string;  
 }
 export class SupportIssueLink {
   id?: number;

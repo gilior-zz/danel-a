@@ -8,7 +8,7 @@ import { Subject } from 'rxjs/Subject';
 
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SupportIssue, DanelVersion, ServiceControllerStatus, Module } from "../../models";
+import { SupportIssue, DanelVersion, CustomServiceControllerStatus, Module } from "../../models";
 import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
@@ -112,12 +112,12 @@ export class EnvironmentSystemComponent implements OnInit {
   }
 
   setStatusSpanStyle(status: number): SafeStyle {
-    switch (<ServiceControllerStatus>status) {
-      case ServiceControllerStatus.NotExists:
+    switch (<CustomServiceControllerStatus>status) {
+      case CustomServiceControllerStatus.NotExists:
         return this.domSanitizer.bypassSecurityTrustStyle('background-color:black;display: inline-block;height:20px;width:20px;');
-      case ServiceControllerStatus.Running:
+      case CustomServiceControllerStatus.Running:
         return this.domSanitizer.bypassSecurityTrustStyle('background-color:green;display: inline-block;height:20px;width:20px;');
-      case ServiceControllerStatus.Stopped:
+      case CustomServiceControllerStatus.Stopped:
         return this.domSanitizer.bypassSecurityTrustStyle('background-color:red;display: inline-block;height:20px;width:20px;');
       default:
         return this.domSanitizer.bypassSecurityTrustStyle('background-color:orange;display: inline-block;height:20px;width:20px;');
@@ -156,13 +156,13 @@ export class EnvironmentSystemComponent implements OnInit {
     let toStatus = -1;
     let originStatus = dataItem.winListenerStatus;
     switch (dataItem.winListenerStatus) {
-      case ServiceControllerStatus.Running:
-        toStatus = ServiceControllerStatus.Stopped;
-        dataItem.winListenerStatus = ServiceControllerStatus.StopPending;
+      case CustomServiceControllerStatus.Running:
+        toStatus = CustomServiceControllerStatus.Stopped;
+        dataItem.winListenerStatus = CustomServiceControllerStatus.StopPending;
         break;
-      case ServiceControllerStatus.Stopped:
-        toStatus = ServiceControllerStatus.Running;
-        dataItem.winListenerStatus = ServiceControllerStatus.StartPending;
+      case CustomServiceControllerStatus.Stopped:
+        toStatus = CustomServiceControllerStatus.Running;
+        dataItem.winListenerStatus = CustomServiceControllerStatus.StartPending;
         break;
     }
 
@@ -185,13 +185,13 @@ export class EnvironmentSystemComponent implements OnInit {
 
 
     switch (dataItem.winNotificationStatus) {
-      case ServiceControllerStatus.Running:
-        toStatus = ServiceControllerStatus.Stopped;
-        dataItem.winNotificationStatus = ServiceControllerStatus.StopPending;
+      case CustomServiceControllerStatus.Running:
+        toStatus = CustomServiceControllerStatus.Stopped;
+        dataItem.winNotificationStatus = CustomServiceControllerStatus.StopPending;
         break;
-      case ServiceControllerStatus.Stopped:
-        toStatus = ServiceControllerStatus.Running;
-        dataItem.winNotificationStatus = ServiceControllerStatus.StartPending;
+      case CustomServiceControllerStatus.Stopped:
+        toStatus = CustomServiceControllerStatus.Running;
+        dataItem.winNotificationStatus = CustomServiceControllerStatus.StartPending;
         break;
     }
 

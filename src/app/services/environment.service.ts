@@ -43,7 +43,7 @@ export class EnvironmentService {
       .catch(this.handleError);
   }
 
-
+  
 
 
 
@@ -51,7 +51,7 @@ export class EnvironmentService {
   //0-stop 1-start 2-restart //winservice
   //10-stop 11-start 12-restart //notification
   changeService(toStatus: number, danelVersiond: DanelVersion): Observable<DanelVersionResponse> {
-    return this.http.put(this.config.apiEndpoint + `/${toStatus}`, JSON.stringify(danelVersiond))
+    return this.http.put(this.config.apiEndpoint + `/${toStatus}`, danelVersiond)
       .map(this.extractData)
       .catch(this.handleError);
   }
