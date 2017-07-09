@@ -5,7 +5,7 @@
         <div class="col-xs-4" *ngFor="let grp of (linkResponse|async)?.lnks">
           <span class="caption">{{grp[0].ctg}}</span>
           <div class="well">
-            <button [disabled]="isLoadingFile" (click)="runFile(lnk.pth)" id="{{'id'+index}}"  class="link-btn" *ngFor="let lnk of grp;let index=index" kendoButton [icon]="'folder'">{{lnk.nm}}</button>
+            <button  title="{{fileRunnerIsDown?'יש להפעיל smart office service':''}}" [disabled]="isLoadingFile ||fileRunnerIsDown" (click)="runFile(lnk.pth)" id="{{'id'+index}}" class="link-btn btn btn-info" *ngFor="let lnk of grp;let index=index">{{lnk.nm}}</button>
           </div>
         </div>
       </div>

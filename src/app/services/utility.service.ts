@@ -14,12 +14,63 @@ export class UtilityService {
   showFaqDlg: boolean;
   delRecord: boolean;
   faqToSave: SupportIssue;
-  userType: string='support';
+  userType: string = 'support';
   public isManager: boolean;
+  fileRunnerIsUp: boolean = true;
+  isExplorer: boolean;
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
     this.config = Object.assign({}, config)
     this.config.winServiceEndpoint = config.winServiceEndpoint + '/Values/RunFile';
+    this.checkWinServiceEndpoint();
+    this.checkBrowser();
+    // this.mycheckBrowser();
   }
+
+  private checkBrowser() {
+    {
+      // console.log(navigator.userAgent);
+
+      // var ua = navigator.userAgent, tem,
+      //   M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+      // if (/trident/i.test(M[1])) {
+      //   tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+      //   return 'IE ' + (tem[1] || '');
+      // }
+      // if (M[1] === 'Chrome') {
+      //   tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+      //   if (tem != null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+      // }
+      // M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+      // if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+
+
+
+      // let l = M.join(' ');
+      // let ll = (M[0]);
+      // let isExplorer = ll.toLowerCase().includes('msie')
+
+      this.isExplorer = navigator.userAgent.toLowerCase().indexOf('trident') != -1 || navigator.userAgent.toLowerCase().indexOf('msie') != -1
+      // return l;
+    }
+  }
+
+
+
+  checkWinServiceEndpoint() {
+    this.http.get(this.config.winServiceEndpoint)
+      .subscribe(
+      i => {
+
+        this.fileRunnerIsUp = true;
+      }, (err: any) => {
+
+        this.fileRunnerIsUp = (err && err.status == 405)
+
+      }
+      )
+  }
+
+
 
   runFile(file: string): Observable<boolean> {
     // console.log(fp);
@@ -28,6 +79,8 @@ export class UtilityService {
       .map(this.extractData)
       .catch(this.handleError);
   }
+
+
 
   private extractData(res: Response) {
     let body = res.json();

@@ -3,7 +3,8 @@
 <div class="container-fluid">
   <div class="row">
     <lg-mnu></lg-mnu>
-     <div id="lg-roller" class="container-fluid lg-roller">
+    <div *ngIf="isExplorer" class="col-xs-12 alert-danger text-center explorer-alert">דפדפן אינטרנט אקפלורר.אדג' אינו מומלץ</div>
+    <div id="lg-roller" class="container-fluid lg-roller">
       <div class="row">
         <div class="container">
           <lg-roller></lg-roller>
@@ -12,10 +13,10 @@
     </div>
     <router-outlet></router-outlet>
     <!--<lg-curtain></lg-curtain>-->
-   
-   
-    
-    
+
+
+
+
 
   </div>
 

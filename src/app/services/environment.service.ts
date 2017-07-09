@@ -43,7 +43,7 @@ export class EnvironmentService {
       .catch(this.handleError);
   }
 
-  
+
 
 
 
@@ -59,6 +59,8 @@ export class EnvironmentService {
 
 
   getEnvs(): Observable<DanelVersionResponse> {
+    console.log(this.config.apiEndpoint);
+
     return this.http.get(this.config.apiEndpoint)
       .map(this.extractData)
       .catch(this.handleError);

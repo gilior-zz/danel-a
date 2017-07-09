@@ -15,9 +15,9 @@ export class LinksComponent implements OnInit {
 
   constructor(private linksService: LinksService, private us: UtilityService) {
   }
-public isLoadingFile: boolean;
+  public isLoadingFile: boolean;
   runFile(pth: string) {
-     this.isLoadingFile = true;
+    this.isLoadingFile = true;
     this.us.runFile(pth).subscribe(i => {
       this.isLoadingFile = false;
     }, err => { this.isLoadingFile = false; })
@@ -29,7 +29,7 @@ public isLoadingFile: boolean;
 
   }
 
-
+  get fileRunnerIsDown(): boolean { return !this.us.fileRunnerIsUp }
   arr: Array<Array<Link>>;
 
   ngOnInit() {

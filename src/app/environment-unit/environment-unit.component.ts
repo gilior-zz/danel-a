@@ -34,6 +34,8 @@ export class EnvironmentUnitComponent implements OnInit {
     }, err => this.winServiceIsChanging = false)
   }
 
+   get fileRunnerIsDown(): boolean { return !this.us.fileRunnerIsUp }
+
   changeNotification() {
     this.notificationIsChanging = true;
     let toStatus: number = 1 - (+ this.danelVersion.winNotificationIsUp) + 10;

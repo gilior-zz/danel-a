@@ -6,8 +6,8 @@
     <div class="row">
         <div class="col-xs-12 h3">
             <p>
-                <button [disabled]="isLoadingFile" #btn id="{{'id'+danelVersion.id}}" (click)="copyExeFilePath(btn.id)" class="btn btn-success"
-                    type="">הפעלת סביבה</button>
+                <button title="{{fileRunnerIsDown?'יש להפעיל smart office service':''}}" [disabled]="isLoadingFile||fileRunnerIsDown" #btn
+                    id="{{'id'+danelVersion.id}}" (click)="copyExeFilePath(btn.id)" class="btn btn-success" type="">הפעלת סביבה</button>
             </p>
         </div>
 
@@ -18,7 +18,7 @@
             <p> <label for="">גרסת בסיס נתונים <mark>{{danelVersion.version}}</mark>      </label> </p>
         </div>
     </div>
-       <div class="row">
+    <div class="row">
         <div class="col-xs-12">
             <p> <label for="">גרסת אפליקציה <mark>{{danelVersion.appVersion}}</mark>      </label> </p>
         </div>
