@@ -1,11 +1,13 @@
+<lg-last-update [lastUpdate]="lastUpdate" backColor="dimgrey"></lg-last-update>
 <div id="lg-links" class="container-fluid lg-links">
   <div class="row">
     <div class="container">
       <div class="row">
-        <div class="col-xs-4" *ngFor="let grp of (linkResponse|async)?.lnks">
+        <div class="col-xs-4" *ngFor="let grp of links">
           <span class="caption">{{grp[0].ctg}}</span>
           <div class="well">
-            <button  title="{{fileRunnerIsDown?'יש להפעיל smart office service':''}}" [disabled]="isLoadingFile ||fileRunnerIsDown" (click)="runFile(lnk.pth)" id="{{'id'+index}}" class="link-btn btn btn-info" *ngFor="let lnk of grp;let index=index">{{lnk.nm}}</button>
+            <button title="{{fileRunnerIsDown?'יש להפעיל smart office service':''}}" [disabled]="isLoadingFile ||fileRunnerIsDown" (click)="runFile(lnk.pth)"
+              id="{{'id'+index}}" class="link-btn btn btn-info" *ngFor="let lnk of grp;let index=index">{{lnk.nm}}</button>
           </div>
         </div>
       </div>

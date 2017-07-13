@@ -44,8 +44,10 @@ export class InfoComponent implements OnInit {
     // this.handleAStream();
     // this.handleQStream();
   }
+  lastUpdate: Date;
   private loadFaqs() {
     this.infoService.getFaQs().subscribe(i => {
+      this.lastUpdate = i.time;
       this.items = <Array<SupportIssue>>JSON.parse(JSON.stringify(i.sis));
       this.loadItems();
 

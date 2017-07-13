@@ -38,72 +38,76 @@
     </div>
   </div>
 </div>
-<form novalidate #myForm="ngForm">
-  <kendo-grid [pageSize]="pageSize" #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)"
-    (save)="saveHandlerTemplateDriven($event)" (remove)="removeHandler($event)" [selectable]="true" [pageable]="pageable" (pageChange)="pageChange($event)"
-    [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true" (add)="addHandler($event)">
+<lg-last-update [lastUpdate]="lastUpdate" backColor="slategrey"></lg-last-update>
+<div>
+  <form novalidate #myForm="ngForm">
+    <kendo-grid [pageSize]="pageSize" #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)"
+      (save)="saveHandlerTemplateDriven($event)" (remove)="removeHandler($event)" [selectable]="true" [pageable]="pageable"
+      (pageChange)="pageChange($event)" [filter]="state.filter" (dataStateChange)="dataStateChange($event)" [filterable]="true"
+      (add)="addHandler($event)">
 
-    <kendo-grid-column title="ID" field="id" [hidden]="true">
-    </kendo-grid-column>
-    <kendo-grid-column headerClass="prb-header"  class="prb-cell" title="בעיה" field="prb">
-      <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-filter let-column="column">
-        <textarea [(ngModel)]="dataItem.prb" name="prb" class="k-textbox" required></textarea>
+      <kendo-grid-column title="ID" field="id" [hidden]="true">
+      </kendo-grid-column>
+      <kendo-grid-column headerClass="prb-header" class="prb-cell" title="בעיה" field="prb">
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-filter let-column="column">
+          <textarea [(ngModel)]="dataItem.prb" name="prb" class="k-textbox" required></textarea>
 
-      </ng-template>
+        </ng-template>
 
-      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
-        <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
-        </kendo-grid-string-filter-cell>
-      </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column headerClass="sln-header" class="sln-cell" title="פתרון" field="sln">
-      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
-        <textarea [(ngModel)]="dataItem.sln" name="sln" class="k-textbox" required></textarea>
-      </ng-template>
-      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
-        <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
-        </kendo-grid-string-filter-cell>
-      </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column headerClass="mdlName-header" class="mdlName-cell"  title="מודול" width="160px" field="mdlName">
-      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
-        <input [(ngModel)]="dataItem.mdlName" name="mdlName" class="k-textbox" />
-      </ng-template>
-      <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
-        <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
-        </kendo-grid-string-filter-cell>
-      </ng-template>
-    </kendo-grid-column>
-    <kendo-grid-column title="מס מודול" field="mID" [hidden]="true">
-    </kendo-grid-column>
-    <!--<kendo-grid-column [filterable]="false" title="תאריך" width="90px" field="ts" filter="date" format="{0:d}">
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+          <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
+          </kendo-grid-string-filter-cell>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column headerClass="sln-header" class="sln-cell" title="פתרון" field="sln">
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+          <textarea [(ngModel)]="dataItem.sln" name="sln" class="k-textbox" required></textarea>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+          <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
+          </kendo-grid-string-filter-cell>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column headerClass="mdlName-header" class="mdlName-cell" title="מודול" width="160px" field="mdlName">
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+          <input [(ngModel)]="dataItem.mdlName" name="mdlName" class="k-textbox" />
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+          <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
+          </kendo-grid-string-filter-cell>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column title="מס מודול" field="mID" [hidden]="true">
+      </kendo-grid-column>
+      <!--<kendo-grid-column [filterable]="false" title="תאריך" width="90px" field="ts" filter="date" format="{0:d}">
       <ng-template kendoGridCellTemplate let-dataItem>
         <span>{{dataItem.ts|date:"dd/MM/yy HH:MM:ss"}}</span>
       </ng-template>
     </kendo-grid-column>-->
-    <ng-template kendoGridDetailTemplate let-dataItem>
-      <section>
-        <p class="info-link" *ngFor="let lnk of dataItem.lnks;let index=index ">
-          <span (click)="runFile(lnk.pth)" id="{{'id'+index}}">{{lnk.pth}}</span>
-        </p>
+      <ng-template kendoGridDetailTemplate let-dataItem>
+        <section>
+          <p class="info-link" *ngFor="let lnk of dataItem.lnks;let index=index ">
+            <span (click)="runFile(lnk.pth)" id="{{'id'+index}}">{{lnk.pth}}</span>
+          </p>
 
-      </section>
-    </ng-template>
-
-    <kendo-grid-command-column width="100">
-      <ng-template class="center " kendoGridHeaderTemplate let-dataItem>
-        <span kendoGridAddCommand class="k-icon k-i-plus-circle center "></span>
+        </section>
       </ng-template>
-      <ng-template kendoGridCellTemplate let-isNew="isNew ">
-        <span kendoGridEditCommand class="k-icon k-i-pencil "></span>
 
-        <span kendoGridSaveCommand kendoGridEditCommand class="k-icon k-i-save k-i-floppy "></span>
+      <kendo-grid-command-column width="100">
+        <ng-template class="center " kendoGridHeaderTemplate let-dataItem>
+          <span kendoGridAddCommand class="k-icon k-i-plus-circle center "></span>
+        </ng-template>
+        <ng-template kendoGridCellTemplate let-isNew="isNew ">
+          <span kendoGridEditCommand class="k-icon k-i-pencil "></span>
 
-        <span *ngIf="isManager" kendoGridRemoveCommand class="k-icon k-i-delete k-i-trash "></span>
+          <span kendoGridSaveCommand kendoGridEditCommand class="k-icon k-i-save k-i-floppy "></span>
 
-        <span kendoGridCancelCommand class="k-icon k-i-undo "></span>
-      </ng-template>
-    </kendo-grid-command-column>
+          <span *ngIf="isManager" kendoGridRemoveCommand class="k-icon k-i-delete k-i-trash "></span>
 
-  </kendo-grid>
-</form>
+          <span kendoGridCancelCommand class="k-icon k-i-undo "></span>
+        </ng-template>
+      </kendo-grid-command-column>
+
+    </kendo-grid>
+  </form>
+</div>

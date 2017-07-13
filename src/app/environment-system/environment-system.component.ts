@@ -48,9 +48,11 @@ export class EnvironmentSystemComponent implements OnInit {
     // this.handleQStream();
   }
 
+  lastUpdate: Date;
   get isManager(): boolean { return this.ut.isManager }
   loadFaqs() {
     this.flatEnvironmentService.getEnvs().subscribe(i => {
+      this.lastUpdate = i.time;
       this.allItems = <Array<DanelVersion>>JSON.parse(JSON.stringify(i.flatVers));
       this.mdlFilteredItems = this.allItems;
       this.loadItems();

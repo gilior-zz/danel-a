@@ -18,12 +18,13 @@ import { UtilityService } from "app/services/utility.service";
 export class EnvironmentComponent implements OnInit {
   vers: DanelVersion[][];
   allVers: DanelVersion[][];
-
+  lastUpdate: Date;
   danelVersionResponse: Observable<DanelVersionResponse>;
   constructor(private environmentService: EnvironmentService, private ut: UtilityService) { }
 
   ngOnInit() {
     this.environmentService.getEnvs().subscribe(i => {
+      this.lastUpdate = i.time
       this.vers = i.vers;
       this.allVers = new Array<Array<DanelVersion>>();
       Object.assign(this.allVers, this.vers);

@@ -8,7 +8,7 @@
     "rs": "nodemon ./src/server/server.ts",
     "rc": "ng serve -o",
     "bc": "ng build --prod --aot  -bh=smart-office  -op=V:\\  --stats-json",
-    "bcl": "ng build --prod",
+    "bcl": "ng build --prod --aot  -bh=smart-office  -op=C:\\info  --stats-json",   
     "bs": "tsc ./src/server/server.ts",
     "test": "ng test",
     "lint": "ng lint",

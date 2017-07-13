@@ -1,0 +1,38 @@
+// .row{    
+//     color: white;
+
+// }
+
+// .span{
+//     border-top: 1px;
+// }
+
+// div{
+//     top: -56px;
+//     font-size: 20px;
+//     position: relative;
+//     float: left;
+//     margin-left: 30px;
+//     border-top: 3px solid black;
+//     border-right: 3px solid black;
+//     border-left: 3px solid black;
+//     color: white;
+// }
+
+
+.row, .text-left{
+    // border: solid;
+    color: white;
+   
+    // display: inline-block;
+}
+
+.inner{
+ float: left;
+  border-top: 3px solid black;
+    border-right: 3px solid black;
+    border-left: 3px solid black;
+    border-left: 3px solid black;
+    margin-left: 50px;
+    font-size: 20px;
+}

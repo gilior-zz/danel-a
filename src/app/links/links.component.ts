@@ -32,9 +32,14 @@ export class LinksComponent implements OnInit {
   get fileRunnerIsDown(): boolean { return !this.us.fileRunnerIsUp }
   arr: Array<Array<Link>>;
 
+  links: Array<Array<Link>>
+  lastUpdate: Date;
   ngOnInit() {
 
-    this.linkResponse = this.linksService.getLinks();
+    this.linksService.getLinks().subscribe(i => {
+      this.lastUpdate = i.time;;
+      this.links = i.lnks;
+    })
 
     // let lnks: Link[] = [];
     // for (var index = 0; index < 20; index++) {

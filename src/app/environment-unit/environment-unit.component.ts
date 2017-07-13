@@ -47,6 +47,7 @@ export class EnvironmentUnitComponent implements OnInit {
 
 
   restartwinService() {
+     this.winServiceIsChanging = true;
     let toStatus: number = 2;
     this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
       this.danelVersion.winServiceIsUp = i.ver.winServiceIsUp;

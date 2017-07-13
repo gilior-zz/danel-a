@@ -5,30 +5,38 @@
         </div>
     </div>
 </div>
+<lg-last-update [lastUpdate]="lastUpdate" backColor="#666"></lg-last-update>
+<!--<div class=" row">
+    <div class="col-xs-12 text-left">
+        <span class="foo">
+            dfvg
+        </span>
+    </div>-->
 
+<!--</div>-->
 <kendo-grid class="environment-system.component-grid" [scrollable]="'scrollable'" [pageSize]="pageSize" #grid [data]="gridView"
     [pageable]="pageable" (pageChange)="pageChange($event)" [filter]="state.filter" (dataStateChange)="dataStateChange($event)"
     [filterable]="true">
-    <kendo-grid-column class="dbName-column" [style]="{'background-color': '#888','color': '#fff'}" headerClass="version-header" field="dbName"
-        title="db-Name">
+    <kendo-grid-column class="dbName-column" [style]="{'background-color': '#888','color': '#fff'}" headerClass="version-header"
+        field="dbName" title="db-Name">
         <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
             <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
             </kendo-grid-string-filter-cell>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column headerClass="version-header"  field="sqlInstance" title="server" [width]="140">
+    <kendo-grid-column headerClass="version-header" field="sqlInstance" title="server" [width]="140">
         <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
             <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
             </kendo-grid-string-filter-cell>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column headerClass="version-header"  field="version" title="Version" [width]="80">
+    <kendo-grid-column headerClass="version-header" field="version" title="Version" [width]="80">
         <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
             <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
             </kendo-grid-string-filter-cell>
         </ng-template>
     </kendo-grid-column>
-    <kendo-grid-column-group headerClass="listener-header"  title="Listener" [locked]="false">
+    <kendo-grid-column-group headerClass="listener-header" title="Listener" [locked]="false">
         <kendo-grid-column headerClass="listener-header" field="winServiceName" title="Name" [locked]="false">
             <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
                 <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
@@ -41,8 +49,7 @@
                 </kendo-grid-string-filter-cell>
             </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column headerClass="listener-header" field="winListenerStatus" title="Status" [locked]="false" width="70"
-            [filterable]="false">
+        <kendo-grid-column headerClass="listener-header" field="winListenerStatus" title="Status" [locked]="false" width="70" [filterable]="false">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <button *ngIf="dataItem.winListenerStatus" [disabled]="dataItem.winListenerStatus==-1 || dataItem.winListenerStatusIsCahnging || !isManager"
                     (click)="chnageWinListenerStatus(dataItem)" type="button" [style]="setStatusSpanStyle(dataItem.winListenerStatus)">{{dataItem.statusIssCahnging}}</button>
@@ -50,8 +57,8 @@
             </ng-template>
         </kendo-grid-column>
     </kendo-grid-column-group>
-    <kendo-grid-column-group headerClass="notification-header"  title="Notification" [locked]="false ">
-        <kendo-grid-column headerClass="notification-header"  field="winNotificationName " title="Name " [locked]="false ">
+    <kendo-grid-column-group headerClass="notification-header" title="Notification" [locked]="false ">
+        <kendo-grid-column headerClass="notification-header" field="winNotificationName " title="Name " [locked]="false ">
             <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
                 <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
                 </kendo-grid-string-filter-cell>
@@ -64,8 +71,8 @@
                 </kendo-grid-string-filter-cell>
             </ng-template>
         </kendo-grid-column>
-        <kendo-grid-column headerClass="notification-header" field="winNotificationStatus " title="Status" [locked]="false"
-            width="70" [filterable]="false">
+        <kendo-grid-column headerClass="notification-header" field="winNotificationStatus " title="Status" [locked]="false" width="70"
+            [filterable]="false">
             <ng-template kendoGridCellTemplate let-dataItem>
                 <button *ngIf="dataItem.winNotificationStatus" [disabled]="dataItem.winListenerStatus==-1|| dataItem.winNotificationStatusIsCahnging || !isManager"
                     (click)="chnageWinNotificationStatus(dataItem)" type="button" [style]="setStatusSpanStyle(dataItem.winNotificationStatus)"></button>
