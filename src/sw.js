@@ -7,11 +7,11 @@ let dataCacheName = 'pwa-client-data-v' + version;
 let appShellFilesToCache = [
   './',
   './index.html',
-  './polyfills.bundle.js',
-  './inline.bundle.js',
-  './styles.bundle.js',
-  './vendor.bundle.js',
-  './main.bundle.js'
+  './polyfills..bundle.js',
+  './inline..bundle.js',
+  './styles..bundle.css',
+  './vendor..bundle.js',
+  './main..bundle.js'
 ];
 
 self.addEventListener('install', (e) => {

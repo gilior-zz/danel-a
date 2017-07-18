@@ -11,8 +11,8 @@
         "assets",
         "favicon.ico",
         "pic.jpg",
-        "sw.js",
-        "Web.config"
+        "sw.js"
+        
       ],
       "index": "index.html",
       "main": "main.ts",
