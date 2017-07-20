@@ -9,7 +9,6 @@
     "rc": "ng serve -o",
     "bc": "ng build --prod --aot  -bh=smart-office  -op=V:\\  --stats-json",
     "bc:test": "ng build --prod --aot  -bh=s-w  -op=T:\\  --stats-json",
-      
     "bs": "tsc ./src/server/server.ts",
     "test": "ng test",
     "lint": "ng lint",
@@ -38,6 +37,7 @@
     "@progress/kendo-angular-intl": "^1.0.0",
     "@progress/kendo-angular-l10n": "^1.0.0",
     "@progress/kendo-angular-layout": "^0.24.2",
+    "@progress/kendo-angular-upload": "^1.1.1",
     "@progress/kendo-data-query": "^1.0.1",
     "@progress/kendo-drawing": "^1.0.3",
     "@progress/kendo-theme-bootstrap": "^2.4.0",

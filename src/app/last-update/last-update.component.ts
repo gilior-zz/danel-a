@@ -20,7 +20,7 @@ export class LastUpdateComponent implements OnInit, OnChanges, OnDestroy {
   interval: NodeJS.Timer;
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     if (!this.time) return;
-    console.log(this.time);
+    // console.log(this.time);
     let l = new Date().getTime() - new Date(this.time).getTime()
     let ll = l / 1000 / 60;
     this.minDif = ll;

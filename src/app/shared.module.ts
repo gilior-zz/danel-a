@@ -16,6 +16,8 @@ import { ComboBoxModule } from '@progress/kendo-angular-dropdowns';
 import { ReCaptchaModule } from 'angular2-recaptcha';
 import { LockedMdlsComponent } from './locked-mdls/locked-mdls.component';
 import { LastUpdateComponent } from './last-update/last-update.component';
+import { UploadModule } from '@progress/kendo-angular-upload';
+
 
 
 
@@ -30,6 +32,7 @@ import { LastUpdateComponent } from './last-update/last-update.component';
     PDFModule,
     InputsModule,
     ButtonsModule,
+    UploadModule,
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
@@ -46,6 +49,7 @@ import { LastUpdateComponent } from './last-update/last-update.component';
     PDFModule,
     InputsModule,
     ButtonsModule,
+    UploadModule,
     FormsModule,
     ReactiveFormsModule,
     LayoutModule,
