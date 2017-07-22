@@ -1,84 +1,84 @@
-<span (click)="onCLick()" [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'"
-    #span class="link">{{danelVersion.dbName}}</span>
-<!--<span [style.border-color]="danelVersion.winServiceIsUp?'greenyellow':'darkred'" [style.color]="danelVersion.winNotificationIsUp?'greenyellow':'darkred'" (lclick)="onDoubleCLick(danelVersion)" [lgCopy]="danelVersion.fp" #span id="id{{index}}" class="link">{{danelVersion.dbName}}</span>-->
+<span (click)="onCLick()" [style]="styleByStatus" #span class="link ">{{danelVersion.dbName}}</span>
+<!--<span [style.border-color]="danelVersion.winServiceIsUp? 'greenyellow': 'darkred' " [style.color]="danelVersion.winNotificationIsUp?
+    'greenyellow': 'darkred' " (lclick)="onDoubleCLick(danelVersion) " [lgCopy]="danelVersion.fp " #span id="id{{index}} " class="link ">{{danelVersion.dbName}}</span>-->
 
-<kendo-dialog title="{{danelVersion.serverName}}" *ngIf="showDtataDlg" (close)="showDtataDlg=false">
-    <div class="row">
-        <div class="col-xs-12 h3">
+<kendo-dialog title="{{danelVersion.serverName}} " *ngIf="showDtataDlg " (close)="showDtataDlg=false ">
+    <div class="row ">
+        <div class="col-xs-12 h3 ">
             <p>
-                <button title="{{fileRunnerIsDown?'יש להפעיל smart office service':''}}" [disabled]="isLoadingFile||fileRunnerIsDown" #btn
-                    id="{{'id'+danelVersion.id}}" (click)="copyExeFilePath(btn.id)" class="btn btn-success" type="">הפעלת סביבה</button>
+                <button title="{{fileRunnerIsDown? 'יש להפעיל smart office service': ''}} " [disabled]="isLoadingFile||fileRunnerIsDown "
+                    #btn id="{{ 'id'+danelVersion.id}} " (click)="copyExeFilePath(btn.id) " class="btn btn-success " type=" ">הפעלת סביבה</button>
             </p>
         </div>
 
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <p> <label for="">גרסת בסיס נתונים <mark>{{danelVersion.version}}</mark>      </label> </p>
+    <div class="row ">
+        <div class="col-xs-12 ">
+            <p> <label for=" ">גרסת בסיס נתונים <mark>{{danelVersion.version}}</mark>      </label> </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <p> <label for="">גרסת אפליקציה <mark>{{danelVersion.appVersion}}</mark>      </label> </p>
+    <div class="row ">
+        <div class="col-xs-12 ">
+            <p> <label for=" ">גרסת אפליקציה <mark>{{danelVersion.appVersion}}</mark>      </label> </p>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12 h3">
-            <p class="file-path"> {{danelVersion.fp}} </p>
+    <div class="row ">
+        <div class="col-xs-12 h3 ">
+            <p class="file-path "> {{danelVersion.fp}} </p>
         </div>
 
     </div>
-    <div class="row">
-        <div class="col-xs-6 h3">
+    <div class="row ">
+        <div class="col-xs-6 h3 ">
             <p> שרת </p>
         </div>
-        <div class="col-xs-6 h3">
+        <div class="col-xs-6 h3 ">
             <p> הפצה </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-6">
-            <p> <label for="">פורט <mark>{{danelVersion.listenerPort}}</mark>      </label> </p>
+    <div class="row ">
+        <div class="col-xs-6 ">
+            <p> <label for=" ">פורט <mark>{{danelVersion.listenerPort}}</mark>      </label> </p>
         </div>
-        <div class="col-xs-6">
-            <p> <label for=""> פורט  <mark>{{danelVersion.notificationPort}}</mark>    </label> </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-6">
-            <p> <label for="">     שם       <mark>{{danelVersion.winServiceName}}</mark>    </label> </p>
-        </div>
-        <div class="col-xs-6">
-            <p> <label for="">      שם       <mark>{{danelVersion.winNotificationName}}</mark>    </label> </p>
+        <div class="col-xs-6 ">
+            <p> <label for=" "> פורט  <mark>{{danelVersion.notificationPort}}</mark>    </label> </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-6">
+    <div class="row ">
+        <div class="col-xs-6 ">
+            <p> <label for=" ">     שם       <mark>{{danelVersion.winServiceName}}</mark>    </label> </p>
+        </div>
+        <div class="col-xs-6 ">
+            <p> <label for=" ">      שם       <mark>{{danelVersion.winNotificationName}}</mark>    </label> </p>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-xs-6 ">
             <span>     סטטוס       <mark>{{danelVersion.winServiceIsUp?'למעלה':'למטה'}}</mark>    </span>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-6 ">
             <span>     סטטוס       <mark>{{danelVersion.winNotificationIsUp?'למעלה':'למטה'}}</mark>    </span>
-            <!--<button *ngIf="isManager" class="k-button-decrease" type="">{{danelVersion.winNotificationIsUp?'להוריד':'להרים'}}</button>-->
+            <!--<button *ngIf="isManager " class="k-button-decrease " type=" ">{{danelVersion.winNotificationIsUp?'להוריד':'להרים'}}</button>-->
 
         </div>
     </div>
-    <ng-container *ngIf="isManager">
-        <div class="row">
-            <div class="col-xs-6">
+    <ng-container *ngIf="isManager ">
+        <div class="row ">
+            <div class="col-xs-6 ">
                 <p>
-                    <button [disabled]="winServiceIsChanging" (click)="changeWinService()" class="btn btn-info" type="">{{danelVersion.winServiceIsUp?'עצירה':'הפעלה'}}</button>
-                    <button [disabled]="winServiceIsChanging" (click)="restartwinService()" *ngIf="danelVersion.winServiceIsUp" class="btn btn-info"
-                        type="">אתחול</button>
+                    <button [disabled]="changeWinServiceNotAllowed " (click)="changeWinService() " class="btn btn-info
+    " type=" ">{{btnServiceText}}</button>
+                    <button [disabled]="restartServiceNotAllowed " (click)="restartwinService() " class="btn btn-info " type=" ">אתחול</button>
 
                 </p>
             </div>
-            <div class="col-xs-6">
+            <div class="col-xs-6 ">
                 <p>
-                    <button [disabled]="notificationIsChanging" (click)="changeNotification()" class="btn btn-info" type="">{{danelVersion.winNotificationIsUp?'עצירה':'הפעלה'}}</button>
-                    <button [disabled]="notificationIsChanging" (click)="restartNotification()" *ngIf="danelVersion.winNotificationIsUp" class="btn btn-info"
-                        type="">אתחול</button>
+                    <button [disabled]="changeNotificationNotAllowed " (click)="changeNotification() " class="btn btn-info
+    " type=" ">{{btnNotificationText}}</button>
+                    <button [disabled]="restartNotificationNotAllowed" (click)="restartNotification() " class="btn btn-info " type=" ">אתחול</button>
 
                 </p>
             </div>
