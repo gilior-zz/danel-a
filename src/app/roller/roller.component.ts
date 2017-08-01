@@ -1,11 +1,13 @@
 import { Observable } from 'rxjs/Observable';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations'
 
 
 import { NewsResponse } from "../../models";
 import { NewsService } from "../services/news.service";
 import { UtilityService } from "../services/utility.service";
+import { DataService } from "app/services/data.service";
+
 
 @Component({
   selector: 'lg-roller',
@@ -30,8 +32,8 @@ import { UtilityService } from "../services/utility.service";
   // ]
   animations: [
     trigger('flyInOut', [
-      state('start', style({transform: 'translateX(100%)'})),
-      state('end', style({transform: 'translateX(-100%)'})),
+      state('start', style({ transform: 'translateX(100%)' })),
+      state('end', style({ transform: 'translateX(-100%)' })),
       transition('start => end', [
         animate('10s')
       ])
@@ -46,16 +48,17 @@ export class RollerComponent implements OnInit {
     'You are the best hero!',
     'Will you be my hero?'
   ];
-  spanState:string="start";
+  spanState: string = "start";
   public rollerResponse: Observable<NewsResponse>;
-  constructor(private  rs:NewsService,private  us:UtilityService) { this.resend(); }
+  constructor(private us: UtilityService, private dataService: DataService)
+  { this.resend(); }
   resend() {
     this.message$ = Observable.interval(500)
       .map(i => this.messages[i])
       .take(this.messages.length);
   }
 
-  animationDone(event ){
+  animationDone(event) {
     // let l=this.index+=1;
     // this.index=l%this.msgs.length;
     //
@@ -66,21 +69,21 @@ export class RollerComponent implements OnInit {
 
   }
 
-  private index:number=-1;
-  get msg():any{
+  private index: number = -1;
+  get msg(): any {
     // if (this.msgs==null || this.index==-1) return null;
     // return this.msgs[this.index];
     return null;
   }
 
- get combinedMsg():string{
+  get combinedMsg(): string {
     // if (this.msgs==null) return null;
     // return  this.msgs.join();
-   return "";
+    return "";
   }
-  showMsg:boolean=true;
+  showMsg: boolean = true;
   ngOnInit() {
-   this.rollerResponse= this.rs.getRllrs();
+    this.rollerResponse = this.dataService.GetData<NewsResponse>('news');
   }
 
 }

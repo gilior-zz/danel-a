@@ -5,7 +5,9 @@ import { EnvironmentSystemComponent } from "app/environment-system/environment-s
 import { NgModule } from "@angular/core";
 
 const envSystemRoutes: Routes = [
-  { path: '', component: EnvironmentSystemComponent },
+  {
+    path: '', component: EnvironmentSystemComponent, 
+  },
   // { path: '',pathMatch:'full'  ,redirectTo: 'env' },
 
 ];
@@ -16,6 +18,7 @@ const envSystemRoutes: Routes = [
   ],
   exports: [
     RouterModule
-  ]
+  ],
+
 })
 export class EnvironmentSystemRoutingModule { }

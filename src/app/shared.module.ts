@@ -8,6 +8,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { GridModule, PDFModule } from '@progress/kendo-angular-grid';
 import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { TreeModule } from 'angular-tree-component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -27,6 +28,7 @@ import { UploadModule } from '@progress/kendo-angular-upload';
     CommonModule,
     TreeModule,
     HttpModule,
+    HttpClientModule,
     GridModule,
     ComboBoxModule,
     PDFModule,
@@ -38,12 +40,13 @@ import { UploadModule } from '@progress/kendo-angular-upload';
     LayoutModule,
     DialogModule,
     ReCaptchaModule,
-    
+
 
   ],
   exports: [
     CommonModule,
     HttpModule,
+    HttpClientModule,
     GridModule,
     ComboBoxModule,
     PDFModule,

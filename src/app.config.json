@@ -1,0 +1,4 @@
+{
+    "apiEndpoint": "http://localhost:3000/api",
+    "winServiceEndpoint": "http://localhost:8080/api"
+}

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { LinkResponse, Link } from "../../models";
 import { LinksService } from "../services/links.service";
 import { UtilityService } from "app/services/utility.service";
+import { DataService } from "app/services/data.service";
+
 
 
 @Component({
@@ -13,7 +15,7 @@ import { UtilityService } from "app/services/utility.service";
 export class LinksComponent implements OnInit {
   public linkResponse: Observable<LinkResponse>;
 
-  constructor(private linksService: LinksService, private us: UtilityService) {
+  constructor(private us: UtilityService, private dataService: DataService) {
   }
   public isLoadingFile: boolean;
   runFile(pth: string) {
@@ -36,7 +38,8 @@ export class LinksComponent implements OnInit {
   lastUpdate: Date;
   ngOnInit() {
 
-    this.linksService.getLinks().subscribe(i => {
+    // this.linksService.getLinks().subscribe(i => {
+    this.dataService.GetData<LinkResponse>('lnks').subscribe(i => {
       this.lastUpdate = i.time;;
       this.links = i.lnks;
     })

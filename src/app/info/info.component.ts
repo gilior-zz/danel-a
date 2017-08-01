@@ -9,10 +9,12 @@ import { RTL } from "@progress/kendo-angular-l10n";
 
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SupportIssue } from "../../models";
+import { SupportIssue, SupportIssueResponse } from "../../models";
 import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
+import { DataService } from "app/services/data.service";
+
 
 @Component({
 
@@ -28,7 +30,7 @@ export class InfoComponent implements OnInit {
   public showUpdateFaqDlg: boolean;
   private data: Array<SupportIssue>;
   public showRemoveDlg: boolean;
-  constructor(public infoService: InfoService, public ut: UtilityService) { }
+  constructor(public ut: UtilityService, private dataService: DataService) { }
   gridData: Array<SupportIssue>;
   public pageSize: number = 5;
   public items: Array<SupportIssue>;
@@ -46,7 +48,8 @@ export class InfoComponent implements OnInit {
   }
   lastUpdate: Date;
   private loadFaqs() {
-    this.infoService.getFaQs().subscribe(i => {
+    // this.infoService.getFaQs().subscribe(i => {
+    this.dataService.GetData<SupportIssueResponse>('faq').subscribe(i => {
       this.lastUpdate = i.time;
       this.items = <Array<SupportIssue>>JSON.parse(JSON.stringify(i.sis));
       this.loadItems();
@@ -129,12 +132,12 @@ export class InfoComponent implements OnInit {
   public saveHandlerReactiveDriven({ sender, rowIndex, formGroup, isNew }) {
     const si: SupportIssue = formGroup.value;
 
-    this.infoService.update(si).subscribe(i => {
+    // this.infoService.update(si).subscribe(i => {
+    this.dataService.PutData<any, SupportIssue>('faq', si.id, si).subscribe(i => {
       console.log(rowIndex);
       console.log(si);
     }, (err) => {
       console.log('somthing is wrong');
-
     });
 
     sender.closeRow(rowIndex);
@@ -142,7 +145,9 @@ export class InfoComponent implements OnInit {
 
   public saveHandlerTemplateDriven({ sender, rowIndex, dataItem, isNew }) {
     // update the data source
-    this.infoService.update(dataItem).subscribe(i => {
+    // this.infoService.update(dataItem).subscribe(i => {
+    this.dataService.PutData<any, SupportIssue>('faq', dataItem.id, dataItem).subscribe(i => {
+      console.log(rowIndex);
       console.log(rowIndex);
       console.log(dataItem);
     });
@@ -170,7 +175,8 @@ export class InfoComponent implements OnInit {
 
   delete() {
     console.log(`delete from DB ${this.delID}`);
-    this.infoService.remove(this.delID).subscribe(() => {
+    // this.infoService.remove(this.delID).subscribe(() => {
+    this.dataService.RemoveData<Boolean>('faq', this.delID).subscribe(() => {
       let item = this.items.find(i => i.id == this.delID);
       this.items = this.items.filter(i => i != item);
       this.loadItems();
@@ -197,7 +203,8 @@ export class InfoComponent implements OnInit {
     this.showFaqDlg = false;
     if (status == 'yes') {
       let sis = newItemWindow.getNewFaq();
-      this.infoService.add(sis).subscribe(i => {
+      // this.infoService.add(sis).subscribe(i => {
+      this.dataService.PostData<SupportIssue>('faq', sis).subscribe(i => {
         console.log(i);
         this.items.push(i);
         this.items = this.items.sort((a, b) => { return new Date(b.ts).getDate() - new Date(a.ts).getDate() })
@@ -205,10 +212,8 @@ export class InfoComponent implements OnInit {
       }, (err) => {
         console.log('somthing is wrong');
       }
-
       );
     }
-
   }
 
   public closeUpdateFaqDlg(status, updateItemWindow: any = null, ) {
@@ -219,8 +224,8 @@ export class InfoComponent implements OnInit {
       let sis = updateItemWindow.getNewFaq();
 
 
-      this.infoService.update(sis).subscribe(i => {
-
+      // this.infoService.update(sis).subscribe(i => {
+      this.dataService.PutData<any, SupportIssue>('faq', sis.id, sis).subscribe(i => {
 
         for (var index = 0; index < this.items.length; index++) {
           var element = this.items[index];

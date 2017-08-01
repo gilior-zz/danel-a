@@ -8,13 +8,15 @@ import { Subject } from 'rxjs/Subject';
 
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { SupportIssue, DanelVersion, CustomServiceControllerStatus, Module } from "../../models";
+import { SupportIssue, DanelVersion, CustomServiceControllerStatus, Module, DanelVersionResponse } from "../../models";
 import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
 import { FlatEnvironmentService } from "app/services/flat-environment.service";
 import { EnvironmentService } from "app/services/environment.service";
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
+import { DataService } from "app/services/data.service";
+
 
 @Component({
 
@@ -29,7 +31,7 @@ export class EnvironmentSystemComponent implements OnInit {
   public showUpdateFaqDlg: boolean;
   private data: Array<DanelVersion>;
   public showRemoveDlg: boolean;
-  constructor(public domSanitizer: DomSanitizer, public flatEnvironmentService: FlatEnvironmentService, public ut: UtilityService, public environmentService: EnvironmentService) { }
+  constructor(public domSanitizer: DomSanitizer, public ut: UtilityService, private dataService: DataService) { }
   gridData: Array<DanelVersion>;
   public pageSize: number = 100;
   public mdlFilteredItems: Array<DanelVersion>;
@@ -51,12 +53,14 @@ export class EnvironmentSystemComponent implements OnInit {
   lastUpdate: Date;
   get isManager(): boolean { return this.ut.isManager }
   loadFaqs() {
-    this.flatEnvironmentService.getEnvs().subscribe(i => {
+    // this.flatEnvironmentService.getEnvs().subscribe(i => {
+    this.dataService.GetData<DanelVersionResponse>('flatEnvs').subscribe(i => {
       this.lastUpdate = i.time;
       this.allItems = <Array<DanelVersion>>JSON.parse(JSON.stringify(i.flatVers));
       this.mdlFilteredItems = this.allItems;
       this.loadItems();
-      this.flatEnvironmentService.GetListenersStatuses().subscribe(listenersStatuses => {
+      // this.flatEnvironmentService.GetListenersStatuses().subscribe(listenersStatuses => {
+      this.dataService.GetData<Array<any>>('listener').subscribe(listenersStatuses => {
 
         listenersStatuses.forEach(item => {
           let envs = this.allItems.filter(env => env.id == item.Key);
@@ -68,7 +72,8 @@ export class EnvironmentSystemComponent implements OnInit {
         })
       })
 
-      this.flatEnvironmentService.GetNotificationsStatuses().subscribe(listenersStatuses => {
+      // this.flatEnvironmentService.GetNotificationsStatuses().subscribe(listenersStatuses => {
+      this.dataService.GetData<Array<any>>('notification').subscribe(listenersStatuses => {
 
         listenersStatuses.forEach(item => {
           let envs = this.allItems.filter(env => env.id == item.Key);
@@ -127,12 +132,16 @@ export class EnvironmentSystemComponent implements OnInit {
   }
 
   GetNotificationStatus(winNotificationName: string, serverName: string): Observable<string> {
-    return this.environmentService.GetNotificationStatus(winNotificationName, serverName);
+    // return this.environmentService.GetNotificationStatus(winNotificationName, serverName);
+    let id = `${winNotificationName};${serverName}`
+    return this.dataService.GetData<string>('notification', id);
   }
 
 
   GetListenerStatus(winServiceName: string, serverName: string): Observable<string> {
-    return this.environmentService.GetListenerStatus(winServiceName, serverName);
+    // return this.environmentService.GetListenerStatus(winServiceName, serverName);
+    let id = `${winServiceName};${serverName}`
+    return this.dataService.GetData<string>('listener', id);
   }
 
   setHeaderStyle() {
@@ -169,7 +178,8 @@ export class EnvironmentSystemComponent implements OnInit {
     }
 
 
-    this.flatEnvironmentService.chnageWinListenerStatus(dataItem.id, toStatus).subscribe(i => {
+    // this.flatEnvironmentService.chnageWinListenerStatus(dataItem.id, toStatus).subscribe(i => {
+    this.dataService.PutData<any, CustomServiceControllerStatus>('listener', dataItem.id, toStatus).subscribe(i => {
       dataItem.winListenerStatus = toStatus;
       dataItem.winListenerStatusIsCahnging = false;
     }, err => {
@@ -197,7 +207,8 @@ export class EnvironmentSystemComponent implements OnInit {
         break;
     }
 
-    this.flatEnvironmentService.chnageWinNotificationStatus(dataItem.id, toStatus).subscribe(i => {
+    // this.flatEnvironmentService.chnageWinNotificationStatus(dataItem.id, toStatus).subscribe(i => {
+    this.dataService.PutData<any, CustomServiceControllerStatus>('notification', dataItem.id, toStatus).subscribe(i => {
       dataItem.winNotificationStatus = toStatus;
       dataItem.winNotificationStatusIsCahnging = false;
     }, err => {

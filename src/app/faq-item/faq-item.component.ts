@@ -8,9 +8,11 @@ import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 // import { FileInfo } from "@progress/kendo-angular-upload";
 
 
-import { Module, SupportIssueLink, SupportIssue } from "../../models";
+import { Module, SupportIssueLink, SupportIssue, ModuleResponse } from "../../models";
 import { UtilityService } from "../services/utility.service";
 import { MdlsService } from "../services/mdls.service";
+import { DataService } from "app/services/data.service";
+
 
 
 
@@ -40,7 +42,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   // myFiles: Array<FileInfo>;
   private lnks: FileList;
 
-  constructor(private fb: FormBuilder, private ut: UtilityService, public ms: MdlsService) {
+  constructor(private fb: FormBuilder, private ut: UtilityService, private dataService: DataService) {
 
 
   }
@@ -72,9 +74,9 @@ export class FaqItemComponent implements OnInit, OnDestroy {
       links.push(l);
     }
 
-  
 
-    
+
+
 
     let sis: SupportIssue = { mdlName: formModel.mdl, lnks: formModel.lnks, sln: formModel.sln, prb: formModel.prb, mID: formModel.mdlID, id: formModel.id };
     return sis;
@@ -156,8 +158,8 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   }
 
-  onClear(){
-     this.faqForm.get('mdl').setValue(null);
+  onClear() {
+    this.faqForm.get('mdl').setValue(null);
     this.faqForm.get('mdlID').setValue(null);
   }
 
@@ -175,7 +177,8 @@ export class FaqItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createForm();
-    this.ms.getMdls().subscribe(i => {
+    // this.ms.getMdls().subscribe(i => {
+    this.dataService.GetData<ModuleResponse>('mdls').subscribe(i => {
       this.mdls = i.mdls;
     })
 

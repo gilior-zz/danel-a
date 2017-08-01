@@ -54,6 +54,10 @@ export class Link {
   pth: string;
 }
 
+export class WindowsUserinfo {
+  name: string;
+}
+
 export class LinkResponse {
   lnks: Link[][];
   time: Date;
@@ -66,7 +70,7 @@ export class SupportIssue {
   mod?: Module;
   ts?: Date;
   lnks?: SupportIssueLink[];
-  mdlName?: string;  
+  mdlName?: string;
 }
 export class SupportIssueLink {
   id?: number;

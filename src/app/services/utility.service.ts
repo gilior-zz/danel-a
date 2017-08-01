@@ -1,9 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
-import { SupportIssue, DanelVersionResponse } from "../../models";
+import { SupportIssue, DanelVersionResponse, WindowsUserinfo } from "../../models";
 import * as Clipboard from "Clipboard";
 import { Http, Response } from "@angular/http";
 import { APP_CONFIG, AppConfig } from "app/app-config";
 import { Observable } from "rxjs/Observable";
+
+
+
 
 
 
@@ -16,14 +19,25 @@ export class UtilityService {
   faqToSave: SupportIssue;
   userType: string = 'support';
   public isManager: boolean;
+  windowsUserinfo: WindowsUserinfo
   fileRunnerIsUp: boolean = true;
   isExplorer: boolean;
   constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
     this.config = Object.assign({}, config)
-    this.config.winServiceEndpoint = config.winServiceEndpoint + '/Values/RunFile';
+    this.config.winServiceEndpoint = config.winServiceEndpoint;
     this.checkWinServiceEndpoint();
+    this.getWindowsUserinfo();
     this.checkBrowser();
     // this.mycheckBrowser();
+  } 
+
+  getWindowsUserinfo() { 
+    if (this.fileRunnerIsUp) {
+      let url=`${this.config.winServiceEndpoint}/Values/GetUserEnv`;
+      this.http.get(url).subscribe((i) => {
+        this.windowsUserinfo = i.json();
+      })
+    }
   }
 
   private checkBrowser() {
@@ -57,7 +71,7 @@ export class UtilityService {
 
 
   checkWinServiceEndpoint() {
-    this.http.get(this.config.winServiceEndpoint)
+    this.http.get(this.config.winServiceEndpoint+`/Values/RunFile`)
       .subscribe(
       i => {
 
@@ -75,7 +89,7 @@ export class UtilityService {
   runFile(file: string): Observable<boolean> {
     // console.log(fp);
 
-    return this.http.post(this.config.winServiceEndpoint, { file })
+    return this.http.post(this.config.winServiceEndpoint+`/Values/RunFile`, { file })
       .map(this.extractData)
       .catch(this.handleError);
   }

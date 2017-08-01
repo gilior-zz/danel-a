@@ -51,7 +51,7 @@
         </kendo-grid-column>
         <kendo-grid-column headerClass="listener-header" field="winListenerStatus" title="Status" [locked]="false" width="70" [filterable]="false">
             <ng-template kendoGridCellTemplate let-dataItem>
-                <button *ngIf="dataItem.winListenerStatus" [disabled]="dataItem.winListenerStatus==-1 || dataItem.winListenerStatusIsCahnging || !isManager"
+                <button *ngIf="dataItem.winListenerStatus" [disabled]="dataItem.winListenerStatus==-1 || dataItem.winListenerStatusIsCahnging || false"
                     (click)="chnageWinListenerStatus(dataItem)" type="button" [style]="setStatusSpanStyle(dataItem.winListenerStatus)">{{dataItem.statusIssCahnging}}</button>
                 <span *ngIf="!dataItem.winListenerStatus" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
             </ng-template>
@@ -74,7 +74,7 @@
         <kendo-grid-column headerClass="notification-header" field="winNotificationStatus " title="Status" [locked]="false" width="70"
             [filterable]="false">
             <ng-template kendoGridCellTemplate let-dataItem>
-                <button *ngIf="dataItem.winNotificationStatus" [disabled]="dataItem.winListenerStatus==-1|| dataItem.winNotificationStatusIsCahnging || !isManager"
+                <button *ngIf="dataItem.winNotificationStatus" [disabled]="dataItem.winListenerStatus==-1|| dataItem.winNotificationStatusIsCahnging || false"
                     (click)="chnageWinNotificationStatus(dataItem)" type="button" [style]="setStatusSpanStyle(dataItem.winNotificationStatus)"></button>
                 <span *ngIf="!dataItem.winNotificationStatus" class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
             </ng-template>

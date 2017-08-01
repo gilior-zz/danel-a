@@ -5,6 +5,8 @@ import { EnvironmentService } from "../services/environment.service";
 import { Observable } from "rxjs/Observable";
 import * as Clipboard from "Clipboard";
 import { UtilityService } from "app/services/utility.service";
+import { DataService } from "app/services/data.service";
+
 
 @Component({
 
@@ -20,16 +22,15 @@ export class EnvironmentComponent implements OnInit {
   allVers: DanelVersion[][];
   lastUpdate: Date;
   danelVersionResponse: Observable<DanelVersionResponse>;
-  constructor(private environmentService: EnvironmentService, private ut: UtilityService) { }
+  constructor(private ut: UtilityService, private dataService: DataService) { }
 
   ngOnInit() {
-    this.environmentService.getEnvs().subscribe(i => {
+    // this.environmentService.getEnvs().subscribe(i => {
+    this.dataService.GetData<DanelVersionResponse>('envs').subscribe(i => {
       this.lastUpdate = i.time
       this.vers = i.vers;
       this.allVers = new Array<Array<DanelVersion>>();
       Object.assign(this.allVers, this.vers);
-
-
     })
   }
   showDtataDlg: boolean;

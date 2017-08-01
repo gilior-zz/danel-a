@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DanelVersion, CustomServiceControllerStatus } from "../../models";
+import { DanelVersion, CustomServiceControllerStatus, DanelVersionResponse } from "../../models";
 import { EnvironmentService } from "app/services/environment.service";
 import { UtilityService } from "app/services/utility.service";
 import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
+import { DataService } from "app/services/data.service";
+
 
 @Component({
   selector: 'lg-environment-unit',
@@ -11,7 +13,7 @@ import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 })
 export class EnvironmentUnitComponent implements OnInit {
   @Input() danelVersion: DanelVersion
-  constructor(private environmentService: EnvironmentService, private us: UtilityService, public domSanitizer: DomSanitizer) { }
+  constructor(private us: UtilityService, public domSanitizer: DomSanitizer, private dataService: DataService) { }
 
   showDtataDlg: boolean;
   onCLick() {
@@ -33,9 +35,11 @@ export class EnvironmentUnitComponent implements OnInit {
     let toStatus: number = 1 - (+ this.danelVersion.winServiceIsUp);
 
     this.danelVersion.winListenerStatus = CustomServiceControllerStatus.StartPending;
-    this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
+    // this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
+    //   this.danelVersion.winListenerStatus = i.ver.winListenerStatus;
+    this.dataService.PutData<DanelVersionResponse, DanelVersion>('envs', toStatus, this.danelVersion).subscribe(i => {
       this.danelVersion.winListenerStatus = i.ver.winListenerStatus;
-      
+
     }, err => {
       this.danelVersion.winListenerStatus = currentStatus;
       //this.winServiceIsChanging = false
@@ -51,7 +55,8 @@ export class EnvironmentUnitComponent implements OnInit {
       this.danelVersion.winNotificationStatus == CustomServiceControllerStatus.Running
     let toStatus: number = 1 - (+ this.danelVersion.winNotificationIsUp) + 10;
     this.danelVersion.winNotificationStatus = CustomServiceControllerStatus.StartPending;
-    this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
+    // this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
+    this.dataService.PutData<DanelVersionResponse, DanelVersion>('envs', toStatus, this.danelVersion).subscribe(i => {
       this.danelVersion.winNotificationStatus = i.ver.winNotificationStatus;
       //this.notificationIsChanging = false
     }, err => {
@@ -66,8 +71,9 @@ export class EnvironmentUnitComponent implements OnInit {
     //this.winServiceIsChanging = true;
     let toStatus: number = 2;
     this.danelVersion.winListenerStatus = CustomServiceControllerStatus.StartPending;
-    this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
-     // this.winServiceIsChanging = false;
+    // this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
+    this.dataService.PutData<DanelVersionResponse, DanelVersion>('envs', toStatus, this.danelVersion).subscribe(i => {
+      // this.winServiceIsChanging = false;
       this.danelVersion.winListenerStatus = i.ver.winListenerStatus;
       this
     }, err => {
@@ -142,23 +148,25 @@ export class EnvironmentUnitComponent implements OnInit {
     //this.notificationIsChanging = true;
     let toStatus: number = 12;
     this.danelVersion.winNotificationStatus = CustomServiceControllerStatus.StartPending;
-    this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
+    // this.environmentService.changeService(toStatus, this.danelVersion).subscribe(i => {
+    this.dataService.PutData<DanelVersionResponse, DanelVersion>('envs', toStatus, this.danelVersion).subscribe(i => {
       //this.notificationIsChanging = false;
-     // this.danelVersion.winNotificationStatus = i.ver.winNotificationStatus;
+      // this.danelVersion.winNotificationStatus = i.ver.winNotificationStatus;
 
     }, err => {
       this.danelVersion.winNotificationStatus = currentStatus;
-     // this.notificationIsChanging = false
+      // this.notificationIsChanging = false
     })
   }
 
   //public winServiceIsChanging: boolean;
- // public notificationIsChanging: boolean;
+  // public notificationIsChanging: boolean;
 
   get isManager(): boolean { return this.us.isManager }
 
   ngOnInit() {
-    this.environmentService.getEnv(this.danelVersion.id).subscribe(i => {
+    // this.environmentService.getEnv(this.danelVersion.id).subscribe(i => {
+    this.dataService.GetData<DanelVersionResponse>('envs', this.danelVersion.id.toString()).subscribe(i => {
       // this.danelVersion.winNotificationIsUp = i.ver.winNotificationIsUp;
       // this.danelVersion.winServiceIsUp = i.ver.winServiceIsUp;
       this.danelVersion = i.ver;
