@@ -6,10 +6,10 @@ export class LogService {
   constructor() { }
 
   public logError(msg: string): void {
-    console.error(msg);
+    console.error(`${msg} ${new Date().toLocaleTimeString()}`);
   }
 
-  public logInfo(msg: string): void {
-    console.info(msg);
+  public logInfo(msg: Object): void {
+    console.info(`${JSON.stringify(msg)} ${new Date().toLocaleTimeString()}`);
   }
 }

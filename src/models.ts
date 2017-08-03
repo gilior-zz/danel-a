@@ -105,5 +105,17 @@ export class NewsResponse {
   time: Date;
 }
 
+export interface AppConfig {
+  prodApiEndpoint: string;
+  devApiEndpoint: string;
+  winServiceEndpoint: string;
+  isDevMode: boolean;
+  latestWinServiceVersion: string;
+}
+
+export class VersionResponse {
+  version: string;
+}
+
 
 

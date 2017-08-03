@@ -48,9 +48,10 @@ export class MnuComponent implements OnInit {
 
   }
 
-  // get userName():string{
-  //   return this.us.windowsUserinfo.name;
-  // }
+  get userName():string{
+    // return this.us.windowsUserinfo.name;
+    return "this.us.windowsUserinfo.name";
+  }
 
   get isSystem(): boolean { return this.us.userType == 'system' }
   get userType(): string { return this.us.userType }

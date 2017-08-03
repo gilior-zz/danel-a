@@ -1,0 +1,7 @@
+{
+    "prodApiEndpoint": "api",
+    "devApiEndpoint": "http://localhost:3000/api",
+    "winServiceEndpoint": "http://localhost:8080/api",
+    "isDevMode": true,
+    "latestWinServiceVersion": "2.0.0"
+}

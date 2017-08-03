@@ -1,7 +1,7 @@
 <!--<lg-curtain></lg-curtain>-->
 <!--<div class="container-fluid"  [hidden]="!showContent">-->
 <div class="container-fluid">
-  <div class="row">
+  <div *ngIf="!showSysAdminPage" class="row">
     <lg-mnu></lg-mnu>
     <div *ngIf="isExplorer" class="col-xs-12 alert-danger text-center explorer-alert">דפדפן אינטרנט אקפלורר.אדג' אינו מומלץ</div>
     <div id="lg-roller" class="container-fluid lg-roller">
@@ -13,14 +13,15 @@
     </div>
     <router-outlet></router-outlet>
     <!--<lg-curtain></lg-curtain>-->
-
-
-
-
-
   </div>
 
+<div class="row">
+  <div class="col-xs-12">
+  <lg-sys-admin *ngIf="showSysAdminPage"></lg-sys-admin>
+
 </div>
+
+
 
 
 `

@@ -7,13 +7,21 @@ import 'rxjs/add/operator/map';
 import { APP_CONFIG, AppConfig } from "app/app-config";
 import { UtilityService } from "app/services/utility.service";
 import { LogService } from "app/services/log.service";
+import { ConfigSettings } from "app/services/config-settings.service";
 
 @Injectable()
 export class DataService {
-  logDataService: boolean = true;
-  apiEndpoint: string;
-  constructor(private http: HttpClient, @Inject(APP_CONFIG) config: AppConfig, private ut: UtilityService, private logService: LogService) {
-    this.apiEndpoint = config.apiEndpoint;
+  logDataService: boolean = false;
+
+  constructor(private http: HttpClient, private ut: UtilityService, private logService: LogService, private configSettings: ConfigSettings) {
+
+
+  }
+
+  get apiEndpoint(): string {
+    return this.configSettings.appConfig.isDevMode ?
+      this.configSettings.appConfig.devApiEndpoint :
+      this.configSettings.appConfig.prodApiEndpoint;
   }
 
   public GetData<T>(url: string, id?: string, headres?: HttpHeaders): Observable<T> {

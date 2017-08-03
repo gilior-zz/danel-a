@@ -11,8 +11,8 @@
         "assets",
         "favicon.ico",
         "pic.jpg",
-        "sw.js"
-
+        "sw.js",
+        "settings.json"
       ],
       "index": "index.html",
       "main": "main.ts",

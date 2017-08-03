@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { requestOptionsProvider } from "app/services/default-request-options.service";
 import { InfoService } from "app/services/info.service";
 import { EnvironmentService } from "app/services/environment.service";
@@ -9,28 +9,41 @@ import { LinksService } from "app/services/links.service";
 import { AppConfigProvider } from "app/app-config";
 import { RTL } from "@progress/kendo-angular-l10n";
 import { FlatEnvironmentService } from "app/services/flat-environment.service";
-
 import { LogService } from "app/services/log.service";
 import { DataService } from "app/services/data.service";
+import { ConfigSettings } from "app/services/config-settings.service";
 
 
+export function startupServiceFactory(startupService: ConfigSettings): Function {
+  return () => startupService.load();
+}
 
 @NgModule({
   imports: [
 
   ],
   providers: [
+    LogService,
+    UtilityService,
+    ConfigSettings,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: startupServiceFactory,
+      deps: [ConfigSettings],
+      multi: true
+    },
     requestOptionsProvider,
     // InfoService,
     // EnvironmentService,
     // LinksService,
     // NewsService,
-    UtilityService,
+
     // MdlsService,
     AppConfigProvider,
     // FlatEnvironmentService,
     DataService,
-    LogService
+
+
     // 
   ]
 })

@@ -25,7 +25,7 @@ export class EnvironmentComponent implements OnInit {
   constructor(private ut: UtilityService, private dataService: DataService) { }
 
   ngOnInit() {
-    // this.environmentService.getEnvs().subscribe(i => {
+    // this.environmentService.getEnvs().subscribe(i => {            
     this.dataService.GetData<DanelVersionResponse>('envs').subscribe(i => {
       this.lastUpdate = i.time
       this.vers = i.vers;

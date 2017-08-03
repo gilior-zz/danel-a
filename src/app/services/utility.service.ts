@@ -1,9 +1,10 @@
 import { Injectable, Inject } from '@angular/core';
-import { SupportIssue, DanelVersionResponse, WindowsUserinfo } from "../../models";
+import { SupportIssue, DanelVersionResponse, WindowsUserinfo, AppConfig } from "../../models";
 import * as Clipboard from "Clipboard";
 import { Http, Response } from "@angular/http";
-import { APP_CONFIG, AppConfig } from "app/app-config";
+// import { APP_CONFIG, AppConfig } from "app/app-config";
 import { Observable } from "rxjs/Observable";
+import { ConfigSettings } from "../services/config-settings.service";
 
 
 
@@ -11,8 +12,8 @@ import { Observable } from "rxjs/Observable";
 
 
 @Injectable()
-export class UtilityService {
-  config: AppConfig
+export class UtilityService { 
+   config: AppConfig;
   showContent: boolean;
   showFaqDlg: boolean;
   delRecord: boolean;
@@ -22,18 +23,18 @@ export class UtilityService {
   windowsUserinfo: WindowsUserinfo
   fileRunnerIsUp: boolean = true;
   isExplorer: boolean;
-  constructor(private http: Http, @Inject(APP_CONFIG) config: AppConfig) {
-    this.config = Object.assign({}, config)
-    this.config.winServiceEndpoint = config.winServiceEndpoint;
+  constructor(private http: Http, private configSettings: ConfigSettings) {
+    // this.config = Object.assign({}, config)
+    // this.config.winServiceEndpoint = config.winServiceEndpoint;
     this.checkWinServiceEndpoint();
     this.getWindowsUserinfo();
-    this.checkBrowser();
+    this.checkBrowser()
     // this.mycheckBrowser();
-  } 
+  }
 
-  getWindowsUserinfo() { 
+  getWindowsUserinfo() {
     if (this.fileRunnerIsUp) {
-      let url=`${this.config.winServiceEndpoint}/Values/GetUserEnv`;
+      let url = `${this.configSettings.appConfig.winServiceEndpoint}/Values/GetUserEnv`;
       this.http.get(url).subscribe((i) => {
         this.windowsUserinfo = i.json();
       })
@@ -71,7 +72,7 @@ export class UtilityService {
 
 
   checkWinServiceEndpoint() {
-    this.http.get(this.config.winServiceEndpoint+`/Values/RunFile`)
+    this.http.get(this.configSettings.appConfig.winServiceEndpoint + `/Values/RunFile`)
       .subscribe(
       i => {
 
@@ -89,7 +90,7 @@ export class UtilityService {
   runFile(file: string): Observable<boolean> {
     // console.log(fp);
 
-    return this.http.post(this.config.winServiceEndpoint+`/Values/RunFile`, { file })
+    return this.http.post(this.configSettings.appConfig.winServiceEndpoint + `/Values/RunFile`, { file })
       .map(this.extractData)
       .catch(this.handleError);
   }

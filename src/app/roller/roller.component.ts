@@ -83,7 +83,9 @@ export class RollerComponent implements OnInit {
   }
   showMsg: boolean = true;
   ngOnInit() {
+
     this.rollerResponse = this.dataService.GetData<NewsResponse>('news');
+
   }
 
 }

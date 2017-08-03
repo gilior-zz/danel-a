@@ -15,6 +15,10 @@ import { AppRoutingModule } from "app/app-routing.module";
 import { CopyComponent } from "app/copy/copy.component";
 import { MnuComponent } from "app/mnu/mnu.component";
 import { UtilityService } from "app/services/utility.service";
+import { Router } from "@angular/router";
+import { ConfigSettings } from "app/services/config-settings.service";
+import { SysAdminComponent } from './sys-admin/sys-admin.component';
+
 
 
 @NgModule({
@@ -25,6 +29,7 @@ import { UtilityService } from "app/services/utility.service";
     CurtainComponent,
     DialogWindowComponent,
     CopyComponent,
+    SysAdminComponent,
 
   ],
   imports: [
@@ -34,22 +39,20 @@ import { UtilityService } from "app/services/utility.service";
     CoreModule,
     AppRoutingModule
   ],
+  
+   
 
   // providers: [
   //   UtilityService, { provide: APP_INITIALIZER, useFactory: loadContext, deps: [UtilityService], multi: true }
   // ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
-
-
-function loadContext(context: UtilityService) {
-  return () => {
-    setTimeout(function () {
-      console.log('in loadContext');
-
-      context.checkWinServiceEndpoint();
-    }, 10000);
-
+export class AppModule {
+  constructor(router: Router, private configSettings: ConfigSettings) {
+    // console.log('Routes: ', JSON.stringify(router.config, undefined, 2));
   }
 }
+
+
+
+
