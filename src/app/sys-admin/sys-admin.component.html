@@ -1,6 +1,34 @@
+<div class="foo row text-center">
+  <div class="col-xs-12">
+    <ng-container *ngIf="showNotWinServiceLatestVersion">
+      <p class="h1">
+        יש לעדכן לגרסה האחרונה של smart office service.
+      </p>
+      <p class="h1">
+        ( כלומר להריץ עוד פעם את התכנית smart office service מתוך תכניות מותקנות )
+      </p>
+      <p class="h1">
+        לאחר מכן ניתן ללחוץ F5 לרענון מסך.
+      </p>
+    </ng-container>
 
-    <p>
-      sys-admin works!
+    <ng-container *ngIf="showNoWinServiceEndpoint">
+      <p class="h1">
+        smart office service אינו מופעל/מותקן במחשב זה.
+      </p>
+      <p class="h1">אם השרות מותקן, יש להפעיל אותו מתוך תכניות מותקנות.</p>
+      <p class="h1">אם השרות אינו מותקן, יש להתקין אותו מתוך כונן X.</p>
+      <p class="h1">את השרות חובה להתקין כאדמיניסטרור.</p>
+      <p class="h1">
+        לאחר מכן ניתן ללחוץ F5 לרענון מסך.
+      </p>
+    </ng-container>
+  </div>
+  <div class="col-xs-12">
+    <p class="img-wrp">
+      <img src="assets/smart.png" class="img-responsive" alt="smart office">
     </p>
   </div>
+
+
 </div>

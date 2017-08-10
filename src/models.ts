@@ -56,6 +56,10 @@ export class Link {
 
 export class WindowsUserinfo {
   name: string;
+  machineName: string;
+  osVersion: {};
+  userDomainName: string;
+
 }
 
 export class LinkResponse {

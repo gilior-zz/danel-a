@@ -6,12 +6,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import { UtilityService } from "app/services/utility.service";
-import { AppConfig, VersionResponse } from "models";
+import { AppConfig, VersionResponse, WindowsUserinfo } from "models";
 import { LogService } from "app/services/log.service";
 
 @Injectable()
 export class ConfigSettings {
   winServiceEndpoint: VersionResponse;
+  windowsUserinfo: WindowsUserinfo;
 
   utilityService: UtilityService
   get appConfig(): AppConfig { return this._appConfig; }
@@ -75,8 +76,20 @@ export class ConfigSettings {
     let endPoint = this.appConfig.winServiceEndpoint + "/" + 'Values' + '/' + 'GetVersion';
 
 
-    return this.http.get<VersionResponse>(endPoint).toPromise().then((i) => {
+    await this.http.get<VersionResponse>(endPoint).toPromise().then((i) => {
       this.winServiceEndpoint = <VersionResponse>i;
+    }
+    )
+      .catch((err: any) => {
+        this.logService.logInfo(err);
+        Promise.resolve()
+      });
+
+
+      endPoint = this.appConfig.winServiceEndpoint + "/" + 'Values' + '/' + 'GetUserEnv';
+    return this.http.get<WindowsUserinfo>(endPoint).toPromise().then((i) => {
+      this.windowsUserinfo = <WindowsUserinfo>i;
+      this.logService.logInfo(this.windowsUserinfo);
     }
     )
       .catch((err: any) => {

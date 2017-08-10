@@ -26,8 +26,8 @@ export class UtilityService {
   constructor(private http: Http, private configSettings: ConfigSettings) {
     // this.config = Object.assign({}, config)
     // this.config.winServiceEndpoint = config.winServiceEndpoint;
-    this.checkWinServiceEndpoint();
-    this.getWindowsUserinfo();
+    // this.checkWinServiceEndpoint();
+    // this.getWindowsUserinfo();
     this.checkBrowser()
     // this.mycheckBrowser();
   }

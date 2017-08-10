@@ -22,8 +22,10 @@
 
 
 
-:host /deep/  {
-
+:host  ::ng-deep  {
+.k-i-filter-clear{
+    display: none;
+}
 .k-grid{
   
     border-top: 0;

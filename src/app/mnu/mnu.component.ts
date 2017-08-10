@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/animations'
 import { UtilityService } from "app/services/utility.service";
 import { Router } from "@angular/router";
+import { ConfigSettings } from "app/services/config-settings.service";
 
 
 @Component({
@@ -30,9 +31,12 @@ import { Router } from "@angular/router";
 })
 export class MnuComponent implements OnInit {
   managerCode: number;
-  constructor(private us: UtilityService, private router: Router) { }
+  constructor(private us: UtilityService, private router: Router, private configSettings: ConfigSettings) { }
 
   ngOnInit() {
+    setInterval(() => {
+      this.time = new Date();
+    }, 1000);
   }
 
   menuVisible: boolean = window.pageYOffset < 30;
@@ -48,9 +52,9 @@ export class MnuComponent implements OnInit {
 
   }
 
-  get userName():string{
-    // return this.us.windowsUserinfo.name;
-    return "this.us.windowsUserinfo.name";
+  get userName(): string {
+    return this.configSettings.windowsUserinfo.name;
+    // return "this.us.windowsUserinfo.name";
   }
 
   get isSystem(): boolean { return this.us.userType == 'system' }
@@ -60,6 +64,9 @@ export class MnuComponent implements OnInit {
   onUserTypeChanged() {
 
   }
+  time: Date;
+
+
 
 
   get isManager(): boolean { return this.us.isManager }

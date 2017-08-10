@@ -18,7 +18,7 @@ iframe{
   
 }
 
-:host /deep/  {
+:host  ::ng-deep  {
 .k-grid{
    
     border-top: 0;
@@ -33,9 +33,9 @@ color: white;
 background: darkblue;
 color: white
 }
-  .k-button.k-button-icon {
+.k-i-filter-clear{
     display: none;
-  }
+}
 .prb-header{
   text-align: center;
   color: white;
