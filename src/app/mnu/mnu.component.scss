@@ -1,66 +1,20 @@
-$mnu-color: white;
-$mnu-text-color: black;
+a{
+  font-size: x-large;
+  color: black !important;
+}
+a:hover, a:focus{
+background-color: white;
 
+}
 
-
-.menu-wrp{
-
-  background-color: $mnu-color;
-  width:100%;
-  height:50px;
-  // position: absolute;
-  top:0;
-  left:0;
-  &--menu{
-    border: none;
-    background-color: $mnu-color;
-    &--brand{
-      color: darkslateblue !important;
-      cursor: text;
-    
-    background-color: lightgoldenrodyellow;
-    }
-    &--user-name{
-  padding-right: 0;
-    border-left: solid;
-    }
-    &--greetings{
-  padding-left: 2px;
-    
-    }
-
-    &--menu-anchor-item-wrp{
-      background-color: $mnu-color;
-      &--li{
-        &--select-a{
-          padding: 15px;
-           &:hover{
-            // background-color: $mnu-color !important;
-          }
-        }
-        &--active{
-        // background-color: black !important;
-          color: red !important;
-        }
-        &--menu-anchor-item{
-          color: $mnu-text-color;
-          cursor: pointer;
-          font-weight: 700;
-          font-size:24px;
-          &:hover{
-            background-color: $mnu-color !important;
-          }
-           &:focus{
-            background-color: $mnu-color !important;
-          }
-          &:before{
+ a:before{
             content: "";
             position: absolute;
             width: 100%;
             height: 2px;
             bottom: 2px;
             left: 0;
-            background-color: $mnu-text-color;
+            background-color: black;
             visibility: hidden;
             -webkit-transform: scaleX(0);
             transform: scaleX(0);
@@ -68,50 +22,34 @@ $mnu-text-color: black;
             transition: transform 0.3s ease-in-out 0s;
 
           }
-          &:hover:before {
+    a:hover:before {
             visibility: visible;
             -webkit-transform: scaleX(1);
             transform: scaleX(1);
           }
-        }
-      }
 
+          .active{
+            color: red !important;
+          }
 
-    }
-
+  .date-time{
+    border-left-style: solid;
   }
+
+  .user-name{
+  padding-right: 5px !important;
 }
 
-.clock{
-  color: darkviolet;
-  background: white;
-  margin:0;
-}
-
-.navbar-nav{
-  margin-right: 10px;
-}
-
-.navbar-toggle{
-  background: rgba(0,0,0,0.5);
- 
-  color: white;
+.envs{
+  margin-right: 20px;
 }
 
 @media only screen and (max-width: 768px)  {
-  .menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item{
-  color:white;
-     background-color: rgba(0,0,0,0.5);
-  }
-
-   .menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item:hover{
-background-color: rgba(0,0,0,0.5);
- color:red;
-   }
-   .menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item:focus{
-background-color: rgba(0,0,0,0.5);
- color:red;
-   }
-
+  .envs{
+  margin-right: 0;
+}
 }
 
+.date-time{
+  color: #9400d3;
+}

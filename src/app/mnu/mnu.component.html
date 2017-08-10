@@ -1,53 +1,35 @@
-<div class="menu-wrp">
-  <nav class="navbar navbar-fixed-top menu-wrp--menu">
-    <!--<nav [@menuState]="menuVisible" class="navbar navbar-fixed-top menu-wrp--menu">-->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
         aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
-       <span>תפריט</span>
+        תפריט
       </button>
-      <span class="navbar-brand menu-wrp--menu--brand menu-wrp--menu--greetings">שלום,  </span>
-      <span class="navbar-brand menu-wrp--menu--brand  menu-wrp--menu--user-name">{{userName}}  </span>
+      <span class="navbar-brand">שלום,</span>
+      <span class="navbar-brand left-border user-name">{{userName}}</span>
+      <span class="navbar-brand hidden-md hidden-lg hidden-sm"> {{time|date:'HH:mm:ss'}}</span>
     </div>
-    <div class="collapse navbar-collapse menu-wrp--menu--menu-anchor-item-wrp" id="bs-example-navbar-collapse-1">
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/env" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">סביבות</a></li>
-        <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/env-system" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">סביבות-מפורט</a></li>
-        <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/inf" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">FaQ</a></li>
-        <li class="menu-wrp--menu--menu-anchor-item-wrp--li"><a routerLink="/lnk" routerLinkActive="menu-wrp--menu--menu-anchor-item-wrp--li--active" class="menu-wrp--menu--menu-anchor-item-wrp--li--menu-anchor-item">קישורים</a></li>
-        <!--<li class="menu-wrp--menu--menu-anchor-item-wrp--li">
-          <span class="menu-wrp--menu--menu-anchor-item-wrp--li--select-a" href="#">
-            <form>
-              <select (change)="goToEnvs()" name="userType" [(ngModel)]="userType" class="k-select">
-  <option    [value]="'support'">תמיכה</option>
-  <option  [value]="'system'">סיסטם</option>
-</select>
-            </form>
-          </span>
-        </li>-->
+        <li><a routerLink="/env" routerLinkActive="active" class="envs">סביבות</a></li>
+        <li><a routerLink="/env-system" routerLinkActive="active">סביבות-מפורט</a></li>
+        <li><a routerLink="/inf" routerLinkActive="active">FaQ</a></li>
+        <li><a routerLink="/lnk" routerLinkActive="active">קישורים</a></li>
 
 
 
       </ul>
-      <!-- <div>
-        <form class="navbar-form navbar-left">
-          <div class="form-group">
-            <input *ngIf="!isManager" #passInput [(ngModel)]="managerCode" type="password" name="managerCode" class="form-control" placeholder="סיסמת מנהל">
-          </div>
-          <button *ngIf="!isManager" [disabled]="managerCode==null ||managerCode.length==0" (click)="managerIn()" type="submit" class="btn btn-default">כניסת מנהל</button>
-          <button *ngIf="isManager" (click)="managerOut()" type="submit" class="btn btn-default">התנתקות</button>
 
-        </form>
-      </div> -->
-      <!-- <h3 class="navbar-text navbar-left clock"> {{time|date:'HH:mm:ss'}}</h3> -->
-      <h2 class="navbar-text navbar-left clock hidden-xs">
+
+      <ul class="nav navbar-nav navbar-left hidden-xs date-time h2"> 
         {{time|date:'HH:mm:ss'}}
-      </h2>
+      </ul>
     </div>
-
-  </nav>
-
-
-
-</div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
