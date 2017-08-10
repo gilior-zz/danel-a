@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -19,13 +19,8 @@
         <li><a routerLink="/env-system" routerLinkActive="active">סביבות-מפורט</a></li>
         <li><a routerLink="/inf" routerLinkActive="active">FaQ</a></li>
         <li><a routerLink="/lnk" routerLinkActive="active">קישורים</a></li>
-
-
-
       </ul>
-
-
-      <div class="nav navbar-nav navbar-left hidden-xs date-time h2"> 
+      <div class="nav navbar-nav navbar-left hidden-xs date-time h2">
         {{time|date:'HH:mm:ss'}}
       </div>
     </div>
