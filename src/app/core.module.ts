@@ -12,7 +12,8 @@ import { FlatEnvironmentService } from "app/services/flat-environment.service";
 import { LogService } from "app/services/log.service";
 import { DataService } from "app/services/data.service";
 import { ConfigSettings } from "app/services/config-settings.service";
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { DataInterceptor } from "app/services/DataInterceptor";
 
 export function startupServiceFactory(startupService: ConfigSettings): Function {
   return () => startupService.load();
@@ -41,8 +42,11 @@ export function startupServiceFactory(startupService: ConfigSettings): Function 
     // MdlsService,
     AppConfigProvider,
     // FlatEnvironmentService,
-    DataService,
-
+    DataService
+    ,    {      provide: HTTP_INTERCEPTORS,
+      useClass: DataInterceptor,
+      multi: true,
+    }
 
     // 
   ]

@@ -7,14 +7,28 @@ html,body{
   overflow-x: hidden;
 // direction: rtl;
 // text-align: right;
-padding-top: 200px;
+
 }
 body{
   font-family: 'Arimo', sans-serif;
+  padding-top: 200px;
+    //   background-image: url('assets/back.jpg');
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-position: center;
+    background-color: #528C90 !important;
 }
 
 .left-border{
   border-left-style: solid;
+}
+
+
+@media(max-width:768px){
+  body{
+  
+  padding-top: 0;
+}
 }
 
 
