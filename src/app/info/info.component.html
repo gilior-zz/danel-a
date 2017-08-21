@@ -31,14 +31,19 @@
         <p style="margin: 30px; text-align: center; ">האם למחוק רשומה?</p>
 
         <kendo-dialog-actions>
-          <button kendoButton (click)="closeRemoveDlg( 'no') " primary="true ">ביטול</button>
-          <button kendoButton (click)="closeRemoveDlg( 'yes') " primary="true ">אישור</button>
+          <button kendoButton (click)="closeRemoveDlg('no') " primary="true ">ביטול</button>
+          <button kendoButton (click)="closeRemoveDlg('yes') " primary="true ">אישור</button>
         </kendo-dialog-actions>
       </kendo-dialog>
     </div>
   </div>
 </div>
 <lg-last-update [lastUpdate]="lastUpdate" backColor="black"></lg-last-update>
+<div [@confirmState]="showConfirm" class="faq-confiramtion-wrp">
+  <span class="faq-confiramtion">
+  {{faqConfiramtionMsg}}
+  </span>
+</div>
 <div>
   <form novalidate #myForm="ngForm">
     <kendo-grid [pageSize]="pageSize" #grid [data]="gridView" (edit)="editHandlerModalWindow($event)" (cancel)="cancelHandler($event)"

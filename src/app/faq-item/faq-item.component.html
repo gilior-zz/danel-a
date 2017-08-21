@@ -18,6 +18,14 @@
   </div>
   <div class="form-group">
     <label class="center-block" for="exampleInputFile">קבצים:
+      <h6>       
+        <span [@files]="invalid">
+<span>   יש לבחור קבצים מתיקיית      </span>     
+          <mark>X:\lnks</mark>
+          <span>בלבד</span>
+        </span>
+      
+       </h6>        
     <!--<input #files type="file" id="exampleInputFile" formControlName="lnks"  (change)="fileChangeEvent(files.files)"  multiple>-->
    <div class="file-div">
     <input #files type='file' (change)="fileChangeEvent(files.files)"  multiple> 
@@ -39,7 +47,7 @@
 
 
     <tree-root [options]="options" id="mdl" [nodes]="mdls"></tree-root>
-    
+
   </div>
   <input hidden type="number" formControlName="mdlID" />
   <input hidden type="number" formControlName="id" />

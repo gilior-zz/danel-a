@@ -23,12 +23,10 @@
 
 
 :host  ::ng-deep  {
-.k-i-filter-clear{
-    display: none;
+.k-filtercell-operator button{
+    display: none !important;
 }
-button[title=Clear]{
-    display: none;
-}
+
 .k-grid{
   
     border-top: 0;

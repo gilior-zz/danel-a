@@ -1,6 +1,18 @@
 :host{
   margin-top: 40px;
 }
+
+.faq-confiramtion-wrp{
+  padding: 15px;
+    text-align: center;
+}
+
+.faq-confiramtion{
+  background-color: lightcyan;
+    transform: scale(2);
+    color: darkviolet;
+}
+
 .k-textbox{width: 100% !important;
 }
 .k-grid{
@@ -24,6 +36,7 @@ iframe{
     border-top: 0;
 }
 
+
 .mdlName-header{
 background: darkblue;
 color: white;
@@ -33,8 +46,8 @@ color: white;
 background: darkblue;
 color: white
 }
-.k-i-filter-clear{
-    display: none;
+.k-filtercell-operator button{
+    display: none !important;
 }
 .prb-header{
   text-align: center;

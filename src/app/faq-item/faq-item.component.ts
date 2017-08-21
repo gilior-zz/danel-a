@@ -12,6 +12,8 @@ import { Module, SupportIssueLink, SupportIssue, ModuleResponse } from "../../mo
 import { UtilityService } from "../services/utility.service";
 import { MdlsService } from "../services/mdls.service";
 import { DataService } from "app/services/data.service";
+import { filesAnimation } from "app/faq-item/files-anim";
+import { inputErrorAnim } from "app/faq-item/input-error-anim";
 
 
 
@@ -22,16 +24,8 @@ import { DataService } from "app/services/data.service";
   templateUrl: './faq-item.component.html',
   styleUrls: ['./faq-item.component.scss'],
   animations: [
-    trigger('flyInOut', [
-      state('in', style({ transform: 'translateX(0)' })),
-      transition('void => *', [
-        style({ transform: 'translateX(-50%)' }),
-        animate('.7s')
-      ]),
-      transition('* => void', [
-        animate('.7s', style({ transform: 'translateX(-50%)' }))
-      ])
-    ])
+    inputErrorAnim
+    , filesAnimation
   ]
 })
 export class FaqItemComponent implements OnInit, OnDestroy {
@@ -83,7 +77,7 @@ export class FaqItemComponent implements OnInit, OnDestroy {
   }
 
 
-
+  get invalid(): boolean { return this.ut.isInvalidFiles }
   createForm() {
     this.faqForm = this.fb.group({
       prb: [this.item == null ? '' : this.item.prb, Validators.required],

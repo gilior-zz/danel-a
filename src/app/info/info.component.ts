@@ -14,6 +14,8 @@ import { InfoService } from "../services/info.service";
 import { UtilityService } from "../services/utility.service";
 import { PageChangeEvent, GridDataResult, DataStateChangeEvent } from "@progress/kendo-angular-grid";
 import { DataService } from "app/services/data.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { faqConfirmAnimation } from "app/info/faq-confirm-anim";
 
 
 @Component({
@@ -21,9 +23,14 @@ import { DataService } from "app/services/data.service";
   templateUrl: 'info.component.html',
   styleUrls: ['info.component.scss'],
   // encapsulation: ViewEncapsulation.None,
-  providers: [{ provide: RTL, useValue: true }]
+  providers: [{ provide: RTL, useValue: true }],
+  animations: [
+    faqConfirmAnimation
+  ]
 })
 export class InfoComponent implements OnInit {
+  showConfirm: boolean = false;
+  faqConfiramtionMsg: string;
   public formGroup: FormGroup;
 
   public showFaqDlg: boolean;
@@ -180,6 +187,8 @@ export class InfoComponent implements OnInit {
       let item = this.items.find(i => i.id == this.delID);
       this.items = this.items.filter(i => i != item);
       this.loadItems();
+      this.showRemoveDlg = false;
+      this.handleConfirmMsg("נמחק בהצלחה");
     });
   }
 
@@ -189,18 +198,17 @@ export class InfoComponent implements OnInit {
     // console.log(`Dialog result: ${status}`);
 
     if (status == 'yes') {
-      if (this.deletePassword != 1234) {
-        return;
-      }
-      this.showRemoveDlg = false;
+
       this.delete();
     }
-    this.showRemoveDlg = false;
+    else
+      this.showRemoveDlg = false;
 
   }
 
   public closeFaqDlg(status, newItemWindow: any = null, ) {
-    this.showFaqDlg = false;
+
+    this.ut.isInvalidFiles = false;
     if (status == 'yes') {
       let sis = newItemWindow.getNewFaq();
       // this.infoService.add(sis).subscribe(i => {
@@ -209,12 +217,38 @@ export class InfoComponent implements OnInit {
         this.items.push(i);
         this.items = this.items.sort((a, b) => { return new Date(b.ts).getDate() - new Date(a.ts).getDate() })
         this.loadItems();
-      }, (err) => {
-        console.log('somthing is wrong');
+        this.showFaqDlg = false;
+        this.handleConfirmMsg("נשמר בהצלחה");
+      }, (err: HttpErrorResponse) => {
+        if (err.status == 404) {
+          this.ut.isInvalidFiles = true;
+          setTimeout(() => {
+            this.ut.isInvalidFiles = false;
+          }, 500);
+        }
+
+
       }
       );
     }
+    else {
+      this.showFaqDlg = false;
+
+
+    }
+    this.showFaqDlg = false;
+
   }
+
+  handleConfirmMsg(faqConfiramtionMsg: string) {
+    this.faqConfiramtionMsg = faqConfiramtionMsg;
+    this.showConfirm = true;
+    setTimeout(() => {
+      this.showConfirm = false;
+    }, 1500);
+  }
+
+  showFaqConfiramtion: boolean = false;
 
   public closeUpdateFaqDlg(status, updateItemWindow: any = null, ) {
 

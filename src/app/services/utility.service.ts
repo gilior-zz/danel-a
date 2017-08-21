@@ -11,9 +11,11 @@ import { ConfigSettings } from "../services/config-settings.service";
 
 
 
+
 @Injectable()
-export class UtilityService { 
-   config: AppConfig;
+export class UtilityService {
+  isInvalidFiles: boolean=false;
+  config: AppConfig;
   showContent: boolean;
   showFaqDlg: boolean;
   delRecord: boolean;
