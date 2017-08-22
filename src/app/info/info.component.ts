@@ -178,7 +178,7 @@ export class InfoComponent implements OnInit {
     pageSizes: [5, 10, 20, 30, 40, 50, 100, 600]
   }
 
-  delID: number;
+  delID: number;  
 
   delete() {
     console.log(`delete from DB ${this.delID}`);
@@ -212,14 +212,16 @@ export class InfoComponent implements OnInit {
     if (status == 'yes') {
       let sis = newItemWindow.getNewFaq();
       // this.infoService.add(sis).subscribe(i => {
-      this.dataService.PostData<SupportIssue>('faq', sis).subscribe(i => {
+      this.dataService.PostData<SupportIssue>('faq', sis).subscribe
+      (i => {
         console.log(i);
         this.items.push(i);
         this.items = this.items.sort((a, b) => { return new Date(b.ts).getDate() - new Date(a.ts).getDate() })
         this.loadItems();
         this.showFaqDlg = false;
         this.handleConfirmMsg("נשמר בהצלחה");
-      }, (err: HttpErrorResponse) => {
+      }, 
+      (err: HttpErrorResponse) => {
         if (err.status == 404) {
           this.ut.isInvalidFiles = true;
           setTimeout(() => {
@@ -233,10 +235,8 @@ export class InfoComponent implements OnInit {
     }
     else {
       this.showFaqDlg = false;
-
-
     }
-    this.showFaqDlg = false;
+  
 
   }
 
@@ -265,6 +265,7 @@ export class InfoComponent implements OnInit {
           var element = this.items[index];
           if (element.id == i.id)
             this.items[index] = i;
+          this.handleConfirmMsg('עודכן בהצלחה');
         }
         // this.items.forEach(arrayItem => {
         //   if (i.id == arrayItem.id) {

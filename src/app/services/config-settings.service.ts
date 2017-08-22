@@ -27,7 +27,7 @@ export class ConfigSettings {
   // This is the method you want to call at bootstrap
   // Important: It should return a Promise
   async load(): Promise<any> {
-    this.logService.logInfo('in StartUpService in load')
+    // this.logService.logInfo('in StartUpService in load')
     //option 1
     // return this.http.get("settings.json").toPromise().then(i => console.log(i));
 
@@ -65,7 +65,7 @@ export class ConfigSettings {
     //option good   
     await this.http.get("settings.json").toPromise().then(i => {
       this.appConfig = <AppConfig>i;
-      this.logService.logInfo('in StartUpService in post load')
+      // this.logService.logInfo('in StartUpService in post load')
       this.logService.logInfo(i)
     }).catch((err: any) => {
       this.logService.logInfo(err);
