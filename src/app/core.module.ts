@@ -14,6 +14,7 @@ import { DataService } from "app/services/data.service";
 import { ConfigSettings } from "app/services/config-settings.service";
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataInterceptor } from "app/services/DataInterceptor";
+import {EnvAction} from "./environment/env.action";
 
 export function startupServiceFactory(startupService: ConfigSettings): Function {
   return () => startupService.load();
@@ -26,6 +27,7 @@ export function startupServiceFactory(startupService: ConfigSettings): Function 
   providers: [
     LogService,
     UtilityService,
+    EnvAction,
     ConfigSettings,
     {
       provide: APP_INITIALIZER,
@@ -48,7 +50,7 @@ export function startupServiceFactory(startupService: ConfigSettings): Function 
       multi: true,
     }
 
-    // 
+    //
   ]
 })
 export class CoreModule { }

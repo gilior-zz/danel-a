@@ -30,7 +30,8 @@
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "../src/assets/AnimatedHeader-master/js/classie.js",
-        "../src/assets/AnimatedHeader-master/js/cbpAnimatedHeader.js"
+        "../src/assets/AnimatedHeader-master/js/cbpAnimatedHeader.js" ,       
+        "../node_modules/ms-signalr-client/jquery.signalR.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

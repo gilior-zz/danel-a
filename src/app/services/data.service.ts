@@ -8,7 +8,8 @@ import { APP_CONFIG, AppConfig } from "app/app-config";
 import { UtilityService } from "app/services/utility.service";
 import { LogService } from "app/services/log.service";
 import { ConfigSettings } from "app/services/config-settings.service";
-
+import "rxjs/add/operator/retry"
+import "rxjs/add/operator/mergeMap"
 @Injectable()
 export class DataService {
   logDataService: boolean = false;
@@ -33,7 +34,7 @@ export class DataService {
       headers: headres,
     })
     let retries = get.retry(3);
-    response = retries.flatMap(resp => {
+    response = retries.mergeMap(resp => {
       if (this.logDataService) this.logService.logInfo('finished GetData');
       return Observable.of(resp.body)
     })

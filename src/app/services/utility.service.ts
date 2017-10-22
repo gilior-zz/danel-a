@@ -14,7 +14,7 @@ import { ConfigSettings } from "../services/config-settings.service";
 
 @Injectable()
 export class UtilityService {
-  isInvalidFiles: boolean=false;
+  isInvalidFiles: boolean;
   config: AppConfig;
   showContent: boolean;
   showFaqDlg: boolean;
@@ -30,7 +30,7 @@ export class UtilityService {
     // this.config.winServiceEndpoint = config.winServiceEndpoint;
     // this.checkWinServiceEndpoint();
     // this.getWindowsUserinfo();
-    this.checkBrowser()
+    this.checkBrowser();
     // this.mycheckBrowser();
   }
 
@@ -122,7 +122,7 @@ export class UtilityService {
   showCopied: boolean;
 
   displyCopied(ele: string, fp: string) {
-    // console.log(fp); 
+    // console.log(fp);
 
 
     let l = new Clipboard(`#${ele}`, {

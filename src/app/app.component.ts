@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { UtilityService } from "app/services/utility.service";
 
 import { LogService } from "app/services/log.service";
@@ -15,9 +15,20 @@ export class AppComponent {
   /**
    *
    */
-  constructor(private logService: LogService, private configSettings: ConfigSettings, private us: UtilityService) {
+  constructor(private logService: LogService,
+    private configSettings: ConfigSettings,
+    private us: UtilityService,
+    private ref: ChangeDetectorRef) {
 
+    var connection = $.hubConnection('http://localhost:58949/');
+    var proxy = connection.createHubProxy('MyHub1');
+    proxy.on('Hello', (i) => {
 
+    });
+
+    connection.start({ jsonp: true })
+    .done(function () { console.log('Now connected, connection ID=' + connection.id); proxy.invoke('Hello') })
+    .fail(function () { console.log('Could not connect'); });
   }
 
   get showSysAdminPage(): boolean {

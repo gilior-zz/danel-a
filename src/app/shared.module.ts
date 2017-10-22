@@ -18,6 +18,7 @@ import { ReCaptchaModule } from 'angular2-recaptcha';
 import { LockedMdlsComponent } from './locked-mdls/locked-mdls.component';
 import { LastUpdateComponent } from './last-update/last-update.component';
 import { UploadModule } from '@progress/kendo-angular-upload';
+import {NgReduxModule} from "@angular-redux/store";
 
 
 
@@ -40,7 +41,7 @@ import { UploadModule } from '@progress/kendo-angular-upload';
     LayoutModule,
     DialogModule,
     ReCaptchaModule,
-
+NgReduxModule
 
   ],
   exports: [
