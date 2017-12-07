@@ -21,7 +21,7 @@ function filterEnvs(state: IAppState, action): IAppState {
       })
     })
     return Object.assign({}, state, {
-      filteredEnvs: res
+      filteredEnvs: res      
     })
   }
 }
